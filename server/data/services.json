@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "title": "Architecture Design",
+    "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop",
+    "subtitle": "From concept to technical",
+    "description": "Master planning, concept exploration, schematic design, technical drawings, permits, and design development for any scale of project."
+  },
+  {
+    "id": "2",
+    "title": "Interior Design",
+    "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2500&auto=format&fit=crop",
+    "subtitle": "Space as experience",
+    "description": "Spatial mood strategy, material curation, furniture detailing, and execution support for commercial and residential interiors."
+  },
+  {
+    "id": "3",
+    "title": "Project Management",
+    "image": "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=2376&auto=format&fit=crop",
+    "subtitle": "On time, on budget",
+    "description": "Scheduling, budget coordination, tender administration, ISO-compliant documentation, and comprehensive stakeholder reporting."
+  },
+  {
+    "id": "4",
+    "title": "Construction",
+    "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
+    "subtitle": "Precision delivery",
+    "description": "Full site supervision and quality control to ensure every design intent is translated to the built result with accuracy."
+  }
+]

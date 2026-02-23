@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "The Future of Green Architecture in Urban Planning",
+    "date": "Feb 2026",
+    "tag": "Architecture",
+    "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+    "excerpt": "How passive systems, facade strategy, and urban data are shaping a new era of sustainable projects."
+  },
+  {
+    "id": "2",
+    "title": "Mastering Project Management for High-Rise Buildings",
+    "date": "Jan 2026",
+    "tag": "Construction",
+    "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop",
+    "excerpt": "A practical framework to control budget, schedule, and quality from project kickoff to final handover."
+  },
+  {
+    "id": "3",
+    "title": "Minimalist Interiors for Modern Residences",
+    "date": "Dec 2025",
+    "tag": "Interior",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+    "excerpt": "Balancing function and calm atmosphere through proportion, detail, and material discipline."
+  }
+]
