@@ -5,18 +5,29 @@ const path = require("path");
 const router = express.Router();
 const DATA = path.join(__dirname, "../data/blogs.json");
 
+// In-memory cache
+let _cache = null;
+
 function read() {
-  return JSON.parse(fs.readFileSync(DATA, "utf-8"));
+  if (!_cache) {
+    _cache = JSON.parse(fs.readFileSync(DATA, "utf-8"));
+  }
+  return _cache;
 }
 function write(data) {
+  _cache = data;
   fs.writeFileSync(DATA, JSON.stringify(data, null, 2));
 }
 
-router.get("/", (req, res) => res.json(read()));
+router.get("/", (req, res) => {
+  res.set("Cache-Control", "public, max-age=30");
+  res.json(read());
+});
 
 router.get("/:id", (req, res) => {
   const item = read().find((b) => b.id === req.params.id);
   if (!item) return res.status(404).json({ message: "Not found" });
+  res.set("Cache-Control", "public, max-age=30");
   res.json(item);
 });
 

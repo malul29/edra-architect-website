@@ -5,15 +5,23 @@ const path = require("path");
 const router = express.Router();
 const DATA = path.join(__dirname, "../data/portfolio.json");
 
+// In-memory cache — only reads disk when cache is empty/invalidated
+let _cache = null;
+
 function read() {
-  return JSON.parse(fs.readFileSync(DATA, "utf-8"));
+  if (!_cache) {
+    _cache = JSON.parse(fs.readFileSync(DATA, "utf-8"));
+  }
+  return _cache;
 }
 function write(data) {
+  _cache = data; // update cache
   fs.writeFileSync(DATA, JSON.stringify(data, null, 2));
 }
 
 // GET all
 router.get("/", (req, res) => {
+  res.set("Cache-Control", "public, max-age=30");
   res.json(read());
 });
 
@@ -21,8 +29,10 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const item = read().find((p) => p.id === req.params.id);
   if (!item) return res.status(404).json({ message: "Not found" });
+  res.set("Cache-Control", "public, max-age=30");
   res.json(item);
 });
+
 
 // POST create
 router.post("/", (req, res) => {
@@ -33,7 +43,7 @@ router.post("/", (req, res) => {
   const items = read();
   const newItem = {
     id: String(Date.now()),
-    title, location, category, year, image, 
+    title, location, category, year, image,
     description: description || "",
   };
   items.unshift(newItem);
