@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///D:/web-edra/client/app/admin/page.jsx"],"sourcesContent":["import { redirect } from \"next/navigation\";\r\n\r\nexport default function AdminPage() {\r\n    redirect(\"/admin/login\");\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAEe,SAAS;IACpB,IAAA,2MAAQ,EAAC;AACb"}}]
+}

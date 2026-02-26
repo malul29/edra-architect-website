@@ -26,69 +26,50 @@ export default function Home() {
         let currentScrollY = window.scrollY;
         let ticking = false;
 
-        // Initialize transform on mount
         if (currentScrollY > window.innerHeight * 0.2) {
             img.style.transform = `scale(1.04) translateY(${currentScrollY * 0.12}px)`;
         } else {
             img.style.transform = `scale(1.04) translate(0px, 0px)`;
         }
 
-        // Mouse move parallax with RAF
         let mouseX = 0;
         let mouseY = 0;
         let mouseAnimFrame = null;
 
         const updateMouseParallax = () => {
             if (!img || currentScrollY > window.innerHeight * 0.2) return;
-
-            const moveX = mouseX * 2; // 2px max movement
+            const moveX = mouseX * 2;
             const moveY = mouseY * 2;
-
             img.style.transform = `scale(1.04) translate(${moveX}px, ${moveY}px)`;
             mouseAnimFrame = null;
         };
 
         const onMouseMove = (e) => {
             if (currentScrollY > window.innerHeight * 0.2) return;
-
             const { clientX, clientY } = e;
             const { innerWidth, innerHeight } = window;
-
-            // Calculate movement range (-1 to 1)
             const xPercent = (clientX / innerWidth - 0.5) * 2;
             const yPercent = (clientY / innerHeight - 0.5) * 2;
-
             mouseX = xPercent;
             mouseY = yPercent;
-
             if (!mouseAnimFrame) {
                 mouseAnimFrame = requestAnimationFrame(updateMouseParallax);
             }
         };
 
-        // Scroll parallax with RAF for smooth updates
         const updateScrollParallax = () => {
-            if (!img) {
-                ticking = false;
-                return;
-            }
-
+            if (!img) { ticking = false; return; }
             if (currentScrollY > window.innerHeight * 0.2) {
-                // After scrolling past 20% of viewport, use scroll parallax only
-                // Reduced multiplier from 0.18 to 0.12 for smoother effect
                 const translateY = currentScrollY * 0.12;
                 img.style.transform = `scale(1.04) translateY(${translateY}px)`;
             } else {
-                // Reset to center when at top
                 img.style.transform = `scale(1.04) translate(0px, 0px)`;
             }
-
             ticking = false;
         };
 
         const onScroll = () => {
             currentScrollY = window.scrollY;
-
             if (!ticking) {
                 requestAnimationFrame(updateScrollParallax);
                 ticking = true;
@@ -101,9 +82,7 @@ export default function Home() {
         return () => {
             window.removeEventListener("mousemove", onMouseMove);
             window.removeEventListener("scroll", onScroll);
-            if (mouseAnimFrame) {
-                cancelAnimationFrame(mouseAnimFrame);
-            }
+            if (mouseAnimFrame) cancelAnimationFrame(mouseAnimFrame);
         };
     }, []);
 
@@ -142,7 +121,7 @@ export default function Home() {
         let hasDragged = false;
 
         const onPointerDown = (e) => {
-            e.preventDefault(); // Prevent browser link preview/tooltip and drag behaviors
+            e.preventDefault();
             isDown = true;
             hasDragged = false;
             if (anim) anim.kill();
@@ -152,27 +131,18 @@ export default function Home() {
             lastTime = performance.now();
             velocity = 0;
             viewport.classList.add('dragging');
-
-            // Capture pointer for reliable drag tracking
             if (viewport.setPointerCapture) {
-                try {
-                    viewport.setPointerCapture(e.pointerId);
-                } catch (err) {
-                    console.warn('Pointer capture failed:', err);
-                }
+                try { viewport.setPointerCapture(e.pointerId); } catch (err) { }
             }
         };
 
         const onPointerMove = (e) => {
             if (!isDown) return;
-
             const dx = e.clientX - startX;
-
             if (Math.abs(dx) > 3) {
                 e.preventDefault();
                 hasDragged = true;
                 setX(startPos + dx);
-
                 const now = performance.now();
                 const dt = now - lastTime;
                 if (dt > 0) {
@@ -188,18 +158,13 @@ export default function Home() {
             const target = currentX + amplitude;
             const { min, max } = getBounds();
             const clamped = Math.max(min, Math.min(max, target));
-
             if (Math.abs(clamped - currentX) < 2) return;
-
             const duration = Math.min(0.9, Math.max(0.35, Math.abs(amplitude) / 500));
-
             anim = gsap.to(track, {
                 x: clamped,
                 duration,
                 ease: "power3.out",
-                onUpdate: () => {
-                    currentX = gsap.getProperty(track, "x");
-                },
+                onUpdate: () => { currentX = gsap.getProperty(track, "x"); },
             });
         };
 
@@ -207,30 +172,15 @@ export default function Home() {
             if (!isDown) return;
             isDown = false;
             viewport.classList.remove('dragging');
-
-            // Release pointer capture
             if (viewport.releasePointerCapture && e.pointerId != null) {
-                try {
-                    viewport.releasePointerCapture(e.pointerId);
-                } catch (err) {
-                    console.warn('Pointer release failed:', err);
-                }
+                try { viewport.releasePointerCapture(e.pointerId); } catch (err) { }
             }
-
             if (hasDragged) {
                 finishInertia();
             } else {
-                // Programmatically trigger a click if it was just a tap (not a drag)
-                // We do this because e.preventDefault() in pointerdown blocks native clicks
-                // We find the closest anchor tag that was tapped
                 const targetLink = e.target.closest('a');
-                if (targetLink && targetLink.href) {
-                    // Trigger navigation programmatically
-                    targetLink.click();
-                }
+                if (targetLink && targetLink.href) targetLink.click();
             }
-
-            // Always re-check hovering state after drag ends
             const rect = viewport.getBoundingClientRect();
             if (e.clientX >= rect.left && e.clientX <= rect.right &&
                 e.clientY >= rect.top && e.clientY <= rect.bottom) {
@@ -240,15 +190,10 @@ export default function Home() {
             }
         };
 
-        // Prevent link navigation when dragging
         const onLinkClick = (e) => {
-            if (hasDragged) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
+            if (hasDragged) { e.preventDefault(); e.stopPropagation(); }
         };
 
-        // Custom cursor tracking
         const handleMouseMove = (e) => {
             const rect = viewport.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -257,27 +202,13 @@ export default function Home() {
             viewport.style.setProperty("--cursor-y", `${y}%`);
         };
 
-        const handleMouseEnter = () => {
-            viewport.classList.add('hovering');
-        };
+        const handleMouseEnter = () => viewport.classList.add('hovering');
+        const handleMouseLeave = () => viewport.classList.remove('hovering');
+        const handleContextMenu = (e) => { e.preventDefault(); return false; };
 
-        const handleMouseLeave = () => {
-            viewport.classList.remove('hovering');
-        };
-
-        // Prevent context menu and long touches that might trigger browser UI
-        const handleContextMenu = (e) => {
-            e.preventDefault();
-            return false;
-        };
-
-        // Attach click handlers to all project links
         const links = track.querySelectorAll('.proj-thumb');
-        links.forEach(link => {
-            link.addEventListener('click', onLinkClick, true);
-        });
+        links.forEach(link => link.addEventListener('click', onLinkClick, true));
 
-        // Add all event listeners
         viewport.addEventListener("pointerdown", onPointerDown);
         viewport.addEventListener("pointermove", onPointerMove);
         viewport.addEventListener("pointerup", onPointerUp);
@@ -286,18 +217,13 @@ export default function Home() {
         viewport.addEventListener('mouseenter', handleMouseEnter);
         viewport.addEventListener('mouseleave', handleMouseLeave);
         viewport.addEventListener('contextmenu', handleContextMenu);
-        viewport.addEventListener('selectstart', handleContextMenu); // Prevent text selection UI
+        viewport.addEventListener('selectstart', handleContextMenu);
 
         return () => {
             if (anim) anim.kill();
             isDown = false;
             viewport.classList.remove('dragging');
-
-            // Remove link click handlers
-            links.forEach(link => {
-                link.removeEventListener('click', onLinkClick, true);
-            });
-
+            links.forEach(link => link.removeEventListener('click', onLinkClick, true));
             viewport.removeEventListener("pointerdown", onPointerDown);
             viewport.removeEventListener("pointermove", onPointerMove);
             viewport.removeEventListener("pointerup", onPointerUp);
@@ -309,6 +235,67 @@ export default function Home() {
             viewport.removeEventListener('selectstart', handleContextMenu);
         };
     }, [portfolio]);
+
+    // ── Scroll-triggered animations via IntersectionObserver ──────────────────
+    useEffect(() => {
+        // Animate elements with .reveal class when they enter viewport
+        const revealEls = document.querySelectorAll('.reveal');
+        if (!revealEls.length) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        revealEls.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, []);
+
+    // ── Stat counter animation ────────────────────────────────────────────────
+    useEffect(() => {
+        const counters = document.querySelectorAll('.stat-number[data-target]');
+        if (!counters.length) return;
+
+        const animateCounter = (el) => {
+            const target = parseInt(el.getAttribute('data-target'), 10);
+            const suffix = el.getAttribute('data-suffix') || '';
+            const duration = 1800;
+            const start = performance.now();
+
+            const update = (now) => {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = current + suffix;
+                if (progress < 1) requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        counters.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, []);
 
     const featured = portfolio || [];
 
@@ -378,10 +365,10 @@ export default function Home() {
             {/* ── STATEMENT SECTION ── */}
             <section className="statement-section">
                 <div className="container">
-                    <h2 className="statement-main">
-                        Innovative & Inspiring Design Solutions
+                    <h2 className="statement-main reveal reveal-up">
+                        Innovative &amp; Inspiring Design Solutions
                     </h2>
-                    <p className="statement-sub">
+                    <p className="statement-sub reveal reveal-up" style={{ transitionDelay: '0.15s' }}>
                         We Plan, Design Projects and Coordinate Construction for You
                     </p>
                 </div>
@@ -393,45 +380,37 @@ export default function Home() {
                     {/* Left Side - Content */}
                     <div className="home-about-content">
                         <div className="home-about-content-inner">
-                            <div className="home-about-eyebrow">About EDRA</div>
+                            <div className="home-about-eyebrow reveal reveal-left">About EDRA</div>
 
-                            <h2 className="home-about-title">
-                                SHAPING INDONESIA'S
+                            <h2 className="home-about-title reveal reveal-up" style={{ transitionDelay: '0.1s' }}>
+                                SHAPING INDONESIA&apos;S
                                 <span className="title-highlight">ARCHITECTURAL</span>
                                 LANDSCAPE
                             </h2>
 
-                            <p className="home-about-lead">
+                            <p className="home-about-lead reveal reveal-up" style={{ transitionDelay: '0.2s' }}>
                                 Since 1999, PT. EDRA Arsitek Indonesia has been at the forefront
                                 of architectural innovation, delivering projects that define spaces
                                 and inspire communities.
                             </p>
 
                             <div className="home-about-principles">
-                                <div className="principle-item">
-                                    <div className="principle-icon">01</div>
-                                    <div className="principle-text">
-                                        <h4>Design Excellence</h4>
-                                        <p>Every project reflects our commitment to exceptional design and precision</p>
+                                {[
+                                    { num: "01", title: "Design Excellence", desc: "Every project reflects our commitment to exceptional design and precision" },
+                                    { num: "02", title: "Sustainable Innovation", desc: "Integrating environmental consciousness with cutting-edge solutions" },
+                                    { num: "03", title: "Client Partnership", desc: "Collaborative approach ensuring vision becomes reality" },
+                                ].map((p, i) => (
+                                    <div className="principle-item reveal reveal-up" key={p.num} style={{ transitionDelay: `${0.1 * i + 0.3}s` }}>
+                                        <div className="principle-icon">{p.num}</div>
+                                        <div className="principle-text">
+                                            <h4>{p.title}</h4>
+                                            <p>{p.desc}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="principle-item">
-                                    <div className="principle-icon">02</div>
-                                    <div className="principle-text">
-                                        <h4>Sustainable Innovation</h4>
-                                        <p>Integrating environmental consciousness with cutting-edge solutions</p>
-                                    </div>
-                                </div>
-                                <div className="principle-item">
-                                    <div className="principle-icon">03</div>
-                                    <div className="principle-text">
-                                        <h4>Client Partnership</h4>
-                                        <p>Collaborative approach ensuring vision becomes reality</p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
 
-                            <Link href="/about" className="home-about-cta">
+                            <Link href="/about" className="home-about-cta reveal reveal-up" style={{ transitionDelay: '0.6s' }}>
                                 <span>Explore Our Story</span>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -441,7 +420,7 @@ export default function Home() {
                     </div>
 
                     {/* Right Side - Stats & Image */}
-                    <div className="home-about-visual">
+                    <div className="home-about-visual reveal reveal-right">
                         <div className="home-about-image-wrapper">
                             <Image
                                 src="/about-teaser.jpg"
@@ -456,19 +435,19 @@ export default function Home() {
                         <div className="home-about-stats-card">
                             <div className="stats-grid">
                                 <div className="stat-box">
-                                    <div className="stat-number">25+</div>
+                                    <div className="stat-number" data-target="25" data-suffix="+">25+</div>
                                     <div className="stat-label">Years<br />Experience</div>
                                 </div>
                                 <div className="stat-box">
-                                    <div className="stat-number">200+</div>
+                                    <div className="stat-number" data-target="200" data-suffix="+">200+</div>
                                     <div className="stat-label">Completed<br />Projects</div>
                                 </div>
                                 <div className="stat-box">
-                                    <div className="stat-number">50+</div>
+                                    <div className="stat-number" data-target="50" data-suffix="+">50+</div>
                                     <div className="stat-label">Expert<br />Team Members</div>
                                 </div>
                                 <div className="stat-box">
-                                    <div className="stat-number">15+</div>
+                                    <div className="stat-number" data-target="15" data-suffix="+">15+</div>
                                     <div className="stat-label">Industry<br />Awards</div>
                                 </div>
                             </div>
@@ -480,7 +459,7 @@ export default function Home() {
             {/* ── SERVICES TEASER ── */}
             <section className="home-services-section">
                 <div className="container">
-                    <h2 className="section-title">Our Services</h2>
+                    <h2 className="section-title reveal reveal-up">Our Services</h2>
                     <div className="home-services-grid">
                         {[
                             {
@@ -498,8 +477,8 @@ export default function Home() {
                                 id: 3,
                                 description: "Strong construction project management with outstanding implementation and flawless delivery on time and budget."
                             },
-                        ].map((service) => (
-                            <div className="home-service-card" key={service.id}>
+                        ].map((service, i) => (
+                            <div className="home-service-card reveal reveal-up" key={service.id} style={{ transitionDelay: `${i * 0.15}s` }}>
                                 <div className="home-service-content">
                                     <h3 className="home-service-title">{service.title}</h3>
                                     <p className="home-service-description">{service.description}</p>
@@ -507,7 +486,7 @@ export default function Home() {
                             </div>
                         ))}
                     </div>
-                    <div className="home-services-button-wrapper">
+                    <div className="home-services-button-wrapper reveal reveal-up" style={{ transitionDelay: '0.45s' }}>
                         <Link href="/services" className="liquid-glass-button">
                             <span>View All Services</span>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -519,7 +498,7 @@ export default function Home() {
             </section>
 
             {/* ── CLIENT LOGOS CAROUSEL ── */}
-            <section className="clients-carousel-section">
+            <section className="clients-carousel-section reveal reveal-up">
                 <div className="clients-carousel-wrapper">
                     <div className="clients-carousel-track">
                         {[
@@ -561,8 +540,8 @@ export default function Home() {
 
             {/* ── PROJECT CTA ── */}
             <section className="project-cta-section">
-                <div className="project-cta-background">LET'S TALK</div>
-                <div className="project-cta-content">
+                <div className="project-cta-background">LET&apos;S TALK</div>
+                <div className="project-cta-content reveal reveal-up">
                     <h2 className="project-cta-title">
                         ABOUT<br />YOUR PROJECT!
                     </h2>

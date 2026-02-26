@@ -1543,19 +1543,17 @@ function Home() {
         if (!img) return;
         let currentScrollY = window.scrollY;
         let ticking = false;
-        // Initialize transform on mount
         if (currentScrollY > window.innerHeight * 0.2) {
             img.style.transform = `scale(1.04) translateY(${currentScrollY * 0.12}px)`;
         } else {
             img.style.transform = `scale(1.04) translate(0px, 0px)`;
         }
-        // Mouse move parallax with RAF
         let mouseX = 0;
         let mouseY = 0;
         let mouseAnimFrame = null;
         const updateMouseParallax = ()=>{
             if (!img || currentScrollY > window.innerHeight * 0.2) return;
-            const moveX = mouseX * 2; // 2px max movement
+            const moveX = mouseX * 2;
             const moveY = mouseY * 2;
             img.style.transform = `scale(1.04) translate(${moveX}px, ${moveY}px)`;
             mouseAnimFrame = null;
@@ -1564,7 +1562,6 @@ function Home() {
             if (currentScrollY > window.innerHeight * 0.2) return;
             const { clientX, clientY } = e;
             const { innerWidth, innerHeight } = window;
-            // Calculate movement range (-1 to 1)
             const xPercent = (clientX / innerWidth - 0.5) * 2;
             const yPercent = (clientY / innerHeight - 0.5) * 2;
             mouseX = xPercent;
@@ -1573,19 +1570,15 @@ function Home() {
                 mouseAnimFrame = requestAnimationFrame(updateMouseParallax);
             }
         };
-        // Scroll parallax with RAF for smooth updates
         const updateScrollParallax = ()=>{
             if (!img) {
                 ticking = false;
                 return;
             }
             if (currentScrollY > window.innerHeight * 0.2) {
-                // After scrolling past 20% of viewport, use scroll parallax only
-                // Reduced multiplier from 0.18 to 0.12 for smoother effect
                 const translateY = currentScrollY * 0.12;
                 img.style.transform = `scale(1.04) translateY(${translateY}px)`;
             } else {
-                // Reset to center when at top
                 img.style.transform = `scale(1.04) translate(0px, 0px)`;
             }
             ticking = false;
@@ -1606,9 +1599,7 @@ function Home() {
         return ()=>{
             window.removeEventListener("mousemove", onMouseMove);
             window.removeEventListener("scroll", onScroll);
-            if (mouseAnimFrame) {
-                cancelAnimationFrame(mouseAnimFrame);
-            }
+            if (mouseAnimFrame) cancelAnimationFrame(mouseAnimFrame);
         };
     }, []);
     // Horizontal drag gallery with custom cursor
@@ -1646,7 +1637,7 @@ function Home() {
         };
         let hasDragged = false;
         const onPointerDown = (e)=>{
-            e.preventDefault(); // Prevent browser link preview/tooltip and drag behaviors
+            e.preventDefault();
             isDown = true;
             hasDragged = false;
             if (anim) anim.kill();
@@ -1656,13 +1647,10 @@ function Home() {
             lastTime = performance.now();
             velocity = 0;
             viewport.classList.add('dragging');
-            // Capture pointer for reliable drag tracking
             if (viewport.setPointerCapture) {
                 try {
                     viewport.setPointerCapture(e.pointerId);
-                } catch (err) {
-                    console.warn('Pointer capture failed:', err);
-                }
+                } catch (err) {}
             }
         };
         const onPointerMove = (e)=>{
@@ -1701,27 +1689,17 @@ function Home() {
             if (!isDown) return;
             isDown = false;
             viewport.classList.remove('dragging');
-            // Release pointer capture
             if (viewport.releasePointerCapture && e.pointerId != null) {
                 try {
                     viewport.releasePointerCapture(e.pointerId);
-                } catch (err) {
-                    console.warn('Pointer release failed:', err);
-                }
+                } catch (err) {}
             }
             if (hasDragged) {
                 finishInertia();
             } else {
-                // Programmatically trigger a click if it was just a tap (not a drag)
-                // We do this because e.preventDefault() in pointerdown blocks native clicks
-                // We find the closest anchor tag that was tapped
                 const targetLink = e.target.closest('a');
-                if (targetLink && targetLink.href) {
-                    // Trigger navigation programmatically
-                    targetLink.click();
-                }
+                if (targetLink && targetLink.href) targetLink.click();
             }
-            // Always re-check hovering state after drag ends
             const rect = viewport.getBoundingClientRect();
             if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
                 viewport.classList.add('hovering');
@@ -1729,14 +1707,12 @@ function Home() {
                 viewport.classList.remove('hovering');
             }
         };
-        // Prevent link navigation when dragging
         const onLinkClick = (e)=>{
             if (hasDragged) {
                 e.preventDefault();
                 e.stopPropagation();
             }
         };
-        // Custom cursor tracking
         const handleMouseMove = (e)=>{
             const rect = viewport.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width * 100;
@@ -1744,23 +1720,14 @@ function Home() {
             viewport.style.setProperty("--cursor-x", `${x}%`);
             viewport.style.setProperty("--cursor-y", `${y}%`);
         };
-        const handleMouseEnter = ()=>{
-            viewport.classList.add('hovering');
-        };
-        const handleMouseLeave = ()=>{
-            viewport.classList.remove('hovering');
-        };
-        // Prevent context menu and long touches that might trigger browser UI
+        const handleMouseEnter = ()=>viewport.classList.add('hovering');
+        const handleMouseLeave = ()=>viewport.classList.remove('hovering');
         const handleContextMenu = (e)=>{
             e.preventDefault();
             return false;
         };
-        // Attach click handlers to all project links
         const links = track.querySelectorAll('.proj-thumb');
-        links.forEach((link)=>{
-            link.addEventListener('click', onLinkClick, true);
-        });
-        // Add all event listeners
+        links.forEach((link)=>link.addEventListener('click', onLinkClick, true));
         viewport.addEventListener("pointerdown", onPointerDown);
         viewport.addEventListener("pointermove", onPointerMove);
         viewport.addEventListener("pointerup", onPointerUp);
@@ -1769,15 +1736,12 @@ function Home() {
         viewport.addEventListener('mouseenter', handleMouseEnter);
         viewport.addEventListener('mouseleave', handleMouseLeave);
         viewport.addEventListener('contextmenu', handleContextMenu);
-        viewport.addEventListener('selectstart', handleContextMenu); // Prevent text selection UI
+        viewport.addEventListener('selectstart', handleContextMenu);
         return ()=>{
             if (anim) anim.kill();
             isDown = false;
             viewport.classList.remove('dragging');
-            // Remove link click handlers
-            links.forEach((link)=>{
-                link.removeEventListener('click', onLinkClick, true);
-            });
+            links.forEach((link)=>link.removeEventListener('click', onLinkClick, true));
             viewport.removeEventListener("pointerdown", onPointerDown);
             viewport.removeEventListener("pointermove", onPointerMove);
             viewport.removeEventListener("pointerup", onPointerUp);
@@ -1791,6 +1755,58 @@ function Home() {
     }, [
         portfolio
     ]);
+    // ── Scroll-triggered animations via IntersectionObserver ──────────────────
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        // Animate elements with .reveal class when they enter viewport
+        const revealEls = document.querySelectorAll('.reveal');
+        if (!revealEls.length) return;
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach((entry)=>{
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        revealEls.forEach((el)=>observer.observe(el));
+        return ()=>observer.disconnect();
+    }, []);
+    // ── Stat counter animation ────────────────────────────────────────────────
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const counters = document.querySelectorAll('.stat-number[data-target]');
+        if (!counters.length) return;
+        const animateCounter = (el)=>{
+            const target = parseInt(el.getAttribute('data-target'), 10);
+            const suffix = el.getAttribute('data-suffix') || '';
+            const duration = 1800;
+            const start = performance.now();
+            const update = (now)=>{
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = current + suffix;
+                if (progress < 1) requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
+        };
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach((entry)=>{
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+        counters.forEach((el)=>observer.observe(el));
+        return ()=>observer.disconnect();
+    }, []);
     const featured = portfolio || [];
     const scrollToProjects = ()=>{
         const projectsSection = document.querySelector('.projects-strip');
@@ -1805,7 +1821,7 @@ function Home() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$Header$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 324,
+                lineNumber: 311,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1823,14 +1839,14 @@ function Home() {
                         priority: true
                     }, void 0, false, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 327,
+                        lineNumber: 314,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "hero-shade"
                     }, void 0, false, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 335,
+                        lineNumber: 322,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1841,7 +1857,7 @@ function Home() {
                                 children: "EDRA Arsitek— Jakarta, Indonesia"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 337,
+                                lineNumber: 324,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1852,13 +1868,13 @@ function Home() {
                                 children: "Est. 1999"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 338,
+                                lineNumber: 325,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 336,
+                        lineNumber: 323,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1871,7 +1887,7 @@ function Home() {
                                 children: "Scroll Down"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 345,
+                                lineNumber: 332,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1889,29 +1905,29 @@ function Home() {
                                         strokeLinejoin: "round"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 348,
+                                        lineNumber: 335,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 347,
+                                    lineNumber: 334,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 346,
+                                lineNumber: 333,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 340,
+                        lineNumber: 327,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 326,
+                lineNumber: 313,
                 columnNumber: 13
             }, this),
             featured.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1933,14 +1949,14 @@ function Home() {
                                     draggable: "false"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 366,
+                                    lineNumber: 353,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "proj-thumb-overlay"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 367,
+                                    lineNumber: 354,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1951,7 +1967,7 @@ function Home() {
                                             children: p.title
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 369,
+                                            lineNumber: 356,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1959,29 +1975,29 @@ function Home() {
                                             children: "VIEW MORE"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 370,
+                                            lineNumber: 357,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 368,
+                                    lineNumber: 355,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, p.id, true, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 359,
+                            lineNumber: 346,
                             columnNumber: 29
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/client/app/page.jsx",
-                    lineNumber: 357,
+                    lineNumber: 344,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 356,
+                lineNumber: 343,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1990,30 +2006,33 @@ function Home() {
                     className: "container",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "statement-main",
+                            className: "statement-main reveal reveal-up",
                             children: "Innovative & Inspiring Design Solutions"
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 381,
+                            lineNumber: 368,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "statement-sub",
+                            className: "statement-sub reveal reveal-up",
+                            style: {
+                                transitionDelay: '0.15s'
+                            },
                             children: "We Plan, Design Projects and Coordinate Construction for You"
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 384,
+                            lineNumber: 371,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/client/app/page.jsx",
-                    lineNumber: 380,
+                    lineNumber: 367,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 379,
+                lineNumber: 366,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2027,15 +2046,18 @@ function Home() {
                                 className: "home-about-content-inner",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "home-about-eyebrow",
+                                        className: "home-about-eyebrow reveal reveal-left",
                                         children: "About EDRA"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 396,
+                                        lineNumber: 383,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: "home-about-title",
+                                        className: "home-about-title reveal reveal-up",
+                                        style: {
+                                            transitionDelay: '0.1s'
+                                        },
                                         children: [
                                             "SHAPING INDONESIA'S",
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2043,162 +2065,105 @@ function Home() {
                                                 children: "ARCHITECTURAL"
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 400,
+                                                lineNumber: 387,
                                                 columnNumber: 33
                                             }, this),
                                             "LANDSCAPE"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 398,
+                                        lineNumber: 385,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "home-about-lead",
+                                        className: "home-about-lead reveal reveal-up",
+                                        style: {
+                                            transitionDelay: '0.2s'
+                                        },
                                         children: "Since 1999, PT. EDRA Arsitek Indonesia has been at the forefront of architectural innovation, delivering projects that define spaces and inspire communities."
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 404,
+                                        lineNumber: 391,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "home-about-principles",
                                         children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "principle-item",
+                                            {
+                                                num: "01",
+                                                title: "Design Excellence",
+                                                desc: "Every project reflects our commitment to exceptional design and precision"
+                                            },
+                                            {
+                                                num: "02",
+                                                title: "Sustainable Innovation",
+                                                desc: "Integrating environmental consciousness with cutting-edge solutions"
+                                            },
+                                            {
+                                                num: "03",
+                                                title: "Client Partnership",
+                                                desc: "Collaborative approach ensuring vision becomes reality"
+                                            }
+                                        ].map((p, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "principle-item reveal reveal-up",
+                                                style: {
+                                                    transitionDelay: `${0.1 * i + 0.3}s`
+                                                },
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "principle-icon",
-                                                        children: "01"
+                                                        children: p.num
                                                     }, void 0, false, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 412,
-                                                        columnNumber: 37
+                                                        lineNumber: 404,
+                                                        columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "principle-text",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                children: "Design Excellence"
+                                                                children: p.title
                                                             }, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 414,
-                                                                columnNumber: 41
+                                                                lineNumber: 406,
+                                                                columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                children: "Every project reflects our commitment to exceptional design and precision"
+                                                                children: p.desc
                                                             }, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 415,
-                                                                columnNumber: 41
+                                                                lineNumber: 407,
+                                                                columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 413,
-                                                        columnNumber: 37
+                                                        lineNumber: 405,
+                                                        columnNumber: 41
                                                     }, this)
                                                 ]
-                                            }, void 0, true, {
+                                            }, p.num, true, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 411,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "principle-item",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "principle-icon",
-                                                        children: "02"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 419,
-                                                        columnNumber: 37
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "principle-text",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                children: "Sustainable Innovation"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 421,
-                                                                columnNumber: 41
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                children: "Integrating environmental consciousness with cutting-edge solutions"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 422,
-                                                                columnNumber: 41
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 420,
-                                                        columnNumber: 37
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 418,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "principle-item",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "principle-icon",
-                                                        children: "03"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 426,
-                                                        columnNumber: 37
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "principle-text",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                children: "Client Partnership"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 428,
-                                                                columnNumber: 41
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                children: "Collaborative approach ensuring vision becomes reality"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 429,
-                                                                columnNumber: 41
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 427,
-                                                        columnNumber: 37
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 425,
-                                                columnNumber: 33
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
+                                                lineNumber: 403,
+                                                columnNumber: 37
+                                            }, this))
+                                    }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 410,
+                                        lineNumber: 397,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/about",
-                                        className: "home-about-cta",
+                                        className: "home-about-cta reveal reveal-up",
+                                        style: {
+                                            transitionDelay: '0.6s'
+                                        },
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "Explore Our Story"
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 435,
+                                                lineNumber: 414,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -2214,33 +2179,33 @@ function Home() {
                                                     strokeLinejoin: "round"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/page.jsx",
-                                                    lineNumber: 437,
+                                                    lineNumber: 416,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 436,
+                                                lineNumber: 415,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 434,
+                                        lineNumber: 413,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 395,
+                                lineNumber: 382,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 394,
+                            lineNumber: 381,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "home-about-visual",
+                            className: "home-about-visual reveal reveal-right",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "home-about-image-wrapper",
@@ -2255,20 +2220,20 @@ function Home() {
                                             }
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 446,
+                                            lineNumber: 425,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "home-about-overlay"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 453,
+                                            lineNumber: 432,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 445,
+                                    lineNumber: 424,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2281,10 +2246,12 @@ function Home() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "stat-number",
+                                                        "data-target": "25",
+                                                        "data-suffix": "+",
                                                         children: "25+"
                                                     }, void 0, false, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 459,
+                                                        lineNumber: 438,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2293,20 +2260,20 @@ function Home() {
                                                             "Years",
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 460,
+                                                                lineNumber: 439,
                                                                 columnNumber: 70
                                                             }, this),
                                                             "Experience"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 460,
+                                                        lineNumber: 439,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 458,
+                                                lineNumber: 437,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2314,10 +2281,12 @@ function Home() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "stat-number",
+                                                        "data-target": "200",
+                                                        "data-suffix": "+",
                                                         children: "200+"
                                                     }, void 0, false, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 463,
+                                                        lineNumber: 442,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2326,20 +2295,20 @@ function Home() {
                                                             "Completed",
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 464,
+                                                                lineNumber: 443,
                                                                 columnNumber: 74
                                                             }, this),
                                                             "Projects"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 464,
+                                                        lineNumber: 443,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 462,
+                                                lineNumber: 441,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2347,10 +2316,12 @@ function Home() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "stat-number",
+                                                        "data-target": "50",
+                                                        "data-suffix": "+",
                                                         children: "50+"
                                                     }, void 0, false, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 467,
+                                                        lineNumber: 446,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2359,20 +2330,20 @@ function Home() {
                                                             "Expert",
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 468,
+                                                                lineNumber: 447,
                                                                 columnNumber: 71
                                                             }, this),
                                                             "Team Members"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 468,
+                                                        lineNumber: 447,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 466,
+                                                lineNumber: 445,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2380,10 +2351,12 @@ function Home() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "stat-number",
+                                                        "data-target": "15",
+                                                        "data-suffix": "+",
                                                         children: "15+"
                                                     }, void 0, false, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 471,
+                                                        lineNumber: 450,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2392,48 +2365,48 @@ function Home() {
                                                             "Industry",
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                 fileName: "[project]/client/app/page.jsx",
-                                                                lineNumber: 472,
+                                                                lineNumber: 451,
                                                                 columnNumber: 73
                                                             }, this),
                                                             "Awards"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/client/app/page.jsx",
-                                                        lineNumber: 472,
+                                                        lineNumber: 451,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 470,
+                                                lineNumber: 449,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 457,
+                                        lineNumber: 436,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 456,
+                                    lineNumber: 435,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 444,
+                            lineNumber: 423,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/client/app/page.jsx",
-                    lineNumber: 392,
+                    lineNumber: 379,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 391,
+                lineNumber: 378,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2442,11 +2415,11 @@ function Home() {
                     className: "container",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "section-title",
+                            className: "section-title reveal reveal-up",
                             children: "Our Services"
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 483,
+                            lineNumber: 462,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2467,8 +2440,11 @@ function Home() {
                                     id: 3,
                                     description: "Strong construction project management with outstanding implementation and flawless delivery on time and budget."
                                 }
-                            ].map((service)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "home-service-card",
+                            ].map((service, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "home-service-card reveal reveal-up",
+                                    style: {
+                                        transitionDelay: `${i * 0.15}s`
+                                    },
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "home-service-content",
                                         children: [
@@ -2477,7 +2453,7 @@ function Home() {
                                                 children: service.title
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 504,
+                                                lineNumber: 483,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2485,27 +2461,30 @@ function Home() {
                                                 children: service.description
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/page.jsx",
-                                                lineNumber: 505,
+                                                lineNumber: 484,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 503,
+                                        lineNumber: 482,
                                         columnNumber: 33
                                     }, this)
                                 }, service.id, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 502,
+                                    lineNumber: 481,
                                     columnNumber: 29
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 484,
+                            lineNumber: 463,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "home-services-button-wrapper",
+                            className: "home-services-button-wrapper reveal reveal-up",
+                            style: {
+                                transitionDelay: '0.45s'
+                            },
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/services",
                                 className: "liquid-glass-button",
@@ -2514,7 +2493,7 @@ function Home() {
                                         children: "View All Services"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 512,
+                                        lineNumber: 491,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -2531,38 +2510,38 @@ function Home() {
                                             strokeLinejoin: "round"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 514,
+                                            lineNumber: 493,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 513,
+                                        lineNumber: 492,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 511,
+                                lineNumber: 490,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/client/app/page.jsx",
-                            lineNumber: 510,
+                            lineNumber: 489,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/client/app/page.jsx",
-                    lineNumber: 482,
+                    lineNumber: 461,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 481,
+                lineNumber: 460,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-                className: "clients-carousel-section",
+                className: "clients-carousel-section reveal reveal-up",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "clients-carousel-wrapper",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2663,27 +2642,27 @@ function Home() {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/page.jsx",
-                                    lineNumber: 555,
+                                    lineNumber: 534,
                                     columnNumber: 37
                                 }, this)
                             }, index, false, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 554,
+                                lineNumber: 533,
                                 columnNumber: 33
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 524,
+                        lineNumber: 503,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/client/app/page.jsx",
-                    lineNumber: 523,
+                    lineNumber: 502,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 522,
+                lineNumber: 501,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2694,11 +2673,11 @@ function Home() {
                         children: "LET'S TALK"
                     }, void 0, false, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 564,
+                        lineNumber: 543,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "project-cta-content",
+                        className: "project-cta-content reveal reveal-up",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                 className: "project-cta-title",
@@ -2706,14 +2685,14 @@ function Home() {
                                     "ABOUT",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 567,
+                                        lineNumber: 546,
                                         columnNumber: 30
                                     }, this),
                                     "YOUR PROJECT!"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 566,
+                                lineNumber: 545,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2735,35 +2714,35 @@ function Home() {
                                             strokeLinejoin: "round"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/page.jsx",
-                                            lineNumber: 572,
+                                            lineNumber: 551,
                                             columnNumber: 29
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/page.jsx",
-                                        lineNumber: 571,
+                                        lineNumber: 550,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/page.jsx",
-                                lineNumber: 569,
+                                lineNumber: 548,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/page.jsx",
-                        lineNumber: 565,
+                        lineNumber: 544,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 563,
+                lineNumber: 542,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$Footer$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/client/app/page.jsx",
-                lineNumber: 577,
+                lineNumber: 556,
                 columnNumber: 13
             }, this)
         ]

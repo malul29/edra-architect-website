@@ -35,6 +35,9 @@ export default function DashboardPage() {
         setActiveTab(newTab);
         setShowForm(false);
         setEditingItem(null);
+        // Scroll dashboard main back to top
+        const main = document.querySelector(".dashboard-main");
+        if (main) main.scrollTop = 0;
     };
 
     return (
@@ -60,12 +63,22 @@ export default function DashboardPage() {
                         <span>📝</span> Blog Articles
                     </button>
                     <button
+                        className={`sidebar-nav-item ${activeTab === "services" ? "active" : ""}`}
+                        onClick={() => handleTabChange("services")}
+                    >
+                        <span>🏛️</span> Services
+                    </button>
+                    <button
                         className={`sidebar-nav-item ${activeTab === "settings" ? "active" : ""}`}
                         onClick={() => handleTabChange("settings")}
                     >
                         <span>⚙️</span> Settings
                     </button>
                 </nav>
+
+                <a href="/" target="_blank" rel="noopener noreferrer" className="sidebar-view-site">
+                    <span>🌐</span> View Site
+                </a>
 
                 <button className="sidebar-logout" onClick={handleLogout}>
                     <span>🚪</span> Logout
@@ -79,16 +92,18 @@ export default function DashboardPage() {
                         <h1 className="dashboard-title">
                             {activeTab === "projects" && "Manage Projects"}
                             {activeTab === "blogs" && "Manage Blog Articles"}
+                            {activeTab === "services" && "Manage Services"}
                             {activeTab === "settings" && "Settings"}
                         </h1>
                         <p className="dashboard-subtitle">
                             {activeTab === "projects" && "Add, edit, or remove portfolio projects"}
                             {activeTab === "blogs" && "Create and manage blog articles"}
+                            {activeTab === "services" && "Update your service offerings"}
                             {activeTab === "settings" && "Configure dashboard settings"}
                         </p>
                     </div>
 
-                    {(activeTab === "projects" || activeTab === "blogs") && (
+                    {(activeTab === "projects" || activeTab === "blogs" || activeTab === "services") && (
                         <button className="btn-add-new" onClick={() => setShowForm(true)}>
                             + Add New
                         </button>
@@ -114,6 +129,15 @@ export default function DashboardPage() {
                             setHasUnsavedChanges={setHasUnsavedChanges}
                         />
                     )}
+                    {activeTab === "services" && (
+                        <ServicesManager
+                            showForm={showForm}
+                            setShowForm={setShowForm}
+                            editingItem={editingItem}
+                            setEditingItem={setEditingItem}
+                            setHasUnsavedChanges={setHasUnsavedChanges}
+                        />
+                    )}
                     {activeTab === "settings" && <SettingsPanel />}
                 </div>
             </main>
@@ -121,9 +145,23 @@ export default function DashboardPage() {
     );
 }
 
-// Projects Manager Component
+// ── Skeleton Loader ──────────────────────────────────────────────────────────
+function SkeletonCard() {
+    return (
+        <div className="item-card skeleton-card">
+            <div className="skeleton skeleton-image" />
+            <div className="item-content">
+                <div className="skeleton skeleton-title" />
+                <div className="skeleton skeleton-meta" />
+                <div className="skeleton skeleton-badge" />
+            </div>
+        </div>
+    );
+}
+
+// ── Projects Manager ─────────────────────────────────────────────────────────
 function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
-    const { data: projects, refetch } = useApi("/portfolio");
+    const { data: projects, loading, refetch } = useApi("/portfolio");
     const [formData, setFormData] = useState({
         title: "",
         location: "",
@@ -355,11 +393,21 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
         );
     }
 
+    if (loading) {
+        return (
+            <div className="items-list">
+                <div className="items-grid">
+                    {[1, 2, 3, 4, 5, 6].map(i => <SkeletonCard key={i} />)}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="items-list">
             {projects?.length === 0 ? (
                 <div className="empty-state">
-                    <p>No projects yet. Click "Add New" to create your first project.</p>
+                    <p>No projects yet. Click &quot;Add New&quot; to create your first project.</p>
                 </div>
             ) : (
                 <div className="items-grid">
@@ -372,6 +420,14 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                 <span className="item-badge">{project.category}</span>
                             </div>
                             <div className="item-actions">
+                                <a
+                                    href={`/project/${project.id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-view"
+                                >
+                                    View
+                                </a>
                                 <button
                                     className="btn-edit"
                                     onClick={() => setEditingItem(project)}
@@ -393,9 +449,9 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
     );
 }
 
-// Blogs Manager Component
+// ── Blogs Manager ─────────────────────────────────────────────────────────────
 function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
-    const { data: blogs, refetch } = useApi("/blogs");
+    const { data: blogs, loading, refetch } = useApi("/blogs");
     const [formData, setFormData] = useState({
         title: "",
         subtitle: "",
@@ -615,11 +671,21 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
         );
     }
 
+    if (loading) {
+        return (
+            <div className="items-list">
+                <div className="items-grid">
+                    {[1, 2, 3, 4].map(i => <SkeletonCard key={i} />)}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="items-list">
             {blogs?.length === 0 ? (
                 <div className="empty-state">
-                    <p>No articles yet. Click "Add New" to write your first article.</p>
+                    <p>No articles yet. Click &quot;Add New&quot; to write your first article.</p>
                 </div>
             ) : (
                 <div className="items-grid">
@@ -633,6 +699,14 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                 <p className="item-excerpt">{blog.excerpt}</p>
                             </div>
                             <div className="item-actions">
+                                <a
+                                    href={`/blog/${blog.id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-view"
+                                >
+                                    View
+                                </a>
                                 <button
                                     className="btn-edit"
                                     onClick={() => setEditingItem(blog)}
@@ -654,7 +728,182 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
     );
 }
 
-// Settings Panel
+// ── Services Manager ──────────────────────────────────────────────────────────
+function ServicesManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
+    const { data: services, loading, refetch } = useApi("/services");
+    const [formData, setFormData] = useState({
+        title: "",
+        subtitle: "",
+        description: "",
+        image: "",
+        icon: "01",
+    });
+
+    useEffect(() => {
+        if (editingItem) {
+            setFormData(editingItem);
+            setShowForm(true);
+        }
+    }, [editingItem, setShowForm]);
+
+    const handleInputChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+        setHasUnsavedChanges(true);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            if (editingItem) {
+                await apiPut("/services", editingItem.id, formData);
+            } else {
+                await apiPost("/services", formData);
+            }
+            setFormData({ title: "", subtitle: "", description: "", image: "", icon: "01" });
+            setShowForm(false);
+            setEditingItem(null);
+            setHasUnsavedChanges(false);
+            refetch();
+        } catch (error) {
+            alert("Error saving service: " + error.message);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Delete this service?")) return;
+        try {
+            await apiDelete("/services", id);
+            refetch();
+        } catch (error) {
+            alert("Error deleting service");
+        }
+    };
+
+    const handleCancel = () => {
+        setShowForm(false);
+        setEditingItem(null);
+        setFormData({ title: "", subtitle: "", description: "", image: "", icon: "01" });
+        setHasUnsavedChanges(false);
+    };
+
+    if (showForm) {
+        return (
+            <div className="form-panel">
+                <h3>{editingItem ? "Edit Service" : "Add New Service"}</h3>
+                <form onSubmit={handleSubmit} className="dashboard-form">
+                    <div className="form-grid">
+                        <div className="form-group">
+                            <label>Service Title *</label>
+                            <input
+                                type="text"
+                                value={formData.title}
+                                onChange={(e) => handleInputChange("title", e.target.value)}
+                                placeholder="e.g., Architecture Design"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Subtitle</label>
+                            <input
+                                type="text"
+                                value={formData.subtitle || ""}
+                                onChange={(e) => handleInputChange("subtitle", e.target.value)}
+                                placeholder="e.g., From concept to technical"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Description *</label>
+                        <textarea
+                            value={formData.description}
+                            onChange={(e) => handleInputChange("description", e.target.value)}
+                            placeholder="Describe this service..."
+                            rows="4"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Image URL</label>
+                        <input
+                            type="url"
+                            value={formData.image || ""}
+                            onChange={(e) => handleInputChange("image", e.target.value)}
+                            placeholder="https://..."
+                            className="url-input"
+                        />
+                        {formData.image && (
+                            <div className="image-preview">
+                                <img src={formData.image} alt="Preview" />
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="form-actions">
+                        <button type="button" className="btn-secondary" onClick={handleCancel}>
+                            Cancel
+                        </button>
+                        <button type="submit" className="btn-primary">
+                            {editingItem ? "Update Service" : "Add Service"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div className="items-list">
+                <div className="items-grid">
+                    {[1, 2, 3, 4].map(i => <SkeletonCard key={i} />)}
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="items-list">
+            {services?.length === 0 ? (
+                <div className="empty-state">
+                    <p>No services yet. Click &quot;Add New&quot; to add your first service.</p>
+                </div>
+            ) : (
+                <div className="items-grid">
+                    {services?.map((service) => (
+                        <div key={service.id} className="item-card">
+                            {service.image && (
+                                <img src={service.image} alt={service.title} className="item-image" />
+                            )}
+                            <div className="item-content">
+                                <h4>{service.title}</h4>
+                                {service.subtitle && <p className="item-meta">{service.subtitle}</p>}
+                                <p className="item-excerpt">{service.description}</p>
+                            </div>
+                            <div className="item-actions">
+                                <button
+                                    className="btn-edit"
+                                    onClick={() => setEditingItem(service)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className="btn-delete"
+                                    onClick={() => handleDelete(service.id)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ── Settings Panel ────────────────────────────────────────────────────────────
 function SettingsPanel() {
     return (
         <div className="settings-panel">
@@ -665,16 +914,22 @@ function SettingsPanel() {
             </div>
 
             <div className="settings-section">
-                <h3>Default Credentials</h3>
-                <p>Username: <code>admin</code></p>
-                <p>Password: <code>edra2024</code></p>
-                <p className="settings-note">⚠️ Change these credentials in production</p>
-            </div>
-
-            <div className="settings-section">
                 <h3>System Info</h3>
                 <p>Version: 1.0.0</p>
                 <p>Last Updated: Feb 2026</p>
+            </div>
+
+            <div className="settings-section">
+                <h3>Quick Links</h3>
+                <a href="/" target="_blank" rel="noopener noreferrer" className="settings-link">
+                    → View Live Site
+                </a>
+                <a href="/projects" target="_blank" rel="noopener noreferrer" className="settings-link">
+                    → View Projects Page
+                </a>
+                <a href="/blogs" target="_blank" rel="noopener noreferrer" className="settings-link">
+                    → View Blog Page
+                </a>
             </div>
         </div>
     );

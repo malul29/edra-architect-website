@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-const WORDS = ["Merancang", "Ruang,", "Membentuk", "Kehidupan."];
+const WORDS = ["Design.", "Build.", "Inspire."];
 
 export default function IntroAnimation({ onComplete }) {
     const [mounted, setMounted] = useState(true);

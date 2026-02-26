@@ -61,28 +61,9 @@ export default function LoginPage() {
                         </button>
                     </form>
 
-                    {/* Development Credentials - Remove in Production */}
-                    <div style={{
-                        marginTop: '2rem',
-                        padding: '1rem',
-                        background: 'rgba(52, 199, 89, 0.1)',
-                        border: '1px solid rgba(52, 199, 89, 0.3)',
-                        borderRadius: '8px',
-                        fontSize: '0.85rem',
-                        color: 'rgba(255,255,255,0.7)',
-                        textAlign: 'left'
-                    }}>
-                        <strong style={{ color: '#34c759', display: 'block', marginBottom: '0.5rem' }}>
-                            🔐 Development Access
-                        </strong>
-                        <div style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
-                            Username: <strong style={{ color: '#fff' }}>admin</strong><br />
-                            Password: <strong style={{ color: '#fff' }}>edra2024</strong>
-                        </div>
-                    </div>
 
                     <p className="login-footer">
-                        EDRA Arsitek Indonesia © 2024
+                        EDRA Arsitek Indonesia © 2026
                     </p>
                 </div>
             </div>

@@ -33,16 +33,36 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/client/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 ;
 const BASE = "/api";
+// Module-level in-memory cache: persists across component mounts for the session
+const _cache = new Map(); // endpoint → data
+const _pending = new Map(); // endpoint → Promise (dedup concurrent requests)
 function useApi(endpoint) {
-    const [data, setData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [data, setData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(_cache.get(endpoint) ?? []);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(!_cache.has(endpoint));
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const fetchData = ()=>{
+    const fetchData = (force = false)=>{
+        if (!force && _cache.has(endpoint)) {
+            setData(_cache.get(endpoint));
+            setLoading(false);
+            return;
+        }
         setLoading(true);
-        fetch(`${BASE}${endpoint}`).then((r)=>{
-            if (!r.ok) throw new Error(r.statusText);
-            return r.json();
-        }).then((d)=>{
+        // Reuse in-flight request for same endpoint
+        if (!_pending.has(endpoint)) {
+            const promise = fetch(`${BASE}${endpoint}`).then((r)=>{
+                if (!r.ok) throw new Error(r.statusText);
+                return r.json();
+            }).then((d)=>{
+                _cache.set(endpoint, d);
+                _pending.delete(endpoint);
+                return d;
+            }).catch((e)=>{
+                _pending.delete(endpoint);
+                throw e;
+            });
+            _pending.set(endpoint, promise);
+        }
+        _pending.get(endpoint).then((d)=>{
             setData(d);
             setLoading(false);
         }).catch((e)=>{
@@ -55,11 +75,16 @@ function useApi(endpoint) {
     }, [
         endpoint
     ]);
+    // refetch clears cache entry and forces a fresh fetch
+    const refetch = ()=>{
+        _cache.delete(endpoint);
+        fetchData(true);
+    };
     return {
         data,
         loading,
         error,
-        refetch: fetchData
+        refetch
     };
 }
 async function apiPost(endpoint, body) {
@@ -71,6 +96,8 @@ async function apiPost(endpoint, body) {
         body: JSON.stringify(body)
     });
     if (!res.ok) throw new Error(await res.text());
+    // Invalidate cache for this endpoint
+    _cache.delete(endpoint);
     return res.json();
 }
 async function apiDelete(endpoint, id) {
@@ -78,6 +105,8 @@ async function apiDelete(endpoint, id) {
         method: "DELETE"
     });
     if (!res.ok) throw new Error(await res.text());
+    // Invalidate cache
+    _cache.delete(endpoint);
     return res.json();
 }
 async function apiPut(endpoint, id, body) {
@@ -89,6 +118,8 @@ async function apiPut(endpoint, id, body) {
         body: JSON.stringify(body)
     });
     if (!res.ok) throw new Error(await res.text());
+    // Invalidate cache
+    _cache.delete(endpoint);
     return res.json();
 }
 }),
@@ -1536,28 +1567,8 @@ function Footer() {
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        children: [
-                                                            "Rose Garden, Blok RRG 1 No. 053",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                                                fileName: "[project]/client/components/Footer.jsx",
-                                                                lineNumber: 83,
-                                                                columnNumber: 53
-                                                            }, this),
-                                                            "Grand Galaxy City, Jaka Setia",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                                                fileName: "[project]/client/components/Footer.jsx",
-                                                                lineNumber: 83,
-                                                                columnNumber: 88
-                                                            }, this),
-                                                            "Bekasi Selatan, Kota Bekasi 17147",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                                                fileName: "[project]/client/components/Footer.jsx",
-                                                                lineNumber: 83,
-                                                                columnNumber: 127
-                                                            }, this),
-                                                            "Indonesia"
-                                                        ]
-                                                    }, void 0, true, {
+                                                        children: "Jakarta, Indonesia"
+                                                    }, void 0, false, {
                                                         fileName: "[project]/client/components/Footer.jsx",
                                                         lineNumber: 83,
                                                         columnNumber: 19

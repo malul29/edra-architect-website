@@ -20,10 +20,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$gs
 ;
 ;
 const WORDS = [
-    "Merancang",
-    "Ruang,",
-    "Membentuk",
-    "Kehidupan."
+    "Design.",
+    "Build.",
+    "Inspire."
 ];
 function IntroAnimation({ onComplete }) {
     const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
@@ -238,15 +237,60 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$Intr
 ;
 ;
 ;
+function useScrollReveal(enabled) {
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!enabled) return;
+        const SELECTOR = ".reveal:not(.revealed)";
+        const observe = (root)=>{
+            const els = root.querySelectorAll ? root.querySelectorAll(SELECTOR) : [];
+            els.forEach((el)=>io.observe(el));
+        };
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach((entry)=>{
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("revealed");
+                    io.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -40px 0px"
+        });
+        // Observe already-present elements
+        observe(document);
+        // Watch for elements added by client-side navigation
+        const mo = new MutationObserver((mutations)=>{
+            mutations.forEach((m)=>{
+                m.addedNodes.forEach((node)=>{
+                    if (node.nodeType === 1) {
+                        if (node.matches && node.matches(SELECTOR)) io.observe(node);
+                        observe(node);
+                    }
+                });
+            });
+        });
+        mo.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        return ()=>{
+            io.disconnect();
+            mo.disconnect();
+        };
+    }, [
+        enabled
+    ]);
+}
 function BodyWrapper({ children }) {
     const [introPlaying, setIntroPlaying] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    useScrollReveal(!introPlaying);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             introPlaying && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$IntroAnimation$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 onComplete: ()=>setIntroPlaying(false)
             }, void 0, false, {
                 fileName: "[project]/client/components/BodyWrapper.jsx",
-                lineNumber: 10,
+                lineNumber: 55,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -256,7 +300,7 @@ function BodyWrapper({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/client/components/BodyWrapper.jsx",
-                lineNumber: 12,
+                lineNumber: 57,
                 columnNumber: 13
             }, this)
         ]

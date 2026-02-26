@@ -482,7 +482,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$ne
 var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/client/hooks/useApi.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$RichTextEditor$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/client/components/RichTextEditor.jsx [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
@@ -520,6 +520,9 @@ function DashboardPage() {
         setActiveTab(newTab);
         setShowForm(false);
         setEditingItem(null);
+        // Scroll dashboard main back to top
+        const main = document.querySelector(".dashboard-main");
+        if (main) main.scrollTop = 0;
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "dashboard",
@@ -538,20 +541,20 @@ function DashboardPage() {
                                 height: 80
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 45,
+                                lineNumber: 48,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                 children: "CMS Dashboard"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 46,
+                                lineNumber: 49,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 44,
+                        lineNumber: 47,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -565,14 +568,14 @@ function DashboardPage() {
                                         children: "📁"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 54,
+                                        lineNumber: 57,
                                         columnNumber: 25
                                     }, this),
                                     " Projects"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 50,
+                                lineNumber: 53,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -583,14 +586,32 @@ function DashboardPage() {
                                         children: "📝"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 60,
+                                        lineNumber: 63,
                                         columnNumber: 25
                                     }, this),
                                     " Blog Articles"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 56,
+                                lineNumber: 59,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: `sidebar-nav-item ${activeTab === "services" ? "active" : ""}`,
+                                onClick: ()=>handleTabChange("services"),
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        children: "🏛️"
+                                    }, void 0, false, {
+                                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                        lineNumber: 69,
+                                        columnNumber: 25
+                                    }, this),
+                                    " Services"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                lineNumber: 65,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -601,20 +622,40 @@ function DashboardPage() {
                                         children: "⚙️"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 66,
+                                        lineNumber: 75,
                                         columnNumber: 25
                                     }, this),
                                     " Settings"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 62,
+                                lineNumber: 71,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 49,
+                        lineNumber: 52,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "sidebar-view-site",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: "🌐"
+                            }, void 0, false, {
+                                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                lineNumber: 80,
+                                columnNumber: 21
+                            }, this),
+                            " View Site"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 79,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -625,20 +666,20 @@ function DashboardPage() {
                                 children: "🚪"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 71,
+                                lineNumber: 84,
                                 columnNumber: 21
                             }, this),
                             " Logout"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 70,
+                        lineNumber: 83,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 43,
+                lineNumber: 46,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -654,11 +695,12 @@ function DashboardPage() {
                                         children: [
                                             activeTab === "projects" && "Manage Projects",
                                             activeTab === "blogs" && "Manage Blog Articles",
+                                            activeTab === "services" && "Manage Services",
                                             activeTab === "settings" && "Settings"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 79,
+                                        lineNumber: 92,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -666,32 +708,33 @@ function DashboardPage() {
                                         children: [
                                             activeTab === "projects" && "Add, edit, or remove portfolio projects",
                                             activeTab === "blogs" && "Create and manage blog articles",
+                                            activeTab === "services" && "Update your service offerings",
                                             activeTab === "settings" && "Configure dashboard settings"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 84,
+                                        lineNumber: 98,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 78,
+                                lineNumber: 91,
                                 columnNumber: 21
                             }, this),
-                            (activeTab === "projects" || activeTab === "blogs") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            (activeTab === "projects" || activeTab === "blogs" || activeTab === "services") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 className: "btn-add-new",
                                 onClick: ()=>setShowForm(true),
                                 children: "+ Add New"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 92,
+                                lineNumber: 107,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 77,
+                        lineNumber: 90,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -705,7 +748,7 @@ function DashboardPage() {
                                 setHasUnsavedChanges: setHasUnsavedChanges
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 100,
+                                lineNumber: 115,
                                 columnNumber: 25
                             }, this),
                             activeTab === "blogs" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BlogsManager, {
@@ -716,30 +759,41 @@ function DashboardPage() {
                                 setHasUnsavedChanges: setHasUnsavedChanges
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 109,
+                                lineNumber: 124,
+                                columnNumber: 25
+                            }, this),
+                            activeTab === "services" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ServicesManager, {
+                                showForm: showForm,
+                                setShowForm: setShowForm,
+                                editingItem: editingItem,
+                                setEditingItem: setEditingItem,
+                                setHasUnsavedChanges: setHasUnsavedChanges
+                            }, void 0, false, {
+                                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                lineNumber: 133,
                                 columnNumber: 25
                             }, this),
                             activeTab === "settings" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SettingsPanel, {}, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 117,
+                                lineNumber: 141,
                                 columnNumber: 50
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 98,
+                        lineNumber: 113,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 76,
+                lineNumber: 89,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-        lineNumber: 41,
+        lineNumber: 44,
         columnNumber: 9
     }, this);
 }
@@ -749,10 +803,60 @@ _s(DashboardPage, "dvBaoa81oXO0jI2zF5pgq0vhRs8=", false, function() {
     ];
 });
 _c = DashboardPage;
-// Projects Manager Component
+// ── Skeleton Loader ──────────────────────────────────────────────────────────
+function SkeletonCard() {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "item-card skeleton-card",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "skeleton skeleton-image"
+            }, void 0, false, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 152,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "item-content",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "skeleton skeleton-title"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 154,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "skeleton skeleton-meta"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 155,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "skeleton skeleton-badge"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 156,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 153,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+        lineNumber: 151,
+        columnNumber: 9
+    }, this);
+}
+_c1 = SkeletonCard;
+// ── Projects Manager ─────────────────────────────────────────────────────────
 function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
     _s1();
-    const { data: projects, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"])("/portfolio");
+    const { data: projects, loading, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"])("/portfolio");
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         title: "",
         location: "",
@@ -882,7 +986,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                     children: editingItem ? "Edit Project" : "Add New Project"
                 }, void 0, false, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 226,
+                    lineNumber: 264,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -899,7 +1003,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             children: "Project Title *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 230,
+                                            lineNumber: 268,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -910,13 +1014,13 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 231,
+                                            lineNumber: 269,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 229,
+                                    lineNumber: 267,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -926,7 +1030,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             children: "Location *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 241,
+                                            lineNumber: 279,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -937,13 +1041,13 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 242,
+                                            lineNumber: 280,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 240,
+                                    lineNumber: 278,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -953,7 +1057,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             children: "Category *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 252,
+                                            lineNumber: 290,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -966,7 +1070,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Select category"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 258,
+                                                    lineNumber: 296,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -974,7 +1078,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "High Rise"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 259,
+                                                    lineNumber: 297,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -982,7 +1086,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Mall"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 260,
+                                                    lineNumber: 298,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -990,7 +1094,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Residence"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 261,
+                                                    lineNumber: 299,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -998,7 +1102,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Private House"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 262,
+                                                    lineNumber: 300,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1006,7 +1110,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Office"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 263,
+                                                    lineNumber: 301,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1014,7 +1118,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Public Facility"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 264,
+                                                    lineNumber: 302,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1022,19 +1126,19 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "Interior"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 265,
+                                                    lineNumber: 303,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 253,
+                                            lineNumber: 291,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 251,
+                                    lineNumber: 289,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1044,7 +1148,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             children: "Year *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 270,
+                                            lineNumber: 308,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1055,19 +1159,19 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 271,
+                                            lineNumber: 309,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 269,
+                                    lineNumber: 307,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 228,
+                            lineNumber: 266,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1077,7 +1181,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Image *"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 282,
+                                    lineNumber: 320,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1090,7 +1194,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             className: "file-input"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 284,
+                                            lineNumber: 322,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1098,7 +1202,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             children: "OR"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 290,
+                                            lineNumber: 328,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1109,13 +1213,13 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                             className: "url-input"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 291,
+                                            lineNumber: 329,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 283,
+                                    lineNumber: 321,
                                     columnNumber: 25
                                 }, this),
                                 formData.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1125,18 +1229,18 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                         alt: "Preview"
                                     }, void 0, false, {
                                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                        lineNumber: 301,
+                                        lineNumber: 339,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 300,
+                                    lineNumber: 338,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 281,
+                            lineNumber: 319,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1146,7 +1250,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Description"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 307,
+                                    lineNumber: 345,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1156,13 +1260,13 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     rows: "4"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 308,
+                                    lineNumber: 346,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 306,
+                            lineNumber: 344,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1172,7 +1276,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Project Gallery"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 317,
+                                    lineNumber: 355,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1180,7 +1284,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Upload multiple images for the project gallery"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 318,
+                                    lineNumber: 356,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1191,7 +1295,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     className: "file-input"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 319,
+                                    lineNumber: 357,
                                     columnNumber: 25
                                 }, this),
                                 formData.gallery && formData.gallery.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1204,7 +1308,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     alt: `Gallery ${index + 1}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 330,
+                                                    lineNumber: 368,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1215,24 +1319,24 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                                     children: "×"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 331,
+                                                    lineNumber: 369,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 329,
+                                            lineNumber: 367,
                                             columnNumber: 37
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 327,
+                                    lineNumber: 365,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 316,
+                            lineNumber: 354,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1245,7 +1349,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 346,
+                                    lineNumber: 384,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1254,25 +1358,53 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: editingItem ? "Update Project" : "Add Project"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 349,
+                                    lineNumber: 387,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 345,
+                            lineNumber: 383,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 227,
+                    lineNumber: 265,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 225,
+            lineNumber: 263,
+            columnNumber: 13
+        }, this);
+    }
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "items-list",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "items-grid",
+                children: [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SkeletonCard, {}, i, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 400,
+                        columnNumber: 50
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 399,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 398,
             columnNumber: 13
         }, this);
     }
@@ -1284,12 +1416,12 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                 children: 'No projects yet. Click "Add New" to create your first project.'
             }, void 0, false, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 362,
+                lineNumber: 410,
                 columnNumber: 21
             }, this)
         }, void 0, false, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 361,
+            lineNumber: 409,
             columnNumber: 17
         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "items-grid",
@@ -1302,7 +1434,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                             className: "item-image"
                         }, void 0, false, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 368,
+                            lineNumber: 416,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1312,7 +1444,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: project.title
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 370,
+                                    lineNumber: 418,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1324,7 +1456,7 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 371,
+                                    lineNumber: 419,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1332,25 +1464,36 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: project.category
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 372,
+                                    lineNumber: 420,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 369,
+                            lineNumber: 417,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "item-actions",
                             children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                    href: `/project/${project.id}`,
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                    className: "btn-view",
+                                    children: "View"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 423,
+                                    columnNumber: 33
+                                }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     className: "btn-edit",
                                     onClick: ()=>setEditingItem(project),
                                     children: "Edit"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 375,
+                                    lineNumber: 431,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1359,42 +1502,42 @@ function ProjectsManager({ showForm, setShowForm, editingItem, setEditingItem, s
                                     children: "Delete"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 381,
+                                    lineNumber: 437,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 374,
+                            lineNumber: 422,
                             columnNumber: 29
                         }, this)
                     ]
                 }, project.id, true, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 367,
+                    lineNumber: 415,
                     columnNumber: 25
                 }, this))
         }, void 0, false, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 365,
+            lineNumber: 413,
             columnNumber: 17
         }, this)
     }, void 0, false, {
         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-        lineNumber: 359,
+        lineNumber: 407,
         columnNumber: 9
     }, this);
 }
-_s1(ProjectsManager, "H1VJtbRL66S1kRTUrlB0HyOpTYQ=", false, function() {
+_s1(ProjectsManager, "OnVwxlRMs1t8XXPaWLdl+DfrnCU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"]
     ];
 });
-_c1 = ProjectsManager;
-// Blogs Manager Component
+_c2 = ProjectsManager;
+// ── Blogs Manager ─────────────────────────────────────────────────────────────
 function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
     _s2();
-    const { data: blogs, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"])("/blogs");
+    const { data: blogs, loading, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"])("/blogs");
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         title: "",
         subtitle: "",
@@ -1498,7 +1641,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                     children: editingItem ? "Edit Article" : "Write New Article"
                 }, void 0, false, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 473,
+                    lineNumber: 529,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1513,7 +1656,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: "Basic Information"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 477,
+                                    lineNumber: 533,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1523,7 +1666,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             children: "Article Title *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 480,
+                                            lineNumber: 536,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1534,13 +1677,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 481,
+                                            lineNumber: 537,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 479,
+                                    lineNumber: 535,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1550,7 +1693,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             children: "Subtitle/Hero Description"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 491,
+                                            lineNumber: 547,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1560,13 +1703,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             rows: "2"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 492,
+                                            lineNumber: 548,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 490,
+                                    lineNumber: 546,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1579,7 +1722,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     children: "Published Date *"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 502,
+                                                    lineNumber: 558,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1590,13 +1733,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 503,
+                                                    lineNumber: 559,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 501,
+                                            lineNumber: 557,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1606,7 +1749,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     children: "Category *"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 513,
+                                                    lineNumber: 569,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1619,7 +1762,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Select category"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 519,
+                                                            lineNumber: 575,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1627,7 +1770,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Architecture"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 520,
+                                                            lineNumber: 576,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1635,7 +1778,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Interior"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 521,
+                                                            lineNumber: 577,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1643,7 +1786,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Construction"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 522,
+                                                            lineNumber: 578,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1651,7 +1794,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Design"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 523,
+                                                            lineNumber: 579,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1659,7 +1802,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Studio"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 524,
+                                                            lineNumber: 580,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1667,7 +1810,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Projects"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 525,
+                                                            lineNumber: 581,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1675,7 +1818,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Awards"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 526,
+                                                            lineNumber: 582,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1683,25 +1826,25 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                             children: "Press"
                                                         }, void 0, false, {
                                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                            lineNumber: 527,
+                                                            lineNumber: 583,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 514,
+                                                    lineNumber: 570,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 512,
+                                            lineNumber: 568,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 500,
+                                    lineNumber: 556,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1714,7 +1857,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     children: "Author Name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 534,
+                                                    lineNumber: 590,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1724,13 +1867,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     placeholder: "e.g., Arden Zwerlin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 535,
+                                                    lineNumber: 591,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 533,
+                                            lineNumber: 589,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1740,7 +1883,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     children: "Client Name(s)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 544,
+                                                    lineNumber: 600,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1750,19 +1893,19 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     placeholder: "e.g., Joshua Jacobs, Lillian Steele"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 545,
+                                                    lineNumber: 601,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 543,
+                                            lineNumber: 599,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 532,
+                                    lineNumber: 588,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1772,7 +1915,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             children: "Featured Image *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 555,
+                                            lineNumber: 611,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1785,7 +1928,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     className: "file-input"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 557,
+                                                    lineNumber: 613,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1793,7 +1936,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     children: "OR"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 563,
+                                                    lineNumber: 619,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1804,13 +1947,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                     className: "url-input"
                                                 }, void 0, false, {
                                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                    lineNumber: 564,
+                                                    lineNumber: 620,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 556,
+                                            lineNumber: 612,
                                             columnNumber: 29
                                         }, this),
                                         formData.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1820,18 +1963,18 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                                 alt: "Preview"
                                             }, void 0, false, {
                                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                                lineNumber: 574,
+                                                lineNumber: 630,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 573,
+                                            lineNumber: 629,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 554,
+                                    lineNumber: 610,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1841,7 +1984,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             children: "Article Excerpt *"
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 580,
+                                            lineNumber: 636,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1852,19 +1995,19 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                            lineNumber: 581,
+                                            lineNumber: 637,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 579,
+                                    lineNumber: 635,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 476,
+                            lineNumber: 532,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1875,7 +2018,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: "Article Content"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 593,
+                                    lineNumber: 649,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1883,7 +2026,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: "Build your article using content blocks. Add paragraphs, headings, quotes, and images."
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 594,
+                                    lineNumber: 650,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$client$2f$components$2f$RichTextEditor$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1891,13 +2034,13 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     onChange: (newContent)=>handleInputChange("content", newContent)
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 598,
+                                    lineNumber: 654,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 592,
+                            lineNumber: 648,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1910,7 +2053,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 606,
+                                    lineNumber: 662,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1919,25 +2062,51 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: editingItem ? "Update Article" : "Publish Article"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 609,
+                                    lineNumber: 665,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 605,
+                            lineNumber: 661,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 474,
+                    lineNumber: 530,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 472,
+            lineNumber: 528,
+            columnNumber: 13
+        }, this);
+    }
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "items-list",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "items-grid",
+                children: [
+                    1,
+                    2,
+                    3,
+                    4
+                ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SkeletonCard, {}, i, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 678,
+                        columnNumber: 44
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 677,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 676,
             columnNumber: 13
         }, this);
     }
@@ -1949,12 +2118,12 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                 children: 'No articles yet. Click "Add New" to write your first article.'
             }, void 0, false, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 622,
+                lineNumber: 688,
                 columnNumber: 21
             }, this)
         }, void 0, false, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 621,
+            lineNumber: 687,
             columnNumber: 17
         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "items-grid",
@@ -1967,7 +2136,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                             className: "item-image"
                         }, void 0, false, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 628,
+                            lineNumber: 694,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1977,7 +2146,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: blog.title
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 630,
+                                    lineNumber: 696,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1985,7 +2154,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: blog.date
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 631,
+                                    lineNumber: 697,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1993,7 +2162,7 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: blog.tag
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 632,
+                                    lineNumber: 698,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2001,25 +2170,36 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: blog.excerpt
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 633,
+                                    lineNumber: 699,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 629,
+                            lineNumber: 695,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "item-actions",
                             children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                    href: `/blog/${blog.id}`,
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                    className: "btn-view",
+                                    children: "View"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 702,
+                                    columnNumber: 33
+                                }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     className: "btn-edit",
                                     onClick: ()=>setEditingItem(blog),
                                     children: "Edit"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 636,
+                                    lineNumber: 710,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2028,39 +2208,436 @@ function BlogsManager({ showForm, setShowForm, editingItem, setEditingItem, setH
                                     children: "Delete"
                                 }, void 0, false, {
                                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                    lineNumber: 642,
+                                    lineNumber: 716,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                            lineNumber: 635,
+                            lineNumber: 701,
                             columnNumber: 29
                         }, this)
                     ]
                 }, blog.id, true, {
                     fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                    lineNumber: 627,
+                    lineNumber: 693,
                     columnNumber: 25
                 }, this))
         }, void 0, false, {
             fileName: "[project]/client/app/admin/dashboard/page.jsx",
-            lineNumber: 625,
+            lineNumber: 691,
             columnNumber: 17
         }, this)
     }, void 0, false, {
         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-        lineNumber: 619,
+        lineNumber: 685,
         columnNumber: 9
     }, this);
 }
-_s2(BlogsManager, "/mKn8qK8OGlBqAuW4zUJhTCryK4=", false, function() {
+_s2(BlogsManager, "QcBZT0dLeoGHyasWi4+CS82nFQY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"]
     ];
 });
-_c2 = BlogsManager;
-// Settings Panel
+_c3 = BlogsManager;
+// ── Services Manager ──────────────────────────────────────────────────────────
+function ServicesManager({ showForm, setShowForm, editingItem, setEditingItem, setHasUnsavedChanges }) {
+    _s3();
+    const { data: services, loading, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"])("/services");
+    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        title: "",
+        subtitle: "",
+        description: "",
+        image: "",
+        icon: "01"
+    });
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ServicesManager.useEffect": ()=>{
+            if (editingItem) {
+                setFormData(editingItem);
+                setShowForm(true);
+            }
+        }
+    }["ServicesManager.useEffect"], [
+        editingItem,
+        setShowForm
+    ]);
+    const handleInputChange = (field, value)=>{
+        setFormData({
+            ...formData,
+            [field]: value
+        });
+        setHasUnsavedChanges(true);
+    };
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        try {
+            if (editingItem) {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["apiPut"])("/services", editingItem.id, formData);
+            } else {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["apiPost"])("/services", formData);
+            }
+            setFormData({
+                title: "",
+                subtitle: "",
+                description: "",
+                image: "",
+                icon: "01"
+            });
+            setShowForm(false);
+            setEditingItem(null);
+            setHasUnsavedChanges(false);
+            refetch();
+        } catch (error) {
+            alert("Error saving service: " + error.message);
+        }
+    };
+    const handleDelete = async (id)=>{
+        if (!window.confirm("Delete this service?")) return;
+        try {
+            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["apiDelete"])("/services", id);
+            refetch();
+        } catch (error) {
+            alert("Error deleting service");
+        }
+    };
+    const handleCancel = ()=>{
+        setShowForm(false);
+        setEditingItem(null);
+        setFormData({
+            title: "",
+            subtitle: "",
+            description: "",
+            image: "",
+            icon: "01"
+        });
+        setHasUnsavedChanges(false);
+    };
+    if (showForm) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "form-panel",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                    children: editingItem ? "Edit Service" : "Add New Service"
+                }, void 0, false, {
+                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                    lineNumber: 792,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                    onSubmit: handleSubmit,
+                    className: "dashboard-form",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "form-grid",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "form-group",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                            children: "Service Title *"
+                                        }, void 0, false, {
+                                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                            lineNumber: 796,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                            type: "text",
+                                            value: formData.title,
+                                            onChange: (e)=>handleInputChange("title", e.target.value),
+                                            placeholder: "e.g., Architecture Design",
+                                            required: true
+                                        }, void 0, false, {
+                                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                            lineNumber: 797,
+                                            columnNumber: 29
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 795,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "form-group",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                            children: "Subtitle"
+                                        }, void 0, false, {
+                                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                            lineNumber: 806,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                            type: "text",
+                                            value: formData.subtitle || "",
+                                            onChange: (e)=>handleInputChange("subtitle", e.target.value),
+                                            placeholder: "e.g., From concept to technical"
+                                        }, void 0, false, {
+                                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                            lineNumber: 807,
+                                            columnNumber: 29
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 805,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 794,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "form-group",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                    children: "Description *"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 817,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                                    value: formData.description,
+                                    onChange: (e)=>handleInputChange("description", e.target.value),
+                                    placeholder: "Describe this service...",
+                                    rows: "4",
+                                    required: true
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 818,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 816,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "form-group",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                    children: "Image URL"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 828,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "url",
+                                    value: formData.image || "",
+                                    onChange: (e)=>handleInputChange("image", e.target.value),
+                                    placeholder: "https://...",
+                                    className: "url-input"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 829,
+                                    columnNumber: 25
+                                }, this),
+                                formData.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "image-preview",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                        src: formData.image,
+                                        alt: "Preview"
+                                    }, void 0, false, {
+                                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                        lineNumber: 838,
+                                        columnNumber: 33
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 837,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 827,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "form-actions",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    type: "button",
+                                    className: "btn-secondary",
+                                    onClick: handleCancel,
+                                    children: "Cancel"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 844,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    type: "submit",
+                                    className: "btn-primary",
+                                    children: editingItem ? "Update Service" : "Add Service"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 847,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 843,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                    lineNumber: 793,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 791,
+            columnNumber: 13
+        }, this);
+    }
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "items-list",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "items-grid",
+                children: [
+                    1,
+                    2,
+                    3,
+                    4
+                ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SkeletonCard, {}, i, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 860,
+                        columnNumber: 44
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 859,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 858,
+            columnNumber: 13
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "items-list",
+        children: services?.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "empty-state",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                children: 'No services yet. Click "Add New" to add your first service.'
+            }, void 0, false, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 870,
+                columnNumber: 21
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 869,
+            columnNumber: 17
+        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "items-grid",
+            children: services?.map((service)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "item-card",
+                    children: [
+                        service.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: service.image,
+                            alt: service.title,
+                            className: "item-image"
+                        }, void 0, false, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 877,
+                            columnNumber: 33
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "item-content",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                    children: service.title
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 880,
+                                    columnNumber: 33
+                                }, this),
+                                service.subtitle && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "item-meta",
+                                    children: service.subtitle
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 881,
+                                    columnNumber: 54
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "item-excerpt",
+                                    children: service.description
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 882,
+                                    columnNumber: 33
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 879,
+                            columnNumber: 29
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "item-actions",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    className: "btn-edit",
+                                    onClick: ()=>setEditingItem(service),
+                                    children: "Edit"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 885,
+                                    columnNumber: 33
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    className: "btn-delete",
+                                    onClick: ()=>handleDelete(service.id),
+                                    children: "Delete"
+                                }, void 0, false, {
+                                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                                    lineNumber: 891,
+                                    columnNumber: 33
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                            lineNumber: 884,
+                            columnNumber: 29
+                        }, this)
+                    ]
+                }, service.id, true, {
+                    fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                    lineNumber: 875,
+                    columnNumber: 25
+                }, this))
+        }, void 0, false, {
+            fileName: "[project]/client/app/admin/dashboard/page.jsx",
+            lineNumber: 873,
+            columnNumber: 17
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+        lineNumber: 867,
+        columnNumber: 9
+    }, this);
+}
+_s3(ServicesManager, "13P7heQM9p+tcC2uCaJ2xoCdU3w=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$hooks$2f$useApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useApi"]
+    ];
+});
+_c4 = ServicesManager;
+// ── Settings Panel ────────────────────────────────────────────────────────────
 function SettingsPanel() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "settings-panel",
@@ -2072,7 +2649,7 @@ function SettingsPanel() {
                         children: "Account Information"
                     }, void 0, false, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 662,
+                        lineNumber: 911,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2082,13 +2659,13 @@ function SettingsPanel() {
                                 children: "admin"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 663,
+                                lineNumber: 912,
                                 columnNumber: 30
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 663,
+                        lineNumber: 912,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2098,75 +2675,19 @@ function SettingsPanel() {
                                 children: "Administrator"
                             }, void 0, false, {
                                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 664,
+                                lineNumber: 913,
                                 columnNumber: 26
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 664,
+                        lineNumber: 913,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 661,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "settings-section",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        children: "Default Credentials"
-                    }, void 0, false, {
-                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 668,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: [
-                            "Username: ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("code", {
-                                children: "admin"
-                            }, void 0, false, {
-                                fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 669,
-                                columnNumber: 30
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 669,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: [
-                            "Password: ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("code", {
-                                children: "edra2024"
-                            }, void 0, false, {
-                                fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                                lineNumber: 670,
-                                columnNumber: 30
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 670,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "settings-note",
-                        children: "⚠️ Change these credentials in production"
-                    }, void 0, false, {
-                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 671,
-                        columnNumber: 17
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 667,
+                lineNumber: 910,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2176,42 +2697,93 @@ function SettingsPanel() {
                         children: "System Info"
                     }, void 0, false, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 675,
+                        lineNumber: 917,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: "Version: 1.0.0"
                     }, void 0, false, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 676,
+                        lineNumber: 918,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: "Last Updated: Feb 2026"
                     }, void 0, false, {
                         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                        lineNumber: 677,
+                        lineNumber: 919,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/client/app/admin/dashboard/page.jsx",
-                lineNumber: 674,
+                lineNumber: 916,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "settings-section",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        children: "Quick Links"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 923,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "settings-link",
+                        children: "→ View Live Site"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 924,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/projects",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "settings-link",
+                        children: "→ View Projects Page"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 927,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$client$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/blogs",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        className: "settings-link",
+                        children: "→ View Blog Page"
+                    }, void 0, false, {
+                        fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                        lineNumber: 930,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/client/app/admin/dashboard/page.jsx",
+                lineNumber: 922,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/client/app/admin/dashboard/page.jsx",
-        lineNumber: 660,
+        lineNumber: 909,
         columnNumber: 9
     }, this);
 }
-_c3 = SettingsPanel;
-var _c, _c1, _c2, _c3;
+_c5 = SettingsPanel;
+var _c, _c1, _c2, _c3, _c4, _c5;
 __turbopack_context__.k.register(_c, "DashboardPage");
-__turbopack_context__.k.register(_c1, "ProjectsManager");
-__turbopack_context__.k.register(_c2, "BlogsManager");
-__turbopack_context__.k.register(_c3, "SettingsPanel");
+__turbopack_context__.k.register(_c1, "SkeletonCard");
+__turbopack_context__.k.register(_c2, "ProjectsManager");
+__turbopack_context__.k.register(_c3, "BlogsManager");
+__turbopack_context__.k.register(_c4, "ServicesManager");
+__turbopack_context__.k.register(_c5, "SettingsPanel");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
