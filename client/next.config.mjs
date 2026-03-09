@@ -6,6 +6,14 @@ const nextConfig = {
     experimental: {
         optimizePackageImports: ['framer-motion', 'gsap'],
     },
+    async rewrites() {
+        return [
+            {
+                source: '/api/media/file/:path*',
+                destination: '/media/:path*',
+            },
+        ]
+    },
     images: {
         remotePatterns: [
             {
