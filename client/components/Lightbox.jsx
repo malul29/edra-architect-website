@@ -1,8 +1,57 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
+import { motion } from "framer-motion";
 
-export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev }) {
+const FULL_WIDTH_PX = 110;
+const COLLAPSED_WIDTH_PX = 32;
+const GAP_PX = 2;
+const MARGIN_PX = 2;
+
+function LightboxThumbs({ images, currentIndex, onGoTo }) {
+    const stripRef = useRef(null);
+
+    useEffect(() => {
+        if (stripRef.current) {
+            let scrollPos = 0;
+            for (let i = 0; i < currentIndex; i++) scrollPos += COLLAPSED_WIDTH_PX + GAP_PX;
+            scrollPos += MARGIN_PX;
+            const containerW = stripRef.current.offsetWidth;
+            scrollPos -= containerW / 2 - FULL_WIDTH_PX / 2;
+            stripRef.current.scrollTo({ left: scrollPos, behavior: "smooth" });
+        }
+    }, [currentIndex]);
+
+    return (
+        <div ref={stripRef} className="lightbox-thumb-strip">
+            <div className="lightbox-thumb-inner">
+                {images.map((img, i) => (
+                    <motion.button
+                        key={i}
+                        onClick={(e) => { e.stopPropagation(); onGoTo(i); }}
+                        initial={false}
+                        animate={i === currentIndex ? "active" : "inactive"}
+                        variants={{
+                            active: { width: FULL_WIDTH_PX, marginLeft: MARGIN_PX, marginRight: MARGIN_PX },
+                            inactive: { width: COLLAPSED_WIDTH_PX, marginLeft: 0, marginRight: 0 },
+                        }}
+                        transition={{ duration: 0.28, ease: "easeOut" }}
+                        className={`lightbox-thumb${i === currentIndex ? " lightbox-thumb-active" : ""}`}
+                    >
+                        <img
+                            src={img}
+                            alt={`Thumbnail ${i + 1}`}
+                            style={{ width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none", userSelect: "none", display: "block" }}
+                            draggable={false}
+                        />
+                    </motion.button>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev, onGoTo }) {
   const handleKeyDown = useCallback((e) => {
     if (e.key === "Escape") onClose();
     if (e.key === "ArrowRight") onNext();
@@ -10,11 +59,9 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
   }, [onClose, onNext, onPrev]);
 
   useEffect(() => {
-    // Only lock scroll if lightbox is actually visible
     if (currentIndex !== null && images && images.length > 0) {
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
-
       return () => {
         document.body.style.overflow = "";
         window.removeEventListener("keydown", handleKeyDown);
@@ -35,8 +82,9 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
         </svg>
       </button>
 
-      {images.length > 1 && (
-        <>
+      {/* Body: image + side navs */}
+      <div className="lightbox-body" onClick={(e) => e.stopPropagation()}>
+        {images.length > 1 && (
           <button
             className="lightbox-nav lightbox-nav-prev"
             onClick={(e) => { e.stopPropagation(); onPrev(); }}
@@ -47,7 +95,17 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
+        )}
 
+        <div className="lightbox-content">
+          <img
+            src={currentImage}
+            alt={`Gallery image ${currentIndex + 1}`}
+            className="lightbox-image"
+          />
+        </div>
+
+        {images.length > 1 && (
           <button
             className="lightbox-nav lightbox-nav-next"
             onClick={(e) => { e.stopPropagation(); onNext(); }}
@@ -58,18 +116,17 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
-        </>
-      )}
+        )}
+      </div>
 
-      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-        <img
-          src={currentImage}
-          alt={`Gallery image ${currentIndex + 1}`}
-          className="lightbox-image"
-        />
+      {/* Footer: counter + thumbnail strip */}
+      <div className="lightbox-footer" onClick={(e) => e.stopPropagation()}>
         <div className="lightbox-counter">
           {currentIndex + 1} / {images.length}
         </div>
+        {images.length > 1 && onGoTo && (
+          <LightboxThumbs images={images} currentIndex={currentIndex} onGoTo={onGoTo} />
+        )}
       </div>
     </div>
   );

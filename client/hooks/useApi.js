@@ -1,10 +1,26 @@
 import { useState, useEffect } from "react";
 
+// Payload CMS REST API base
 const BASE = "/api";
 
 // Module-level in-memory cache: persists across component mounts for the session
 const _cache = new Map();        // endpoint → data
 const _pending = new Map();      // endpoint → Promise (dedup concurrent requests)
+
+/**
+ * Normalizes Payload CMS response to a flat array.
+ * Payload returns { docs: [...], totalDocs, ... } for collection endpoints.
+ * If the response has a `docs` array, return that. Otherwise return the response as-is.
+ */
+function normalizeResponse(data) {
+  if (data && Array.isArray(data.docs)) {
+    return data.docs;
+  }
+  if (Array.isArray(data)) {
+    return data;
+  }
+  return data;
+}
 
 export function useApi(endpoint) {
   const [data, setData] = useState(_cache.get(endpoint) ?? []);
@@ -22,15 +38,20 @@ export function useApi(endpoint) {
 
     // Reuse in-flight request for same endpoint
     if (!_pending.has(endpoint)) {
-      const promise = fetch(`${BASE}${endpoint}`)
+      // For Payload CMS, add limit=100 to get enough results (default is 10)
+      const separator = endpoint.includes('?') ? '&' : '?';
+      const url = `${BASE}${endpoint}${separator}limit=100&depth=1`;
+
+      const promise = fetch(url)
         .then((r) => {
           if (!r.ok) throw new Error(r.statusText);
           return r.json();
         })
         .then((d) => {
-          _cache.set(endpoint, d);
+          const normalized = normalizeResponse(d);
+          _cache.set(endpoint, normalized);
           _pending.delete(endpoint);
-          return d;
+          return normalized;
         })
         .catch((e) => {
           _pending.delete(endpoint);

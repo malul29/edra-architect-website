@@ -2,16 +2,18 @@
   "version": 1,
   "config": {
     "env": {},
-    "webpack": null,
-    "typescript": {
-      "ignoreBuildErrors": false
+    "eslint": {
+      "ignoreDuringBuilds": false
     },
-    "typedRoutes": false,
+    "typescript": {
+      "ignoreBuildErrors": false,
+      "tsconfigPath": "tsconfig.json"
+    },
     "distDir": ".next",
     "cleanDistDir": true,
     "assetPrefix": "",
     "cacheMaxMemorySize": 52428800,
-    "configOrigin": "default",
+    "configOrigin": "next.config.mjs",
     "useFileSystemPublicRoutes": true,
     "generateEtags": true,
     "pageExtensions": [
@@ -20,7 +22,7 @@
       "jsx",
       "js"
     ],
-    "poweredByHeader": true,
+    "poweredByHeader": false,
     "compress": true,
     "images": {
       "deviceSizes": [
@@ -34,6 +36,7 @@
         3840
       ],
       "imageSizes": [
+        16,
         32,
         48,
         64,
@@ -47,25 +50,22 @@
       "loaderFile": "",
       "domains": [],
       "disableStaticImages": false,
-      "minimumCacheTTL": 14400,
+      "minimumCacheTTL": 60,
       "formats": [
         "image/webp"
       ],
-      "maximumRedirects": 3,
-      "maximumResponseBody": 50000000,
-      "dangerouslyAllowLocalIP": false,
       "dangerouslyAllowSVG": false,
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
-      "localPatterns": [
+      "remotePatterns": [
         {
-          "pathname": "**",
-          "search": ""
+          "protocol": "https",
+          "hostname": "**"
+        },
+        {
+          "protocol": "http",
+          "hostname": "**"
         }
-      ],
-      "remotePatterns": [],
-      "qualities": [
-        75
       ],
       "unoptimized": false
     },
@@ -76,12 +76,21 @@
       "maxInactiveAge": 60000,
       "pagesBufferLength": 5
     },
+    "amp": {
+      "canonicalBase": ""
+    },
     "basePath": "",
-    "sassOptions": {},
+    "sassOptions": {
+      "silenceDeprecations": [
+        "import"
+      ]
+    },
     "trailingSlash": false,
     "i18n": null,
     "productionBrowserSourceMaps": false,
     "excludeDefaultMomentLocales": true,
+    "serverRuntimeConfig": {},
+    "publicRuntimeConfig": {},
     "reactProductionProfiling": false,
     "reactStrictMode": null,
     "reactMaxHeadersLength": 6000,
@@ -92,6 +101,7 @@
     "compiler": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
+    "output": "standalone",
     "modularizeImports": {
       "@mui/icons-material": {
         "transform": "@mui/icons-material/{{member}}"
@@ -100,61 +110,63 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "D:\\web-edra",
-    "cacheComponents": false,
-    "cacheLife": {
-      "default": {
-        "stale": 300,
-        "revalidate": 900,
-        "expire": 4294967294
-      },
-      "seconds": {
-        "stale": 30,
-        "revalidate": 1,
-        "expire": 60
-      },
-      "minutes": {
-        "stale": 300,
-        "revalidate": 60,
-        "expire": 3600
-      },
-      "hours": {
-        "stale": 300,
-        "revalidate": 3600,
-        "expire": 86400
-      },
-      "days": {
-        "stale": 300,
-        "revalidate": 86400,
-        "expire": 604800
-      },
-      "weeks": {
-        "stale": 300,
-        "revalidate": 604800,
-        "expire": 2592000
-      },
-      "max": {
-        "stale": 300,
-        "revalidate": 2592000,
-        "expire": 31536000
-      }
-    },
-    "cacheHandlers": {},
+    "outputFileTracingRoot": "D:\\web-edra\\client",
     "experimental": {
       "useSkewCookie": false,
+      "nodeMiddleware": false,
+      "cacheLife": {
+        "default": {
+          "stale": 300,
+          "revalidate": 900,
+          "expire": 4294967294
+        },
+        "seconds": {
+          "stale": 0,
+          "revalidate": 1,
+          "expire": 60
+        },
+        "minutes": {
+          "stale": 300,
+          "revalidate": 60,
+          "expire": 3600
+        },
+        "hours": {
+          "stale": 300,
+          "revalidate": 3600,
+          "expire": 86400
+        },
+        "days": {
+          "stale": 300,
+          "revalidate": 86400,
+          "expire": 604800
+        },
+        "weeks": {
+          "stale": 300,
+          "revalidate": 604800,
+          "expire": 2592000
+        },
+        "max": {
+          "stale": 300,
+          "revalidate": 2592000,
+          "expire": 4294967294
+        }
+      },
+      "cacheHandlers": {},
       "cssChunking": true,
       "multiZoneDraftMode": false,
       "appNavFailHandling": false,
       "prerenderEarlyExit": true,
       "serverMinification": true,
+      "serverSourceMaps": false,
       "linkNoTouchStart": false,
       "caseSensitiveRoutes": false,
+      "clientSegmentCache": false,
       "dynamicOnHover": false,
       "preloadEntriesOnStart": true,
       "clientRouterFilter": true,
       "clientRouterFilterRedirects": false,
       "fetchCacheKeyPrefix": "",
-      "proxyPrefetch": "flexible",
+      "middlewarePrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
       "cpus": 7,
@@ -163,7 +175,6 @@
       "imgOptTimeoutInSeconds": 7,
       "imgOptMaxInputPixels": 268402689,
       "imgOptSequentialRead": null,
-      "imgOptSkipMetadata": null,
       "isrFlushToDisk": true,
       "workerThreads": false,
       "optimizeCss": false,
@@ -178,6 +189,7 @@
       "swcTraceProfiling": false,
       "forceSwcTransforms": false,
       "largePageDataBytes": 128000,
+      "typedRoutes": false,
       "typedEnv": false,
       "parallelServerCompiles": false,
       "parallelServerBuildTraces": false,
@@ -186,31 +198,29 @@
       "webpackMemoryOptimizations": false,
       "optimizeServerReact": true,
       "viewTransition": false,
+      "routerBFCache": false,
       "removeUncaughtErrorAndRejectionListeners": false,
       "validateRSCRequestHeaders": false,
       "staleTimes": {
         "dynamic": 0,
         "static": 300
       },
-      "reactDebugChannel": false,
       "serverComponentsHmrCache": true,
       "staticGenerationMaxConcurrency": 8,
       "staticGenerationMinPagesPerWorker": 25,
-      "transitionIndicator": false,
+      "dynamicIO": false,
       "inlineCss": false,
       "useCache": false,
       "globalNotFound": false,
+      "devtoolNewPanelUI": false,
+      "devtoolSegmentExplorer": false,
       "browserDebugInfoInTerminal": false,
-      "lockDistDir": true,
-      "isolatedDevBuild": true,
-      "proxyClientMaxBodySize": 10485760,
-      "hideLogsAfterAbort": false,
-      "mcpServer": true,
-      "turbopackFileSystemCacheForDev": true,
-      "turbopackFileSystemCacheForBuild": false,
-      "turbopackInferModuleSideEffects": false,
-      "middlewarePrefetch": "flexible",
+      "optimizeRouterScrolling": false,
+      "strictNextHead": true,
+      "middlewareClientMaxBodySize": 10485760,
       "optimizePackageImports": [
+        "framer-motion",
+        "gsap",
         "lucide-react",
         "date-fns",
         "lodash-es",
@@ -290,16 +300,30 @@
       "trustHostHeader": false,
       "isExperimentalCompile": false
     },
-    "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight",
+    "htmlLimitedBots": "Mediapartners-Google|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti",
     "bundlePagesRouterDependencies": false,
-    "configFileName": "next.config.js",
-    "turbopack": {
-      "root": "D:\\web-edra"
+    "configFileName": "next.config.mjs",
+    "outputFileTracingExcludes": {
+      "**/*": [
+        "drizzle-kit",
+        "drizzle-kit/api"
+      ]
     },
-    "distDirRoot": ".next"
+    "outputFileTracingIncludes": {
+      "**/*": [
+        "@libsql/client"
+      ]
+    },
+    "turbopack": {
+      "root": "D:\\web-edra\\client"
+    },
+    "serverExternalPackages": [
+      "graphql",
+      "@sentry/nextjs"
+    ]
   },
   "appDir": "D:\\web-edra\\client",
-  "relativeAppDir": "client",
+  "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",
     ".next\\server\\pages-manifest.json",
@@ -308,8 +332,11 @@
     ".next\\server\\functions-config-manifest.json",
     ".next\\server\\middleware-manifest.json",
     ".next\\server\\middleware-build-manifest.js",
+    ".next\\server\\middleware-react-loadable-manifest.js",
+    ".next\\react-loadable-manifest.json",
     ".next\\server\\app-paths-manifest.json",
     ".next\\app-path-routes-manifest.json",
+    ".next\\app-build-manifest.json",
     ".next\\server\\server-reference-manifest.js",
     ".next\\server\\server-reference-manifest.json",
     ".next\\BUILD_ID",
@@ -317,5 +344,7 @@
     ".next\\server\\next-font-manifest.json",
     ".next\\required-server-files.json"
   ],
-  "ignore": []
+  "ignore": [
+    "node_modules\\next\\dist\\compiled\\@ampproject\\toolbox-optimizer\\**\\*"
+  ]
 }

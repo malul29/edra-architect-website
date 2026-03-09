@@ -41,6 +41,24 @@ Backend  : https://edra-api.up.railway.app  (Railway)
 Database : PostgreSQL
 ```
 
+### 🚀 Production (Hostinger VPS)
+```
+App      : Next.js + Payload (single app di folder client)
+Server   : Hostinger VPS (Ubuntu)
+Process  : PM2
+Proxy    : Nginx (domain -> localhost:3000)
+Database : PostgreSQL (Neon / managed DB)
+```
+
+### ⚠️ Jika Hanya Pakai Hostinger Business Web Hosting (Bukan VPS)
+```
+Node.js server jangka panjang: TIDAK tersedia
+PM2 / akses root / custom daemon: TIDAK tersedia
+Deploy Next.js + Payload fullstack: TIDAK bisa langsung di-hosting ini
+```
+
+Artinya: untuk project ini, **Hostinger Business sebaiknya dipakai untuk domain + DNS saja**, sedangkan aplikasi tetap dijalankan di platform Node (Vercel/Railway/Render).
+
 ---
 
 ## Platform Hosting
@@ -56,6 +74,135 @@ Database : PostgreSQL
 - Node.js auto-detected
 - PostgreSQL tersedia
 - Auto-deploy dari GitHub
+
+### Alternatif — Full di Hostinger VPS
+- Cocok jika ingin satu server untuk app + reverse proxy
+- Kontrol penuh environment production
+- Tidak tergantung Vercel/Railway
+
+### Hostinger Business (Shared Hosting) — yang realistis
+- Bisa: domain management, DNS, email hosting, file statis/PHP
+- Tidak bisa: menjalankan Next.js + Payload server production 24/7
+- Rekomendasi: arahkan domain Hostinger ke Vercel (frontend) + Railway/Render (backend)
+
+---
+
+## Skema Deploy Jika Anda Hanya Punya Hostinger Business
+
+### Opsi A (Paling aman, tanpa ubah arsitektur)
+1. Deploy app `client` ke Vercel (Node runtime untuk Next.js).
+2. Deploy backend/API ke Railway/Render (jika masih dipakai terpisah).
+3. Di panel DNS Hostinger, arahkan domain ke Vercel:
+  ```
+  Type    Name    Value
+  A       @       76.76.21.21
+  CNAME   www     cname.vercel-dns.com
+  ```
+4. Keep email tetap di Hostinger (jangan ubah MX records).
+
+### Opsi B (Hostinger-only) — butuh refactor besar
+- Konversi website jadi static export murni (`next export`) tanpa Payload server/admin.
+- Semua fitur CMS, auth admin, API server-side akan hilang atau harus dipindah ke layanan eksternal.
+- Opsi ini **tidak direkomendasikan** untuk struktur project saat ini.
+
+---
+
+## Hostinger VPS Deployment (Recommended untuk stack saat ini)
+
+### 1. Persiapan Server
+
+```bash
+sudo apt update && sudo apt upgrade -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs nginx git
+sudo npm install -g pm2
+```
+
+### 2. Pull Project
+
+```bash
+cd /var/www
+sudo git clone https://github.com/malul29/edra-architect-website.git web-edra
+sudo chown -R $USER:$USER /var/www/web-edra
+cd /var/www/web-edra/client
+```
+
+### 3. Environment Production
+
+```bash
+cp .env.example .env
+nano .env
+```
+
+Isi `.env` minimal:
+```
+PAYLOAD_SECRET=isi-secret-production-yang-kuat
+DATABASE_URL=postgresql://... (production database)
+```
+
+### 4. Install & Build
+
+```bash
+npm ci
+npm run build
+```
+
+### 5. Jalankan Dengan PM2
+
+```bash
+pm2 start ecosystem.config.cjs
+pm2 save
+pm2 startup
+```
+
+### 6. Nginx Reverse Proxy
+
+Buat file `/etc/nginx/sites-available/edra`:
+
+```nginx
+server {
+  listen 80;
+  server_name edra-arsitek.com www.edra-arsitek.com;
+
+  location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_cache_bypass $http_upgrade;
+  }
+}
+```
+
+Aktifkan:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/edra /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### 7. SSL (HTTPS)
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d edra-arsitek.com -d www.edra-arsitek.com
+```
+
+### 8. Update Deploy (setiap ada commit baru)
+
+```bash
+cd /var/www/web-edra
+git pull
+cd client
+npm ci
+npm run build
+pm2 restart edra-client
+```
 
 ---
 

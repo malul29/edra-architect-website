@@ -2,5 +2,8 @@ node_modules/
 dist/
 .env
 *.local
-.gitignore
 .next/
+
+# Payload CMS
+client/media/
+client/payload-types.ts

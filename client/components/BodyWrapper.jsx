@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import IntroAnimation from "../components/IntroAnimation";
+import BackToTop from "../components/BackToTop";
 
 function useScrollReveal(enabled) {
     useEffect(() => {
@@ -56,6 +57,7 @@ export default function BodyWrapper({ children }) {
             )}
             <div style={{ visibility: introPlaying ? "hidden" : "visible" }}>
                 {children}
+                <BackToTop />
             </div>
         </>
     );

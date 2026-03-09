@@ -1,7 +1,6 @@
 {
   "version": 3,
   "pages404": true,
-  "appType": "app",
   "caseSensitive": false,
   "basePath": "",
   "redirects": [
@@ -9,18 +8,56 @@
       "source": "/:path+/",
       "destination": "/:path+",
       "internal": true,
-      "priority": true,
       "statusCode": 308,
       "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
     }
   ],
-  "headers": [],
+  "headers": [
+    {
+      "headers": [
+        {
+          "key": "Accept-CH",
+          "value": "Sec-CH-Prefers-Color-Scheme"
+        },
+        {
+          "key": "Vary",
+          "value": "Sec-CH-Prefers-Color-Scheme"
+        },
+        {
+          "key": "Critical-CH",
+          "value": "Sec-CH-Prefers-Color-Scheme"
+        },
+        {
+          "key": "X-Powered-By",
+          "value": "Next.js, Payload"
+        }
+      ],
+      "source": "/:path*",
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    }
+  ],
   "rewrites": {
     "beforeFiles": [],
     "afterFiles": [],
     "fallback": []
   },
   "dynamicRoutes": [
+    {
+      "page": "/admin/[[...segments]]",
+      "regex": "^/admin(?:/(.+?))?(?:/)?$",
+      "routeKeys": {
+        "nxtPsegments": "nxtPsegments"
+      },
+      "namedRegex": "^/admin(?:/(?<nxtPsegments>.+?))?(?:/)?$"
+    },
+    {
+      "page": "/api/[...slug]",
+      "regex": "^/api/(.+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/(?<nxtPslug>.+?)(?:/)?$"
+    },
     {
       "page": "/blog/[id]",
       "regex": "^/blog/([^/]+?)(?:/)?$",
@@ -46,12 +83,6 @@
       "namedRegex": "^/(?:/)?$"
     },
     {
-      "page": "/_global-error",
-      "regex": "^/_global\\-error(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/_global\\-error(?:/)?$"
-    },
-    {
       "page": "/_not-found",
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
@@ -62,18 +93,6 @@
       "regex": "^/about(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/about(?:/)?$"
-    },
-    {
-      "page": "/admin/dashboard",
-      "regex": "^/admin/dashboard(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/admin/dashboard(?:/)?$"
-    },
-    {
-      "page": "/admin/login",
-      "regex": "^/admin/login(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/admin/login(?:/)?$"
     },
     {
       "page": "/blogs",
@@ -102,17 +121,16 @@
   ],
   "dataRoutes": [],
   "rsc": {
-    "header": "rsc",
-    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
-    "prefetchHeader": "next-router-prefetch",
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
     "didPostponeHeader": "x-nextjs-postponed",
     "contentTypeHeader": "text/x-component",
     "suffix": ".rsc",
-    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
     "prefetchSegmentSuffix": ".segment.rsc",
-    "prefetchSegmentDirSuffix": ".segments",
-    "clientParamParsing": false,
-    "dynamicRSCPrerender": false
+    "prefetchSegmentDirSuffix": ".segments"
   },
   "rewriteHeaders": {
     "pathHeader": "x-nextjs-rewritten-path",
