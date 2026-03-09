@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useApi } from "@/hooks/useApi";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 import { fallbackServices } from "@/lib/fallbackData";
 
@@ -44,10 +45,7 @@ export default function ServicesPage() {
                                 .filter(Boolean)
                                 .slice(0, 4);
 
-                            const imageSrc =
-                                typeof service.image === "object" && service.image?.url
-                                    ? service.image.url
-                                    : service.image;
+                            const imageSrc = resolveMediaUrl(service.image);
 
                             return (
                                 <article key={service.id} className="service-panel">

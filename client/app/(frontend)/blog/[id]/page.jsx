@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useApi } from "../../../../hooks/useApi";
 import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
+import { normalizeMediaUrl, resolveMediaUrl } from "@/lib/mediaUrl";
 
 // Render Payload CMS Lexical rich text JSON
 function renderLexicalContent(node, key) {
@@ -57,7 +58,7 @@ function renderLexicalContent(node, key) {
         case 'listitem':
             return <li key={key}>{children}</li>;
         case 'upload':
-            const imgUrl = node.value?.url || node.value?.filename;
+            const imgUrl = resolveMediaUrl(node.value);
             if (imgUrl) {
                 return (
                     <div key={key} className="blog-detail-image-single">
@@ -127,7 +128,7 @@ export default function BlogDetailPage({ params }) {
             case "image":
                 return (
                     <div key={block.id} className="blog-detail-image-single">
-                        <Image src={block.content} alt={block.caption || "Article image"} width={1200} height={700} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                        <Image src={normalizeMediaUrl(block.content)} alt={block.caption || "Article image"} width={1200} height={700} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                         {block.caption && (
                             <p className="blog-detail-image-caption">{block.caption}</p>
                         )}
@@ -140,7 +141,7 @@ export default function BlogDetailPage({ params }) {
                         {block.content.map((img, idx) => (
                             img && (
                                 <div key={idx} className="blog-detail-image-grid-item">
-                                    <Image src={img} alt={`Grid image ${idx + 1}`} width={700} height={500} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                    <Image src={normalizeMediaUrl(img)} alt={`Grid image ${idx + 1}`} width={700} height={500} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                 </div>
                             )
                         ))}
@@ -204,7 +205,7 @@ export default function BlogDetailPage({ params }) {
                     <div className="blog-detail-content">
                         {/* Featured Image */}
                         <div className="blog-detail-featured-image">
-                            <Image src={typeof blog.image === 'object' ? blog.image?.url : blog.image} alt={blog.title} width={1200} height={600} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} priority />
+                            <Image src={resolveMediaUrl(blog.image)} alt={blog.title} width={1200} height={600} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} priority />
                         </div>
 
                         {/* Body Content */}
@@ -295,7 +296,7 @@ export default function BlogDetailPage({ params }) {
                             <article className="blog-detail-related-card" key={relatedBlog.id}>
                                 <Link href={`/blog/${relatedBlog.id}`}>
                                     <div className="blog-detail-related-image">
-                                        <Image src={typeof relatedBlog.image === 'object' ? relatedBlog.image?.url : relatedBlog.image} alt={relatedBlog.title} width={600} height={400} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                        <Image src={resolveMediaUrl(relatedBlog.image)} alt={relatedBlog.title} width={600} height={400} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                     </div>
                                     <div className="blog-detail-related-content">
                                         <div className="blog-detail-related-meta">

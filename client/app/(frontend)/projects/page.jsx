@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useApi } from "@/hooks/useApi";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 const CATS = ["All", "High Rise", "Mall", "Residence", "Private House", "Office", "Public Facility", "Interior"];
 
@@ -61,7 +62,7 @@ export default function ProjectsPage() {
         if (categoryProjects.length > 0) {
             // Pick a random project for variety
             const randomProject = categoryProjects[Math.floor(Math.random() * categoryProjects.length)];
-            return (typeof randomProject.image === 'object' ? randomProject.image?.url : randomProject.image) || FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
+            return resolveMediaUrl(randomProject.image) || FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
         }
 
         return FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
@@ -186,7 +187,7 @@ export default function ProjectsPage() {
 
 function ProjectCard({ project, index }) {
     const variant = getEditorialVariant(project.id, index);
-    const imageSrc = (typeof project.image === 'object' ? project.image?.url : project.image) || FALLBACK_IMAGES[project.category] || FALLBACK_IMAGES["All"];
+    const imageSrc = resolveMediaUrl(project.image) || FALLBACK_IMAGES[project.category] || FALLBACK_IMAGES["All"];
 
     return (
         <Link

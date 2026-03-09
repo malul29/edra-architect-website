@@ -8,6 +8,7 @@ import Lightbox from "../../../../components/Lightbox";
 import ThumbnailCarousel from "../../../../components/ThumbnailCarousel";
 import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 export default function ProjectDetailPage({ params }) {
     const { id } = use(params);
@@ -47,14 +48,16 @@ export default function ProjectDetailPage({ params }) {
         } else if (Array.isArray(project.gallery)) {
             // Payload CMS format: [{imageUrl: "..."}, ...] or legacy flat strings
             galleryImages = project.gallery.map(item =>
-                typeof item === 'object' && item.image ? (typeof item.image === 'object' ? item.image.url : item.image) : (typeof item === 'object' && item.imageUrl ? item.imageUrl : item)
+                typeof item === 'object' && item.image
+                    ? resolveMediaUrl(item.image)
+                    : (typeof item === 'object' && item.imageUrl ? resolveMediaUrl(item.imageUrl) : resolveMediaUrl(item))
             );
         }
     }
 
     // If no gallery, use main image
     if (galleryImages.length === 0 && project?.image) {
-        galleryImages = [typeof project.image === 'object' ? project.image?.url : project.image];
+        galleryImages = [resolveMediaUrl(project.image)];
     }
 
     const handleOpenLightbox = (index) => {
@@ -91,7 +94,7 @@ export default function ProjectDetailPage({ params }) {
             {/* Hero Section */}
             <section className="project-detail-hero">
                 <div className="project-detail-hero-img">
-                    <Image src={typeof project.image === 'object' ? project.image?.url : project.image} alt={project.title} fill style={{ objectFit: "cover" }} priority />
+                    <Image src={resolveMediaUrl(project.image)} alt={project.title} fill style={{ objectFit: "cover" }} priority />
                 </div>
                 <div className="project-detail-hero-overlay" />
                 <div className="project-detail-hero-content">

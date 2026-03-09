@@ -8,6 +8,7 @@ import gsap from "gsap";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { FocusRail } from "@/components/ui/focus-rail";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 const HERO_IMG = "/hero.jpg";
 
@@ -152,7 +153,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         id: p.id,
         title: p.title,
         description: p.location || "Selected architectural project",
-        imageSrc: typeof p.image === "object" ? p.image?.url : p.image,
+        imageSrc: resolveMediaUrl(p.image),
         href: `/project/${p.slug || p.id}`,
         meta: p.category || "Project",
     })).filter((item) => Boolean(item.imageSrc));

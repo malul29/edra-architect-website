@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useApi } from "@/hooks/useApi";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 export default function BlogsPage() {
     const { data, loading } = useApi("/blogs");
@@ -61,7 +62,7 @@ export default function BlogsPage() {
                         <article className="journal-featured">
                             <Link href={`/blog/${featuredBlog.id}`} className="journal-featured-link">
                                 <div className="journal-featured-image">
-                                    <Image src={typeof featuredBlog.image === 'object' ? featuredBlog.image?.url : featuredBlog.image} alt={featuredBlog.title} fill style={{ objectFit: "cover" }} />
+                                    <Image src={resolveMediaUrl(featuredBlog.image)} alt={featuredBlog.title} fill style={{ objectFit: "cover" }} />
                                     <div className="journal-featured-overlay">
                                         <div className="journal-featured-meta">
                                             <span className="journal-featured-category">{featuredBlog.tag}</span>
@@ -133,7 +134,7 @@ export default function BlogsPage() {
                                 <article className="journal-card" key={blog.id}>
                                     <Link href={`/blog/${blog.id}`} className="journal-card-link">
                                         <div className="journal-card-image">
-                                            <Image src={typeof blog.image === 'object' ? blog.image?.url : blog.image} alt={blog.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} />
+                                            <Image src={resolveMediaUrl(blog.image)} alt={blog.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} />
                                         </div>
                                         <div className="journal-card-content">
                                             <div className="journal-card-meta">
