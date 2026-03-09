@@ -5,5 +5,4 @@ dist/
 .next/
 
 # Payload CMS
-client/media/
 client/payload-types.ts
