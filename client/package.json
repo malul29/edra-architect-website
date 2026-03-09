@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start -H 0.0.0.0",
+    "start": "node .next/standalone/server.js",
     "generate:importmap": "node --experimental-strip-types node_modules/payload/dist/bin/index.js generate:importmap",
     "seed": "node --experimental-strip-types seed.ts"
   },

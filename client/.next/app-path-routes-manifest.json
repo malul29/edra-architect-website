@@ -1,13 +1,13 @@
 {
   "/_not-found/page": "/_not-found",
   "/(payload)/api/[...slug]/route": "/api/[...slug]",
+  "/(payload)/admin/[[...segments]]/page": "/admin/[[...segments]]",
   "/(frontend)/about/page": "/about",
   "/(frontend)/blog/[id]/page": "/blog/[id]",
   "/(frontend)/blogs/page": "/blogs",
-  "/(frontend)/project/[id]/page": "/project/[id]",
   "/(frontend)/contact/page": "/contact",
   "/(frontend)/projects/page": "/projects",
+  "/(frontend)/project/[id]/page": "/project/[id]",
   "/(frontend)/services/page": "/services",
-  "/(frontend)/page": "/",
-  "/(payload)/admin/[[...segments]]/page": "/admin/[[...segments]]"
+  "/(frontend)/page": "/"
 }
