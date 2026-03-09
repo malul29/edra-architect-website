@@ -917,9 +917,17 @@ section {
   top: -7.5%;
   object-fit: cover;
   filter: brightness(.78);
-  will-change: transform;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  z-index: 0;
+}
+
+.hero-img-active {
+  opacity: 1;
+  z-index: 1;
 }
 
 .hero-shade {

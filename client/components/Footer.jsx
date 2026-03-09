@@ -40,7 +40,7 @@ export default function Footer() {
                     <path d="M9.75 15.02l5.75-3.27-5.75-3.27v6.54z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </a>
-                <a href="mailto:studio@edra-architects.com" className="social-link" aria-label="Email">
+                <a href="mailto:admin@edraarsitek.co.id" className="social-link" aria-label="Email">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M22 6l-10 7L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -88,7 +88,7 @@ export default function Footer() {
                 </div>
                 <div className="contact-item">
                   <span className="contact-label">Email</span>
-                  <a href="mailto:info@edraarchitects.id">info@edraarchitects.id</a>
+                  <a href="mailto:admin@edraarsitek.co.id">admin@edraarsitek.co.id</a>
                 </div>
               </div>
             </div>

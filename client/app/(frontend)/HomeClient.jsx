@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useApi } from "@/hooks/useApi";
@@ -11,26 +11,29 @@ import { FocusRail } from "@/components/ui/focus-rail";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 const HERO_IMG = "/hero.jpg";
+const HERO_INTERVAL = 15000; // 15 seconds
 
 export default function HomeClient({ initialPortfolio, initialServices }) {
     const portfolio = initialPortfolio;
     const services = initialServices;
     const heroRef = useRef(null);
+    const [heroIndex, setHeroIndex] = useState(0);
 
     // Subtle parallax on hero with mouse move
     useEffect(() => {
         const el = heroRef.current;
         if (!el) return;
-        const img = el.querySelector(".hero-img");
-        if (!img) return;
+        const getActiveImg = () => el.querySelector(".hero-img-active");
 
         let currentScrollY = window.scrollY;
         let ticking = false;
 
+        const applyTransform = (img, transform) => { if (img) img.style.transform = transform; };
+
         if (currentScrollY > window.innerHeight * 0.2) {
-            img.style.transform = `scale(1.04) translateY(${currentScrollY * 0.12}px)`;
+            applyTransform(getActiveImg(), `scale(1.04) translateY(${currentScrollY * 0.12}px)`);
         } else {
-            img.style.transform = `scale(1.04) translate(0px, 0px)`;
+            applyTransform(getActiveImg(), `scale(1.04) translate(0px, 0px)`);
         }
 
         let mouseX = 0;
@@ -38,6 +41,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         let mouseAnimFrame = null;
 
         const updateMouseParallax = () => {
+            const img = getActiveImg();
             if (!img || currentScrollY > window.innerHeight * 0.2) return;
             const moveX = mouseX * 2;
             const moveY = mouseY * 2;
@@ -59,6 +63,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         };
 
         const updateScrollParallax = () => {
+            const img = getActiveImg();
             if (!img) { ticking = false; return; }
             if (currentScrollY > window.innerHeight * 0.2) {
                 const translateY = currentScrollY * 0.12;
@@ -158,6 +163,20 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         meta: p.category || "Project",
     })).filter((item) => Boolean(item.imageSrc));
 
+    // Build hero images from first 7 rail items (fallback to static hero)
+    const heroImages = railItems.length > 0
+        ? railItems.slice(0, 7).map((item) => item.imageSrc)
+        : [HERO_IMG];
+
+    // Rotate hero image every 15 seconds
+    useEffect(() => {
+        if (heroImages.length <= 1) return;
+        const timer = setInterval(() => {
+            setHeroIndex((prev) => (prev + 1) % heroImages.length);
+        }, HERO_INTERVAL);
+        return () => clearInterval(timer);
+    }, [heroImages.length]);
+
     const scrollToProjects = () => {
         const projectsSection = document.querySelector('.home-focus-rail-section');
         if (projectsSection) {
@@ -170,14 +189,17 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
             <Header />
             {/* ── HERO ── */}
             <section className="hero" ref={heroRef}>
-                <Image
-                    className="hero-img"
-                    src={HERO_IMG}
-                    alt="Featured project – EDRA Architect"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                />
+                {heroImages.map((src, i) => (
+                    <Image
+                        key={src}
+                        className={`hero-img${i === heroIndex ? ' hero-img-active' : ''}`}
+                        src={src}
+                        alt={`EDRA Architect project ${i + 1}`}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        priority={i === 0}
+                    />
+                ))}
                 <div className="hero-shade" />
                 <div className="hero-bottom">
                     <span className="hero-meta">EDRA Arsitek— Jakarta, Indonesia</span>

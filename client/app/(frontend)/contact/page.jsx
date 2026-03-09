@@ -12,7 +12,12 @@ export default function ContactPage() {
 
     const submit = (e) => {
         e.preventDefault();
-        // In a real project, POST to /api/contact or an email service
+        // Send form data via mailto to admin
+        const subject = encodeURIComponent(`New Inquiry: ${form.service || 'General'} - ${form.name}`);
+        const body = encodeURIComponent(
+            `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || '-'}\nService: ${form.service || '-'}\n\nMessage:\n${form.message}`
+        );
+        window.location.href = `mailto:admin@edraarsitek.co.id?subject=${subject}&body=${body}`;
         setSent(true);
     };
 
@@ -101,7 +106,7 @@ export default function ContactPage() {
                                 </span>
                                 <div className="git-row-content">
                                     <span className="git-row-label">Email</span>
-                                    <a href="mailto:info@edraarchitect.com" className="git-row-value git-link">info@edraarchitect.com</a>
+                                    <a href="mailto:admin@edraarsitek.co.id" className="git-row-value git-link">admin@edraarsitek.co.id</a>
                                 </div>
                             </div>
 
