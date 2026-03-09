@@ -23,12 +23,14 @@ const nextConfig = {
         ]
     },
     async rewrites() {
-        return [
-            {
-                source: '/api/media/file/:path*',
-                destination: '/media/:path*',
-            },
-        ]
+        return {
+            beforeFiles: [
+                {
+                    source: '/api/media/file/:path*',
+                    destination: '/media/:path*',
+                },
+            ],
+        }
     },
     images: {
         remotePatterns: [
