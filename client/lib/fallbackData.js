@@ -3,7 +3,7 @@ export const fallbackServices = [
     {
         id: 1,
         title: "Architecture Design",
-        image: "https://leadesign.com.au/wp-content/uploads/2018/11/lea-design-studio-gold-coast-blog-reading-architectural-drawings-101-part-a-header-1080x675.jpg",
+        image: "/media/gateway-pasteur-bandung-main.png",
         description: "We provide a full range of Architectural Services including: Plot Research, Architectural Design, Technical Consultancy, Conservation Services, External Works and Landscaping Services.",
         features: [
             { feature: "Concept Development" },
@@ -15,7 +15,7 @@ export const fallbackServices = [
     {
         id: 2,
         title: "Interior Design",
-        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2500&auto=format&fit=crop",
+        image: "/media/la-montana-apartment-main.png",
         description: "Creating bespoke interior environments that reflect your personality and lifestyle.",
         features: [
             { feature: "Spatial Planning" },
@@ -27,7 +27,7 @@ export const fallbackServices = [
     {
         id: 3,
         title: "Project Management",
-        image: "https://www.esade.edu/wp-content/uploads/2025/01/herramienta-gestion-proyectos.jpg",
+        image: "/media/the-mansion-main.png",
         description: "Comprehensive project management for residential, commercial, and public facilities.",
         features: [
             { feature: "Cost Estimation & Budgeting" },
@@ -39,7 +39,7 @@ export const fallbackServices = [
     {
         id: 4,
         title: "Construction",
-        image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
+        image: "/media/tod-poris-plawad-gallery-0.png",
         description: "Expert construction services with a focus on precision and quality.",
         features: [
             { feature: "Site Supervision" },

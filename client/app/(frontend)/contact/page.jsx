@@ -5,20 +5,33 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function ContactPage() {
-    const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+    const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
     const [sent, setSent] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState("");
 
     const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        // Send form data via mailto to admin
-        const subject = encodeURIComponent(`New Inquiry: ${form.service || 'General'} - ${form.name}`);
-        const body = encodeURIComponent(
-            `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || '-'}\nService: ${form.service || '-'}\n\nMessage:\n${form.message}`
-        );
-        window.location.href = `mailto:admin@edraarsitek.co.id?subject=${subject}&body=${body}`;
-        setSent(true);
+        setSubmitting(true);
+        setError("");
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(form),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || "Failed to submit");
+            }
+            setSent(true);
+        } catch (err) {
+            setError(err.message || "Something went wrong. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     // Scroll to main section if hash is present
@@ -80,19 +93,6 @@ export default function ContactPage() {
                                 <div className="git-row-content">
                                     <span className="git-row-label">Head Office</span>
                                     <span className="git-row-value">Jakarta, Indonesia</span>
-                                </div>
-                            </div>
-
-                            {/* Phone */}
-                            <div className="git-row">
-                                <span className="git-row-icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.89 10.8 19.79 19.79 0 01.82 2.18 2 2 0 012.82 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.61a16 16 0 006.29 6.29l.98-.97a2 2 0 012.1-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </span>
-                                <div className="git-row-content">
-                                    <span className="git-row-label">Phone</span>
-                                    <a href="tel:+622182763100" className="git-row-value git-link">+62-21-82763100</a>
                                 </div>
                             </div>
 
@@ -179,16 +179,6 @@ export default function ContactPage() {
                                 </div>
 
                                 <div className="form-field">
-                                    <label>Phone Number</label>
-                                    <input
-                                        name="phone"
-                                        placeholder="+62 …"
-                                        value={form.phone}
-                                        onChange={handle}
-                                    />
-                                </div>
-
-                                <div className="form-field">
                                     <label>Service Interest</label>
                                     <select name="service" value={form.service} onChange={handle}>
                                         <option value="">Select a service…</option>
@@ -212,9 +202,10 @@ export default function ContactPage() {
                                     />
                                 </div>
 
-                                <button type="submit" className="btn-submit-contact">
-                                    Submit Inquiry
+                                <button type="submit" className="btn-submit-contact" disabled={submitting}>
+                                    {submitting ? "Submitting…" : "Submit Inquiry"}
                                 </button>
+                                {error && <p style={{ color: "#e74c3c", marginTop: "1rem", fontSize: "0.9rem" }}>{error}</p>}
                             </form>
                         )}
                     </div>

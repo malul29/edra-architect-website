@@ -22,8 +22,12 @@ export function resolveMediaUrl(media) {
   }
 
   if (typeof media === "object") {
-    const candidate = media.url || media.filename || media.thumbnailURL || media?.sizes?.full?.url;
-    return normalizeMediaUrl(candidate || FALLBACK_MEDIA_URL);
+    const candidate = media.url || media.filename;
+    if (candidate) return normalizeMediaUrl(candidate);
+    // Try sizes
+    const sizeUrl = media?.sizes?.full?.url || media?.sizes?.card?.url || media?.sizes?.thumbnail?.url;
+    if (sizeUrl) return normalizeMediaUrl(sizeUrl);
+    return FALLBACK_MEDIA_URL;
   }
 
   return FALLBACK_MEDIA_URL;
