@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const FULL_WIDTH_PX = 110;
 const COLLAPSED_WIDTH_PX = 32;
@@ -38,11 +39,14 @@ function LightboxThumbs({ images, currentIndex, onGoTo }) {
                         transition={{ duration: 0.28, ease: "easeOut" }}
                         className={`lightbox-thumb${i === currentIndex ? " lightbox-thumb-active" : ""}`}
                     >
-                        <img
+                        <Image
                             src={img}
                             alt={`Thumbnail ${i + 1}`}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none", userSelect: "none", display: "block" }}
-                            draggable={false}
+                            fill
+                            sizes="110px"
+                            style={{ objectFit: "cover", pointerEvents: "none", userSelect: "none" }}
+                            loading="lazy"
+                            quality={50}
                         />
                     </motion.button>
                 ))}
@@ -98,10 +102,15 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
         )}
 
         <div className="lightbox-content">
-          <img
+          <Image
             src={currentImage}
             alt={`Gallery image ${currentIndex + 1}`}
             className="lightbox-image"
+            width={1920}
+            height={1080}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto", maxHeight: "100%", objectFit: "contain" }}
+            quality={85}
           />
         </div>
 

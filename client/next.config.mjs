@@ -6,20 +6,16 @@ const nextConfig = {
         optimizePackageImports: ['framer-motion', 'gsap'],
     },
     async headers() {
-        const noStore = {
-            key: 'Cache-Control',
-            value: 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
-        }
-
         return [
-            { source: '/', headers: [noStore] },
-            { source: '/about', headers: [noStore] },
-            { source: '/services', headers: [noStore] },
-            { source: '/projects', headers: [noStore] },
-            { source: '/project/:id*', headers: [noStore] },
-            { source: '/blogs', headers: [noStore] },
-            { source: '/blog/:id*', headers: [noStore] },
-            { source: '/contact', headers: [noStore] },
+            {
+                source: '/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, s-maxage=60, stale-while-revalidate=300',
+                    },
+                ],
+            },
         ]
     },
     async rewrites() {
@@ -33,6 +29,10 @@ const nextConfig = {
         }
     },
     images: {
+        formats: ['image/avif', 'image/webp'],
+        deviceSizes: [640, 828, 1080, 1200, 1920],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256],
+        minimumCacheTTL: 31536000,
         remotePatterns: [
             {
                 protocol: 'https',

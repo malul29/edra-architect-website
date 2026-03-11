@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Image from "next/image";
 
 const WORDS = ["Design.", "Build.", "Inspire."];
 
@@ -159,15 +160,18 @@ export default function IntroAnimation({ onComplete }) {
                         transformOrigin: "center center",
                     }}
                 >
-                    <img
+                    <Image
                         src="/edra-logo.png"
                         alt="EDRA Arsitek Indonesia"
+                        width={340}
+                        height={120}
                         style={{
                             width: "100%",
                             height: "auto",
                             filter: "invert(1) brightness(10)",
                             display: "block",
                         }}
+                        priority
                     />
                 </div>
             </div>

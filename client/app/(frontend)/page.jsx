@@ -12,10 +12,10 @@ export const metadata = {
 export default async function Home() {
     const payload = await getPayload({ config });
 
-    // Fetch portfolio
+    // Fetch portfolio - only need a few for the hero carousel
     const portfolioRes = await payload.find({
         collection: "portfolio",
-        limit: 100,
+        limit: 10,
         sort: "-createdAt",
     });
 

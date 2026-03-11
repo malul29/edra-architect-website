@@ -163,9 +163,9 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         meta: p.category || "Project",
     })).filter((item) => Boolean(item.imageSrc));
 
-    // Build hero images from first 7 rail items (fallback to static hero)
+    // Build hero images from first 3 rail items (fallback to static hero)
     const heroImages = railItems.length > 0
-        ? railItems.slice(0, 7).map((item) => item.imageSrc)
+        ? railItems.slice(0, 3).map((item) => item.imageSrc)
         : [HERO_IMG];
 
     // Rotate hero image every 15 seconds
@@ -196,8 +196,11 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                         src={src}
                         alt={`EDRA Architect project ${i + 1}`}
                         fill
+                        sizes="100vw"
                         style={{ objectFit: "cover" }}
                         priority={i === 0}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        quality={75}
                     />
                 ))}
                 <div className="hero-shade" />
@@ -291,7 +294,10 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                                 alt="EDRA Architecture"
                                 className="home-about-image"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
                                 style={{ objectFit: "cover" }}
+                                loading="lazy"
+                                quality={75}
                             />
                             <div className="home-about-overlay"></div>
                         </div>
@@ -325,24 +331,20 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                 <div className="container">
                     <h2 className="section-title reveal reveal-up">Our Services</h2>
                     <div className="home-services-grid">
-                        {[
-                            {
-                                title: "Architecture",
-                                id: 1,
-                                description: "Full range of architectural services including design, technical consultancy, interior design, and conservation services."
-                            },
-                            {
-                                title: "Management",
-                                id: 2,
-                                description: "Project management for residential, commercial and public facilities with full service from concept to completion."
-                            },
-                            {
-                                title: "Construction",
-                                id: 3,
-                                description: "Strong construction project management with outstanding implementation and flawless delivery on time and budget."
-                            },
-                        ].map((service, i) => (
+                        {(services || []).slice(0, 3).map((service, i) => (
                             <div className="home-service-card modern reveal reveal-up" key={service.id} style={{ transitionDelay: `${i * 0.15}s` }}>
+                                <div className="home-service-bg">
+                                    <Image
+                                        src={resolveMediaUrl(service.image)}
+                                        alt={service.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        style={{ objectFit: "cover" }}
+                                        loading="lazy"
+                                        quality={75}
+                                    />
+                                </div>
+                                <div className="home-service-overlay" />
                                 <div className="home-service-content relative-content">
                                     <h3 className="home-service-title">{service.title}</h3>
                                     <p className="home-service-description">{service.description}</p>
@@ -395,7 +397,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                             ])
                             .map((client, index) => (
                                 <div className="client-logo-item" key={index}>
-                                    <Image src={client.logo} alt={client.name} width={150} height={100} style={{ objectFit: "contain" }} />
+                                    <Image src={client.logo} alt={client.name} width={150} height={100} style={{ objectFit: "contain" }} loading="lazy" quality={60} />
                                 </div>
                             ))}
                     </div>

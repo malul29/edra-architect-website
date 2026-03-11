@@ -48,6 +48,8 @@ function Thumbnails({ images, index, setIndex }) {
                             fill
                             style={{ objectFit: "cover", pointerEvents: "none", userSelect: "none" }}
                             sizes="120px"
+                            loading="lazy"
+                            quality={50}
                         />
                     </motion.button>
                 ))}
@@ -109,6 +111,8 @@ export default function ThumbnailCarousel({ images, onImageClick }) {
                                 style={{ objectFit: "cover", userSelect: "none", pointerEvents: "none" }}
                                 sizes="(max-width: 900px) 100vw, 900px"
                                 priority={i === 0}
+                                loading={i === 0 ? "eager" : "lazy"}
+                                quality={75}
                                 draggable={false}
                             />
                             <div className="tcarousel-slide-overlay">

@@ -73,9 +73,18 @@ export default function ProjectsPage() {
             <Header />
             {/* Hero Section */}
             <section className="services-hero" style={{
-                background: `url(${heroImage}) center/cover no-repeat`,
-                position: "relative"
+                position: "relative",
+                overflow: "hidden"
             }}>
+                <Image
+                    src={heroImage}
+                    alt={heroTitle}
+                    fill
+                    sizes="100vw"
+                    style={{ objectFit: "cover" }}
+                    priority
+                    quality={75}
+                />
                 {/* Dark overlay for readability */}
                 <div style={{
                     position: "absolute",
@@ -203,6 +212,8 @@ function ProjectCard({ project, index }) {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="project-masonry-image"
+                    loading="lazy"
+                    quality={75}
                 />
                 <div className="project-masonry-overlay">
                     <h3 className="project-masonry-title">

@@ -62,7 +62,7 @@ function renderLexicalContent(node, key) {
             if (imgUrl) {
                 return (
                     <div key={key} className="blog-detail-image-single">
-                        <Image src={imgUrl} alt={node.value?.alt || 'Article image'} width={1200} height={700} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                        <Image src={imgUrl} alt={node.value?.alt || 'Article image'} width={1200} height={700} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 720px" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} loading="lazy" quality={75} />
                     </div>
                 );
             }
@@ -128,7 +128,7 @@ export default function BlogDetailPage({ params }) {
             case "image":
                 return (
                     <div key={block.id} className="blog-detail-image-single">
-                        <Image src={normalizeMediaUrl(block.content)} alt={block.caption || "Article image"} width={1200} height={700} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                        <Image src={normalizeMediaUrl(block.content)} alt={block.caption || "Article image"} width={1200} height={700} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 720px" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} loading="lazy" quality={75} />
                         {block.caption && (
                             <p className="blog-detail-image-caption">{block.caption}</p>
                         )}
@@ -141,7 +141,7 @@ export default function BlogDetailPage({ params }) {
                         {block.content.map((img, idx) => (
                             img && (
                                 <div key={idx} className="blog-detail-image-grid-item">
-                                    <Image src={normalizeMediaUrl(img)} alt={`Grid image ${idx + 1}`} width={700} height={500} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                    <Image src={normalizeMediaUrl(img)} alt={`Grid image ${idx + 1}`} width={700} height={500} sizes="(max-width: 768px) 100vw, 50vw" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} loading="lazy" quality={75} />
                                 </div>
                             )
                         ))}

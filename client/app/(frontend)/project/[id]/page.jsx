@@ -94,7 +94,7 @@ export default function ProjectDetailPage({ params }) {
             {/* Hero Section */}
             <section className="project-detail-hero">
                 <div className="project-detail-hero-img">
-                    <Image src={resolveMediaUrl(project.image)} alt={project.title} fill style={{ objectFit: "cover" }} priority />
+                    <Image src={resolveMediaUrl(project.image)} alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
                 </div>
                 <div className="project-detail-hero-overlay" />
                 <div className="project-detail-hero-content">

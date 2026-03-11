@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="footer-brand">
               <Link href="/" className="footer-logo-link">
-                <img src="/edra-logo.png" alt="EDRA Arsitek Indonesia" className="footer-logo" />
+                <Image src="/edra-logo.png" alt="EDRA Arsitek Indonesia" className="footer-logo" width={120} height={40} loading="lazy" />
               </Link>
               <p className="footer-tagline">
                 SHAPING INDONESIA'S ARCHITECTURAL LANDSCAPE FOR OVER 25 YEARS

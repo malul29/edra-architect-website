@@ -56,6 +56,8 @@ export default function ServicesPage() {
                                             fill
                                             sizes="(max-width: 1024px) 100vw, 48vw"
                                             style={{ objectFit: "cover" }}
+                                            loading="lazy"
+                                            quality={75}
                                         />
                                         <div className="service-panel-media-overlay"></div>
                                         <div className="service-panel-index">{String(index + 1).padStart(2, "0")}</div>

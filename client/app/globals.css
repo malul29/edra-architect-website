@@ -5884,6 +5884,7 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 .project-detail-container {
   max-width: var(--max);
   margin: 0 auto;
+  padding: 0 var(--px);
 }
 
 .project-detail-desc-content {
@@ -6107,6 +6108,9 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
   object-fit: contain;
   border-radius: 4px;
   display: block;
+  width: auto !important;
+  height: auto !important;
+  position: relative !important;
 }
 
 /* Footer: counter + thumbnails */
@@ -6313,7 +6317,7 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 .tcarousel-slide {
   flex-shrink: 0;
   width: 100%;
-  height: 560px;
+  aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -6438,7 +6442,7 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 /* Responsive */
 @media (max-width: 768px) {
   .tcarousel-slide {
-    height: 260px;
+    aspect-ratio: 4 / 3;
   }
 
   .tcarousel-strip-inner {

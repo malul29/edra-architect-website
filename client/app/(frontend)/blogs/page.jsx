@@ -62,7 +62,7 @@ export default function BlogsPage() {
                         <article className="journal-featured">
                             <Link href={`/blog/${featuredBlog.id}`} className="journal-featured-link">
                                 <div className="journal-featured-image">
-                                    <Image src={resolveMediaUrl(featuredBlog.image)} alt={featuredBlog.title} fill style={{ objectFit: "cover" }} />
+                                    <Image src={resolveMediaUrl(featuredBlog.image)} alt={featuredBlog.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
                                     <div className="journal-featured-overlay">
                                         <div className="journal-featured-meta">
                                             <span className="journal-featured-category">{featuredBlog.tag}</span>
@@ -134,7 +134,7 @@ export default function BlogsPage() {
                                 <article className="journal-card" key={blog.id}>
                                     <Link href={`/blog/${blog.id}`} className="journal-card-link">
                                         <div className="journal-card-image">
-                                            <Image src={resolveMediaUrl(blog.image)} alt={blog.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} />
+                                            <Image src={resolveMediaUrl(blog.image)} alt={blog.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} loading="lazy" quality={75} />
                                         </div>
                                         <div className="journal-card-content">
                                             <div className="journal-card-meta">
