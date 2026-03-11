@@ -3,12 +3,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useApi } from "@/hooks/useApi";
 import gsap from "gsap";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SafeImage from "@/components/SafeImage";
 import { FocusRail } from "@/components/ui/focus-rail";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
+
+const SERVICE_FALLBACKS = [
+    "/media/gateway-pasteur-bandung-main.png",
+    "/media/la-montana-apartment-main.png",
+    "/media/the-mansion-main.png",
+    "/media/tod-poris-plawad-gallery-0.png",
+];
 
 const HERO_IMG = "/hero.jpg";
 const HERO_INTERVAL = 15000; // 15 seconds
@@ -334,8 +341,9 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                         {(services || []).slice(0, 3).map((service, i) => (
                             <div className="home-service-card modern reveal reveal-up" key={service.id} style={{ transitionDelay: `${i * 0.15}s` }}>
                                 <div className="home-service-bg">
-                                    <Image
+                                    <SafeImage
                                         src={resolveMediaUrl(service.image)}
+                                        fallbackSrc={SERVICE_FALLBACKS[i % SERVICE_FALLBACKS.length]}
                                         alt={service.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 33vw"
