@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import YodezeenButton from "./YodezeenButton";
 
@@ -134,7 +135,7 @@ export default function Header() {
         </nav>
 
         <Link href="/" className="brand">
-          <img src="/edra-logo.png" alt="EDRA Arsitek Indonesia" className="brand-logo" />
+          <Image src="/edra-logo.png" alt="EDRA Arsitek Indonesia" className="brand-logo" width={120} height={40} priority quality={75} />
         </Link>
 
         {/* Desktop Right Nav */}

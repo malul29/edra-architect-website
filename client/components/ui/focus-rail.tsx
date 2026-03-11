@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export type FocusRailItem = {
@@ -146,10 +147,14 @@ export function FocusRail({
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="focus-rail-bg-image-wrap"
           >
-            <img
+            <Image
               src={activeItem.imageSrc}
               alt=""
               className="focus-rail-bg-image"
+              fill
+              sizes="100vw"
+              quality={30}
+              priority={false}
             />
             <div className="focus-rail-bg-overlay" />
           </motion.div>
@@ -207,10 +212,14 @@ export function FocusRail({
                   if (offset !== 0) setActive((p) => p + offset);
                 }}
               >
-                <img
+                <Image
                   src={item.imageSrc}
                   alt={item.title}
                   className="focus-rail-card-image"
+                  fill
+                  sizes="(max-width: 768px) 80vw, 400px"
+                  quality={75}
+                  priority={isCenter}
                 />
                 <div className="focus-rail-card-light" />
                 <div className="focus-rail-card-shade" />

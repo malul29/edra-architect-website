@@ -1345,8 +1345,9 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 }
 
 .focus-rail-bg-image {
-  height: 100%;
-  width: 100%;
+  position: absolute !important;
+  height: 100% !important;
+  width: 100% !important;
   object-fit: cover;
   filter: blur(44px) saturate(1.7);
   transform: scale(1.1);
@@ -1406,8 +1407,9 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 }
 
 .focus-rail-card-image {
-  height: 100%;
-  width: 100%;
+  position: absolute !important;
+  height: 100% !important;
+  width: 100% !important;
   object-fit: cover;
   pointer-events: none;
 }
