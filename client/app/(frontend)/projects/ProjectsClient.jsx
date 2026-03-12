@@ -76,7 +76,7 @@ export default function ProjectsClient({ initialData }) {
                 <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1 }} />
                 <div className="services-hero-content" style={{ position: "relative", zIndex: 2 }}>
                     <p className="services-hero-label">OUR PROJECTS</p>
-                    <h1 className="services-hero-title" style={{ fontSize: "clamp(2rem, 7vw, 8rem)", whiteSpace: "nowrap" }}>{heroTitle}</h1>
+                    <h1 className="services-hero-title" style={{ fontSize: "clamp(1.8rem, 3.5vw, 4rem)" }}>{heroTitle}</h1>
                 </div>
             </section>
 
@@ -180,14 +180,18 @@ function ProjectCard({ project, index }) {
     );
 }
 
+// Pattern repeats every 8 cards; only span-1 and span-2 cols used
+// so the 4-column grid always stays balanced (no orphan columns).
+// Row logic: [std std std std] [feat-- std std] [std std land--] ...
 function getEditorialVariant(id, index) {
     const slot = index % 8;
     const seed = hashId(`${id}-${index}`);
+    // slot 0: feature (2-col) – anchors every cycle
     if (slot === 0) return "feature";
-    if (slot === 3) return seed % 100 < 78 ? "wide" : "landscape";
-    if (slot === 6) return seed % 100 < 74 ? "tall" : "standard";
-    if (slot === 2 || slot === 7) return seed % 100 < 60 ? "landscape" : "standard";
-    if (slot === 4 && seed % 100 < 16) return "wide";
+    // slot 5: wide (2-col) – second accent per cycle
+    if (slot === 5) return "wide";
+    // occasional subtle variety in remaining single-col cards
+    if ((slot === 2 || slot === 7) && seed % 100 < 40) return "tall";
     return "standard";
 }
 
