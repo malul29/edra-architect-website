@@ -5,7 +5,7 @@
 
 import 'dotenv/config'
 import { getPayload } from 'payload'
-import config from './payload.config'
+import config from './payload.config.ts'
 import path from 'path'
 import fs from 'fs'
 import os from 'os'

@@ -19,4 +19,4 @@ export default async function BlogsPage() {
     const blogs = blogsRes.docs || [];
     return <BlogsClient initialBlogs={blogs} />;
 }
-
+

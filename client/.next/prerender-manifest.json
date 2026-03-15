@@ -1,7 +1,12 @@
 {
   "version": 4,
   "routes": {
-    "/blogs": {
+    "/sitemap.xml": {
+      "initialHeaders": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "application/xml",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/sitemap.xml/layout,_N_T_/sitemap.xml/route,_N_T_/sitemap.xml"
+      },
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -14,8 +19,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blogs",
-      "dataRoute": "/blogs.rsc",
+      "srcRoute": "/sitemap.xml",
+      "dataRoute": null,
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -64,6 +69,30 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/about",
       "dataRoute": "/about.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/blogs": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/blogs",
+      "dataRoute": "/blogs.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -149,8 +178,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "2b10e760a23e50ad75e8fdc4768883ff",
-    "previewModeSigningKey": "1cd3d011aa4cc5936491db25a28563d70341c0d288eb05e8e38115a6e2d9255d",
-    "previewModeEncryptionKey": "0118079bd654ce7d21f3d0ff4c5903ddd550e1f202a7d69bfe2b9d2694b433b6"
+    "previewModeId": "6ff92cf062d2241c0be09d38f7a20ef2",
+    "previewModeSigningKey": "79b31e8435b8bddb94f7bf488f386cf12e4c4c901a7e6e743d962be83a5e337b",
+    "previewModeEncryptionKey": "fe07db89f1f714eab64c1aa7c2f565d3c91457e521cb23d8305fc45fc4a48879"
   }
 }

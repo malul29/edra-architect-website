@@ -1,13 +1,15 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/contact/route": "app/api/contact/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/(payload)/api/[...slug]/route": "app/(payload)/api/[...slug]/route.js",
   "/(payload)/admin/[[...segments]]/page": "app/(payload)/admin/[[...segments]]/page.js",
-  "/(frontend)/about/page": "app/(frontend)/about/page.js",
   "/(frontend)/blog/[id]/page": "app/(frontend)/blog/[id]/page.js",
-  "/(frontend)/blogs/page": "app/(frontend)/blogs/page.js",
+  "/(frontend)/about/page": "app/(frontend)/about/page.js",
   "/(frontend)/contact/page": "app/(frontend)/contact/page.js",
-  "/(frontend)/projects/page": "app/(frontend)/projects/page.js",
   "/(frontend)/project/[id]/page": "app/(frontend)/project/[id]/page.js",
+  "/(frontend)/blogs/page": "app/(frontend)/blogs/page.js",
+  "/(frontend)/page": "app/(frontend)/page.js",
   "/(frontend)/services/page": "app/(frontend)/services/page.js",
-  "/(frontend)/page": "app/(frontend)/page.js"
+  "/(frontend)/projects/page": "app/(frontend)/projects/page.js"
 }

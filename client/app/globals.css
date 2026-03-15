@@ -165,14 +165,14 @@ section {
 }
 
 .header.solid {
-  background-color: #1a1a1a;
+  background-color: rgba(26, 26, 26, 0.6);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
 .header.light,
 .header.solid.light {
-  background-color: rgba(245, 245, 245, 0.95) !important;
+  background-color: rgba(245, 245, 245, 0.75) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -1879,6 +1879,7 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 
 /* Responsive */
 @media (max-width: 1200px) {
+
   .service-panel,
   .service-panel:nth-child(even) {
     grid-template-columns: 1fr;
@@ -8997,6 +8998,7 @@ body {
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
   }
+
   .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -9030,17 +9032,21 @@ body {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
   }
+
   .theme {
     --font-sans: var(--font-sans);
   }
+
   * {
     border-color: var(--border);
     outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
+
   body {
     background: var(--background);
     color: var(--foreground);
   }
+
   html {
     font-family: var(--font-sans);
   }
