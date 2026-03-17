@@ -11,7 +11,7 @@ export const Media: CollectionConfig = {
         read: () => true,
     },
     upload: {
-        staticDir: path.resolve(__dirname, '../media'),
+        staticDir: path.resolve(__dirname, '../public/media'),
         imageSizes: [
             {
                 name: 'thumbnail',

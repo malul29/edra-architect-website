@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare:media": "node scripts/sync-media.mjs",
+    "predev": "npm run prepare:media",
+    "prebuild": "npm run prepare:media",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
