@@ -7,12 +7,26 @@ import SafeImage from "@/components/SafeImage";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 // Reliable local fallback images committed to git
-const SERVICE_FALLBACKS = [
-    "/media/gateway-pasteur-bandung-main.png",
-    "/media/la-montana-apartment-main.png",
-    "/media/the-mansion-main.png",
-    "/media/tod-poris-plawad-gallery-0.png",
-];
+const SERVICE_FALLBACKS = {
+    architecture: "/media/gateway-pasteur-bandung-main.png",
+    interior: "/media/la-montana-apartment-main.png",
+    management: "/media/the-mansion-main.png",
+    construction: "/media/tod-poris-plawad-gallery-0.png",
+    default: "/media/gateway-pasteur-bandung-main.png",
+};
+
+function getServiceFallback(service) {
+    const title = String(service?.title || "").toLowerCase();
+    const subtitle = String(service?.subtitle || "").toLowerCase();
+    const text = `${title} ${subtitle}`;
+
+    if (text.includes("interior")) return SERVICE_FALLBACKS.interior;
+    if (text.includes("management")) return SERVICE_FALLBACKS.management;
+    if (text.includes("construction")) return SERVICE_FALLBACKS.construction;
+    if (text.includes("architecture") || text.includes("architect")) return SERVICE_FALLBACKS.architecture;
+
+    return SERVICE_FALLBACKS.default;
+}
 
 export default function ServicesClient({ services }) {
     return (
@@ -47,7 +61,7 @@ export default function ServicesClient({ services }) {
                                 .slice(0, 4);
 
                             const imageSrc = resolveMediaUrl(service.image);
-                            const fallback = SERVICE_FALLBACKS[index % SERVICE_FALLBACKS.length];
+                            const fallback = getServiceFallback(service);
 
                             return (
                                 <article key={service.id} className="service-panel">
