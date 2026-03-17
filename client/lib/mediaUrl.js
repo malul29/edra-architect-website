@@ -3,6 +3,18 @@ const FALLBACK_MEDIA_URL = "/edra-logo.png";
 export function normalizeMediaUrl(url) {
   if (!url || typeof url !== "string") return FALLBACK_MEDIA_URL;
 
+  if (/^https?:\/\//i.test(url)) return url;
+
+  if (url.startsWith("/media/") || url.startsWith("/uploads/") || url.startsWith("/")) {
+    return url
+      .replace(/^\/api\/media\/file\//, "/media/")
+      .replace(/\/api\/media\/file\//, "/media/")
+      .replace(/^api\/media\/file\//, "/media/");
+  }
+
+  // Payload can return bare filenames in some environments.
+  if (!url.includes("/")) return `/media/${url}`;
+
   // Backward compatibility for legacy Payload media URLs.
   return url
     .replace(/^\/api\/media\/file\//, "/media/")
