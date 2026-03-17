@@ -207,7 +207,7 @@ const servicesData = [
     },
     {
         title: "Construction",
-        image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2400&auto=format&fit=crop",
         subtitle: "Precision delivery",
         description: "Full site supervision and quality control to ensure every design intent is translated to the built result with accuracy.",
         features: [

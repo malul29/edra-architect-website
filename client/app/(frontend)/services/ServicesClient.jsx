@@ -60,14 +60,15 @@ export default function ServicesClient({ services }) {
                                 .filter(Boolean)
                                 .slice(0, 4);
 
-                            const imageSrc = resolveMediaUrl(service.image);
                             const fallback = getServiceFallback(service);
+                            const imageSrc = resolveMediaUrl(service.image);
+                            const displaySrc = imageSrc === "/edra-logo.png" ? fallback : imageSrc;
 
                             return (
                                 <article key={service.id} className="service-panel">
                                     <div className="service-panel-media">
                                         <SafeImage
-                                            src={imageSrc}
+                                            src={displaySrc}
                                             fallbackSrc={fallback}
                                             alt={service.title}
                                             fill
