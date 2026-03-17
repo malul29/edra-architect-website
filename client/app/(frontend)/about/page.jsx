@@ -9,7 +9,7 @@ export default function AboutPage() {
     return (
         <>
             <Header />
-            <div className="about-page-redesign" style={{ paddingTop: "var(--header-h)" }}>
+            <div className="about-page-redesign">
 
                 {/* ── HERO ── */}
                 <section className="about-redesign-hero">

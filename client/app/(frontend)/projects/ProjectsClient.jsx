@@ -98,7 +98,6 @@ export default function ProjectsClient({ initialData }) {
                     priority
                     quality={75}
                 />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.36) 62%, rgba(230,230,232,0.9) 92%, #e6e6e8 100%)", zIndex: 1 }} />
                 <div className="services-hero-content" style={{ position: "relative", zIndex: 2 }}>
                     <p className="services-hero-label">OUR PROJECTS</p>
                     <h1 className="services-hero-title" style={{ fontSize: "clamp(1.8rem, 3.5vw, 4rem)" }}>{heroTitle}</h1>
