@@ -10,12 +10,26 @@ import SafeImage from "@/components/SafeImage";
 import { FocusRail } from "@/components/ui/focus-rail";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
-const SERVICE_FALLBACKS = [
-    "/media/gateway-pasteur-bandung-main.png",
-    "/media/la-montana-apartment-main.png",
-    "/media/the-mansion-main.png",
-    "/media/tod-poris-plawad-gallery-0.png",
-];
+const SERVICE_FALLBACKS = {
+    architecture: "/media/gateway-pasteur-bandung-main.png",
+    interior: "/media/la-montana-apartment-main.png",
+    management: "/media/the-mansion-main.png",
+    construction: "/media/tod-poris-plawad-gallery-0.png",
+    default: "/media/gateway-pasteur-bandung-main.png",
+};
+
+function getServiceFallback(service) {
+    const title = String(service?.title || "").toLowerCase();
+    const subtitle = String(service?.subtitle || "").toLowerCase();
+    const text = `${title} ${subtitle}`;
+
+    if (text.includes("interior")) return SERVICE_FALLBACKS.interior;
+    if (text.includes("management")) return SERVICE_FALLBACKS.management;
+    if (text.includes("construction")) return SERVICE_FALLBACKS.construction;
+    if (text.includes("architecture") || text.includes("architect")) return SERVICE_FALLBACKS.architecture;
+
+    return SERVICE_FALLBACKS.default;
+}
 
 const HERO_IMG = "/hero.jpg";
 const HERO_INTERVAL = 15000; // 15 seconds
@@ -338,12 +352,17 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                 <div className="container">
                     <h2 className="section-title reveal reveal-up">Our Services</h2>
                     <div className="home-services-grid">
-                        {(services || []).slice(0, 3).map((service, i) => (
+                        {(services || []).slice(0, 3).map((service, i) => {
+                            const fallback = getServiceFallback(service);
+                            const imageSrc = resolveMediaUrl(service.image);
+                            const displaySrc = imageSrc === "/edra-logo.png" ? fallback : imageSrc;
+
+                            return (
                             <div className="home-service-card modern reveal reveal-up" key={service.id} style={{ transitionDelay: `${i * 0.15}s` }}>
                                 <div className="home-service-bg">
                                     <SafeImage
-                                        src={resolveMediaUrl(service.image)}
-                                        fallbackSrc={SERVICE_FALLBACKS[i % SERVICE_FALLBACKS.length]}
+                                        src={displaySrc}
+                                        fallbackSrc={fallback}
                                         alt={service.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 33vw"
@@ -358,7 +377,8 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                                     <p className="home-service-description">{service.description}</p>
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div className="home-services-button-wrapper reveal reveal-up" style={{ transitionDelay: '0.45s' }}>
                         <Link href="/services" className="liquid-glass-button">

@@ -4,6 +4,8 @@ import { getPayload } from "payload";
 import HomeClient from "./HomeClient";
 import { fallbackServices } from "@/lib/fallbackData";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
     title: "Edra Arsitek Indonesia",
     description: "Edra Arsitek Indonesia - Innovative & Inspiring Design Solutions",
