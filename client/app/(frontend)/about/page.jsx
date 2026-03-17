@@ -37,10 +37,10 @@ export default function AboutPage() {
                                     for over 25 years, transforming ideas into iconic spaces across Indonesia.
                                 </p>
                                 <p>
-                                    What began as a small studio in Bekasi, West Java, has grown into a comprehensive
-                                    design and construction management firm. We specialize in real estate, apartments,
-                                    hotels, and office buildings, providing professional services from project visioning
-                                    through construction.
+                                    PT. EDRA Arsitek Indonesia was established in 1999 as an architect studio.
+                                    With 25+ years of experience, PT. EDRA Arsitek Indonesia providing services in
+                                    planning, concept design, project supervision, tender, and construction in the
+                                    real estate, apartment, hotel, mall, office building and land area utilization.
                                 </p>
                                 <p>
                                     Led by experienced professionals, our team combines technical expertise with creative
@@ -154,32 +154,28 @@ export default function AboutPage() {
                 </section>
 
                 {/* ── TEAM ── */}
-                <section className="team-section">
-                    <div className="team-section-head">
-                        <span className="team-eyebrow">Our</span>
-                        <h2 className="team-title">Professional<br />Team</h2>
-                        <p className="team-subtitle">The core minds behind every project — architects, directors, and specialists united by a passion for meaningful design.</p>
-                    </div>
-                    <div className="team-grid">
-                        {[
-                            { img: "/presdir.jpg", name: "Ar. Megawati Nyonri", role: "President Director & Lead Architect", num: "01" },
-                            { img: "/opsdir.jpg", name: "Ning Widyastuti", role: "Operational Director", num: "02" },
-                            { img: "/tekdir.jpg", name: "Mochhamad Yarkasih, S.T.,M.T", role: "Technical Director", num: "03" },
-                        ].map((m) => (
-                            <div className="team-card" key={m.num}>
-                                <div className="team-card-visual">
-                                    <Image src={m.img} alt={m.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 33vw" />
-                                    <div className="team-card-gradient" />
-                                    <div className="team-card-overlay">
-                                        <span className="team-card-num">{m.num}</span>
-                                        <div className="team-card-info">
-                                            <h3 className="team-card-name">{m.name}</h3>
-                                            <p className="team-card-role">{m.role}</p>
-                                        </div>
+                <section className="team-redesign">
+                    <div className="container">
+                        <div className="team-redesign-header">
+                            <h2>Our Professional Team</h2>
+                            <p>The core minds behind every project — architects, directors, and specialists united by a passion for meaningful design.</p>
+                        </div>
+                        <div className="team-redesign-grid">
+                            {[
+                                { img: "/presdir.jpg", name: "Ar. Megawati Nyonri", role: "President Director & Lead Architect", id: "01" },
+                                { img: "/opsdir.jpg", name: "Ning Widyastuti", role: "Operational Director", id: "02" },
+                            ].map((m) => (
+                                <div className="team-member-card" key={m.id}>
+                                    <div className="team-member-image">
+                                        <Image src={m.img} alt={m.name} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 768px) 100vw, 50vw" />
+                                    </div>
+                                    <div className="team-member-info">
+                                        <h3>{m.name}</h3>
+                                        <p>{m.role}</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </section>
 

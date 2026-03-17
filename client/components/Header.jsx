@@ -42,9 +42,8 @@ export default function Header() {
     const updateScrollState = () => {
       const scrollY = window.scrollY;
 
-      // Set solid background - transparent on home and project detail pages at top, and projects page
-      const isTransparentPage = isHome || isProjectDetail || pathname === "/projects";
-      setSolid(!isTransparentPage || scrollY > 40);
+      // Set solid background - transparent on all pages at top, frosted-glass when scrolled
+      setSolid(scrollY > 40);
 
       // Check if navbar is over light section
       if (isHome) {

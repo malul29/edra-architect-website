@@ -3,7 +3,6 @@
   "/api/contact/route": "/api/contact",
   "/sitemap.xml/route": "/sitemap.xml",
   "/(payload)/api/[...slug]/route": "/api/[...slug]",
-  "/(payload)/admin/[[...segments]]/page": "/admin/[[...segments]]",
   "/(frontend)/blog/[id]/page": "/blog/[id]",
   "/(frontend)/about/page": "/about",
   "/(frontend)/contact/page": "/contact",
@@ -11,5 +10,6 @@
   "/(frontend)/blogs/page": "/blogs",
   "/(frontend)/page": "/",
   "/(frontend)/services/page": "/services",
-  "/(frontend)/projects/page": "/projects"
+  "/(frontend)/projects/page": "/projects",
+  "/(payload)/admin/[[...segments]]/page": "/admin/[[...segments]]"
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -45,6 +44,32 @@ export default function ProjectsClient({ initialData }) {
     const hasMore = visibleCount < filtered.length;
     const heroTitle = CATEGORY_TITLES[active] || active.toUpperCase();
 
+    const masonryItems = useMemo(() => {
+        const prepared = visible.map((project, index) => ({
+            project,
+            variant: getEditorialVariant(project.id, index),
+        }));
+
+        const columns = [[], [], [], []];
+        const heights = [0, 0, 0, 0];
+        const weightMap = { standard: 1, tall: 1.5, feature: 0.85, wide: 0.9, landscape: 0.8 };
+
+        for (const item of prepared) {
+            const targetCol = heights.indexOf(Math.min(...heights));
+            columns[targetCol].push(item);
+            heights[targetCol] += weightMap[item.variant] || 1;
+        }
+
+        return columns.flat();
+    }, [visible]);
+
+    const masonryColumnCount = useMemo(() => {
+        if (visible.length <= 1) return 1;
+        if (visible.length === 2) return 2;
+        if (visible.length === 3) return 3;
+        return 4;
+    }, [visible.length]);
+
     const heroImage = useMemo(() => {
         if (!initialData || initialData.length === 0) {
             return FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
@@ -73,19 +98,19 @@ export default function ProjectsClient({ initialData }) {
                     priority
                     quality={75}
                 />
-                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1 }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.36) 62%, rgba(230,230,232,0.9) 92%, #e6e6e8 100%)", zIndex: 1 }} />
                 <div className="services-hero-content" style={{ position: "relative", zIndex: 2 }}>
                     <p className="services-hero-label">OUR PROJECTS</p>
                     <h1 className="services-hero-title" style={{ fontSize: "clamp(1.8rem, 3.5vw, 4rem)" }}>{heroTitle}</h1>
                 </div>
             </section>
 
-            <div style={{ minHeight: "100vh", background: "#1a1a1a" }}>
+            <div style={{ minHeight: "100vh", background: "#e6e6e8" }}>
                 {/* ── FILTER TABS ── */}
                 <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     flexWrap: "wrap", gap: ".5rem", padding: "3rem var(--px) 2rem",
-                    borderBottom: "1px solid rgba(255,255,255,0.1)",
+                    borderBottom: "1px solid rgba(20,20,20,0.12)",
                 }}>
                     <div style={{ display: "flex", gap: "clamp(.8rem,2.5vw,2.5rem)", flexWrap: "wrap" }}>
                         {CATS.map(c => (
@@ -93,23 +118,23 @@ export default function ProjectsClient({ initialData }) {
                                 background: "none", border: "none", padding: "6px 0",
                                 fontSize: ".85rem", letterSpacing: ".14em", textTransform: "uppercase",
                                 cursor: "pointer",
-                                color: active === c ? "#ffffff" : "rgba(255,255,255,.5)",
+                                color: active === c ? "#111111" : "rgba(17,17,17,.45)",
                                 fontWeight: active === c ? 600 : 400,
-                                borderBottom: active === c ? "2px solid #ffffff" : "2px solid transparent",
+                                borderBottom: active === c ? "2px solid #111111" : "2px solid transparent",
                                 transition: "color .2s, border-color .2s",
                             }}>{c}</button>
                         ))}
                     </div>
-                    <span className="label" style={{ color: "rgba(255,255,255,.6)" }}>{filtered.length} Projects</span>
+                    <span className="label" style={{ color: "rgba(17,17,17,.55)" }}>{filtered.length} Projects</span>
                 </div>
 
                 {/* ── MASONRY GRID ── */}
                 <div style={{ padding: "2rem 0.5rem 4rem" }}>
                     {initialData.length === 0 ? (
-                        <p className="label" style={{ textAlign: "center", padding: "8vh", color: "rgba(255,255,255,.6)" }}>No projects yet.</p>
+                        <p className="label" style={{ textAlign: "center", padding: "8vh", color: "rgba(17,17,17,.55)" }}>No projects yet.</p>
                     ) : (
-                        <div className="projects-masonry-grid">
-                            {visible.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
+                        <div className="projects-masonry-grid" style={{ "--masonry-columns": masonryColumnCount }}>
+                            {masonryItems.map((item, i) => <ProjectCard key={`${item.project.id}-${i}`} project={item.project} variant={item.variant} revealIndex={i} />)}
                         </div>
                     )}
                 </div>
@@ -120,14 +145,14 @@ export default function ProjectsClient({ initialData }) {
                         <button
                             onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
                             style={{
-                                background: "none", border: "1px solid rgba(255,255,255,0.4)",
-                                color: "#fff", padding: "0.85rem 2.8rem", fontSize: ".8rem",
+                                background: "transparent", border: "1px solid rgba(17,17,17,0.35)",
+                                color: "#111", padding: "0.85rem 2.8rem", fontSize: ".8rem",
                                 letterSpacing: ".18em", textTransform: "uppercase", cursor: "pointer",
                                 fontFamily: "var(--sans)", fontWeight: 500,
                                 transition: "background .2s, border-color .2s, color .2s",
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#111"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#111"; e.currentTarget.style.borderColor = "rgba(17,17,17,0.35)"; }}
                         >
                             View More ({filtered.length - visibleCount} remaining)
                         </button>
@@ -153,13 +178,17 @@ export default function ProjectsClient({ initialData }) {
     );
 }
 
-function ProjectCard({ project, index }) {
-    const variant = getEditorialVariant(project.id, index);
+function ProjectCard({ project, variant, revealIndex }) {
     const imageSrc = resolveMediaUrl(project.image);
     const fallback = FALLBACK_IMAGES[project.category] || FALLBACK_IMAGES["All"];
 
     return (
-        <Link href={`/project/${project.slug || project.id}`} className="project-masonry-card" data-variant={variant}>
+        <Link
+            href={`/project/${project.slug || project.id}`}
+            className="project-masonry-card"
+            data-variant={variant}
+            style={{ "--reveal-delay": `${(revealIndex % 20) * 45}ms` }}
+        >
             <div className="project-masonry-frame">
                 <SafeImage
                     src={imageSrc}
@@ -180,18 +209,22 @@ function ProjectCard({ project, index }) {
     );
 }
 
-// Pattern repeats every 8 cards; only span-1 and span-2 cols used
-// so the 4-column grid always stays balanced (no orphan columns).
-// Row logic: [std std std std] [feat-- std std] [std std land--] ...
 function getEditorialVariant(id, index) {
-    const slot = index % 8;
+    const slot = index % 10;
     const seed = hashId(`${id}-${index}`);
-    // slot 0: feature (2-col) – anchors every cycle
+
+    // Anchor one larger horizontal card per cycle.
     if (slot === 0) return "feature";
-    // slot 5: wide (2-col) – second accent per cycle
-    if (slot === 5) return "wide";
-    // occasional subtle variety in remaining single-col cards
-    if ((slot === 2 || slot === 7) && seed % 100 < 40) return "tall";
+
+    // Add occasional landscape strips.
+    if ((slot === 3 || slot === 8) && seed % 100 < 55) return "landscape";
+
+    // Make more portrait cards for collage rhythm.
+    if ((slot === 2 || slot === 5 || slot === 9) && seed % 100 < 75) return "tall";
+
+    // Secondary horizontal accent.
+    if (slot === 6 && seed % 100 < 65) return "wide";
+
     return "standard";
 }
 

@@ -300,6 +300,11 @@
     "htmlLimitedBots": "Mediapartners-Google|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti",
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
+    "serverExternalPackages": [
+      "sharp",
+      "graphql",
+      "@sentry/nextjs"
+    ],
     "outputFileTracingExcludes": {
       "**/*": [
         "drizzle-kit",
@@ -314,10 +319,6 @@
     "turbopack": {
       "root": "D:\\web-edra\\client"
     },
-    "serverExternalPackages": [
-      "graphql",
-      "@sentry/nextjs"
-    ],
     "_originalRewrites": {
       "beforeFiles": [
         {

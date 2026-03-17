@@ -165,16 +165,21 @@ section {
 }
 
 .header.solid {
-  background-color: rgba(26, 26, 26, 0.6);
+  background-color: rgba(20, 20, 20, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header.solid.light {
+  background-color: rgba(245, 245, 245, 0.95) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-.header.light,
-.header.solid.light {
-  background-color: rgba(245, 245, 245, 0.75) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+.header.light:not(.solid):not(.services-active) {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .header.services-active {
@@ -1879,7 +1884,6 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 
 /* Responsive */
 @media (max-width: 1200px) {
-
   .service-panel,
   .service-panel:nth-child(even) {
     grid-template-columns: 1fr;
@@ -8832,39 +8836,41 @@ body {
 
 /* Projects Masonry Grid */
 .projects-masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding: 0 var(--px);
+  column-count: var(--masonry-columns, 4);
+  column-gap: 0.35rem;
+  padding: 0 0.35rem;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
 .project-masonry-card {
+  display: block;
   position: relative;
   overflow: hidden;
-  border-radius: 2px;
+  break-inside: avoid;
+  margin: 0 0 0.35rem;
+  border-radius: 0;
   text-decoration: none;
   color: inherit;
   background: #0f0f0f;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 2 / 3;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: project-card-reveal 0.6s ease forwards;
+  animation-delay: var(--reveal-delay, 0ms);
 }
 
-/* Wide variants span 2 columns, same row-height as standard */
 .project-masonry-card[data-variant="wide"],
 .project-masonry-card[data-variant="feature"] {
-  grid-column: span 2;
-  aspect-ratio: 8 / 3;
+  aspect-ratio: 3 / 2;
 }
 
-/* Landscape: 2-col panoramic */
 .project-masonry-card[data-variant="landscape"] {
-  grid-column: span 2;
-  aspect-ratio: 3 / 1;
+  aspect-ratio: 7 / 4;
 }
 
-/* Tall: 1-col portrait */
 .project-masonry-card[data-variant="tall"] {
-  grid-column: span 1;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 9 / 16;
 }
 
 .project-masonry-frame {
@@ -8890,7 +8896,7 @@ body {
   justify-content: flex-end;
   align-items: flex-start;
   padding: 1.5rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.28) 55%, rgba(0, 0, 0, 0.78) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 20%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.68) 100%);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -8923,43 +8929,54 @@ body {
   opacity: 1;
 }
 
+@keyframes project-card-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 1200px) {
   .projects-masonry-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-count: 3;
+    column-gap: 0.35rem;
   }
+}
 
-  .project-masonry-card[data-variant="wide"],
-  .project-masonry-card[data-variant="feature"],
-  .project-masonry-card[data-variant="landscape"] {
-    grid-column: span 2;
-    aspect-ratio: 8 / 3;
-  }
-
-  .project-masonry-card[data-variant="tall"] {
-    grid-column: span 1;
-    aspect-ratio: 2 / 3;
+@media (prefers-reduced-motion: reduce) {
+  .project-masonry-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }
 
 @media (max-width: 768px) {
   .projects-masonry-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.4rem;
+    column-count: 2;
+    column-gap: 0.35rem;
     padding: 0 0.5rem;
   }
 
-  .project-masonry-card,
-  .project-masonry-card[data-variant="wide"],
-  .project-masonry-card[data-variant="feature"],
-  .project-masonry-card[data-variant="landscape"],
-  .project-masonry-card[data-variant="tall"] {
-    grid-column: span 1;
-    aspect-ratio: 4 / 3;
+  .project-masonry-overlay {
+    opacity: 0;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-masonry-grid {
+    column-count: 2;
+    column-gap: 0.35rem;
+    padding: 0 0.35rem;
   }
 
-  .project-masonry-overlay {
-    opacity: 1;
-    padding: 1rem;
+  .project-masonry-card {
+    margin-bottom: 0.35rem;
   }
 }
 
@@ -8998,7 +9015,6 @@ body {
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
   }
-
   .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -9032,21 +9048,17 @@ body {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
   }
-
   .theme {
     --font-sans: var(--font-sans);
   }
-
   * {
     border-color: var(--border);
     outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
-
   body {
     background: var(--background);
     color: var(--foreground);
   }
-
   html {
     font-family: var(--font-sans);
   }
