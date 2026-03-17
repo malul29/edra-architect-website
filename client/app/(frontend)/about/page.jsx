@@ -154,28 +154,32 @@ export default function AboutPage() {
                 </section>
 
                 {/* ── TEAM ── */}
-                <section className="team-redesign">
-                    <div className="container">
-                        <div className="team-redesign-header">
-                            <h2>Our Professional Team</h2>
-                            <p>The core minds behind every project — architects, directors, and specialists united by a passion for meaningful design.</p>
-                        </div>
-                        <div className="team-redesign-grid">
-                            {[
-                                { img: "/presdir.jpg", name: "Ar. Megawati Nyonri", role: "President Director & Lead Architect", id: "01" },
-                                { img: "/opsdir.jpg", name: "Ning Widyastuti", role: "Operational Director", id: "02" },
-                            ].map((m) => (
-                                <div className="team-member-card" key={m.id}>
-                                    <div className="team-member-image">
-                                        <Image src={m.img} alt={m.name} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 768px) 100vw, 50vw" />
-                                    </div>
-                                    <div className="team-member-info">
-                                        <h3>{m.name}</h3>
-                                        <p>{m.role}</p>
+                <section className="team-section">
+                    <div className="team-section-head">
+                        <div className="team-eyebrow">Our Team</div>
+                        <h2 className="team-title">Our Professional Team</h2>
+                        <p className="team-subtitle">The core minds behind every project: architects, directors, and specialists united by meaningful design.</p>
+                    </div>
+
+                    <div className="team-grid">
+                        {[
+                            { img: "/presdir.jpg", name: "Ar. Megawati Nyonri", role: "President Director & Lead Architect", id: "01" },
+                            { img: "/opsdir.jpg", name: "Ning Widyastuti", role: "Operational Director", id: "02" },
+                        ].map((m) => (
+                            <article className="team-card" key={m.id}>
+                                <div className="team-card-visual">
+                                    <Image src={m.img} alt={m.name} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="(max-width: 768px) 100vw, 50vw" />
+                                    <div className="team-card-gradient" />
+                                    <div className="team-card-overlay">
+                                        <div className="team-card-num">{m.id}</div>
+                                        <div className="team-card-info">
+                                            <h3 className="team-card-name">{m.name}</h3>
+                                            <p className="team-card-role">{m.role}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            </article>
+                        ))}
                     </div>
                 </section>
 
