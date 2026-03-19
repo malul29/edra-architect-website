@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useMemo, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useApi } from "../../../../hooks/useApi";
@@ -36,29 +36,37 @@ export default function ProjectDetailPage({ params }) {
         }
     }, [id, apiData, router]);
 
-    // Parse gallery images - handle Payload CMS format (array of {imageUrl}) and legacy formats
-    let galleryImages = [];
-    if (project?.gallery) {
-        if (typeof project.gallery === 'string') {
-            try {
-                galleryImages = JSON.parse(project.gallery);
-            } catch {
-                galleryImages = [project.gallery];
-            }
-        } else if (Array.isArray(project.gallery)) {
-            // Payload CMS format: [{imageUrl: "..."}, ...] or legacy flat strings
-            galleryImages = project.gallery.map(item =>
-                typeof item === 'object' && item.image
-                    ? resolveMediaUrl(item.image)
-                    : (typeof item === 'object' && item.imageUrl ? resolveMediaUrl(item.imageUrl) : resolveMediaUrl(item))
-            );
-        }
-    }
+    const galleryImages = useMemo(() => {
+        if (!project) return [];
 
-    // If no gallery, use main image
-    if (galleryImages.length === 0 && project?.image) {
-        galleryImages = [resolveMediaUrl(project.image)];
-    }
+        const parsed = [];
+        if (project.gallery) {
+            if (typeof project.gallery === "string") {
+                try {
+                    const json = JSON.parse(project.gallery);
+                    if (Array.isArray(json)) {
+                        parsed.push(...json.map((item) => resolveMediaUrl(item?.image || item?.imageUrl || item)));
+                    } else {
+                        parsed.push(resolveMediaUrl(json?.image || json?.imageUrl || json));
+                    }
+                } catch {
+                    parsed.push(resolveMediaUrl(project.gallery));
+                }
+            } else if (Array.isArray(project.gallery)) {
+                parsed.push(...project.gallery.map((item) => resolveMediaUrl(item?.image || item?.imageUrl || item)));
+            }
+        }
+
+        const unique = parsed.filter(Boolean).filter((img, idx, arr) => arr.indexOf(img) === idx);
+        if (unique.length > 0) return unique;
+
+        if (project.image) return [resolveMediaUrl(project.image)];
+        return [];
+    }, [project]);
+
+    useEffect(() => {
+        setLightboxIndex(null);
+    }, [project?.id]);
 
     const handleOpenLightbox = (index) => {
         setLightboxIndex(index);

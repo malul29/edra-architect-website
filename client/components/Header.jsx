@@ -15,7 +15,7 @@ export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isProjectDetail = pathname.startsWith("/project/");
-  const isLightPage = pathname === "/contact" || pathname === "/blogs";
+  const isLightPage = pathname === "/blogs";
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -73,6 +73,16 @@ export default function Header() {
         let isOverLight = false;
         if (aboutHero) {
           const heroRect = aboutHero.getBoundingClientRect();
+          if (heroRect.bottom < 100) {
+            isOverLight = true;
+          }
+        }
+        setIsLightBg(isOverLight);
+      } else if (pathname === "/contact") {
+        const contactHero = document.querySelector(".contact-hero");
+        let isOverLight = false;
+        if (contactHero) {
+          const heroRect = contactHero.getBoundingClientRect();
           if (heroRect.bottom < 100) {
             isOverLight = true;
           }
@@ -171,6 +181,9 @@ export default function Header() {
             </Link>
             <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
               CONSTRUCTION
+            </Link>
+            <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
+              INTERIOR DESIGN
             </Link>
           </div>
         </div>

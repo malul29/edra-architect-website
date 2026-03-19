@@ -1,9 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import path from 'path'
-import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const mediaDir = process.env.MEDIA_DIR || path.resolve(process.cwd(), 'public/media')
 
 export const Media: CollectionConfig = {
     slug: 'media',
@@ -14,7 +12,7 @@ export const Media: CollectionConfig = {
         delete: () => true,
     },
     upload: {
-        staticDir: path.resolve(__dirname, '../public/media'),
+        staticDir: mediaDir,
         imageSizes: [
             {
                 name: 'thumbnail',

@@ -1,25 +1,50 @@
 const FALLBACK_MEDIA_URL = "/edra-logo.png";
 
+function encodePathSegments(pathname) {
+  const safeDecode = (value) => {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  };
+
+  return pathname
+    .split("/")
+    .map((part, idx) => (idx === 0 ? part : encodeURIComponent(safeDecode(part))))
+    .join("/");
+}
+
 export function normalizeMediaUrl(url) {
   if (!url || typeof url !== "string") return FALLBACK_MEDIA_URL;
 
   if (/^https?:\/\//i.test(url)) return url;
 
-  if (url.startsWith("/media/") || url.startsWith("/uploads/") || url.startsWith("/")) {
-    return url
-      .replace(/^\/api\/media\/file\//, "/media/")
-      .replace(/\/api\/media\/file\//, "/media/")
-      .replace(/^api\/media\/file\//, "/media/");
+  const cleaned = String(url).trim();
+
+  if (cleaned.startsWith("/api/media/file/") || cleaned.startsWith("api/media/file/")) {
+    const normalized = cleaned.startsWith("/") ? cleaned : `/${cleaned}`;
+    return encodePathSegments(normalized);
+  }
+
+  if (cleaned.startsWith("/media/") || cleaned.startsWith("media/")) {
+    const relative = cleaned.replace(/^\/?media\//, "");
+    return encodePathSegments(`/api/media/file/${relative}`);
+  }
+
+  if (cleaned.startsWith("/uploads/") || cleaned.startsWith("uploads/")) {
+    const relative = cleaned.replace(/^\/?uploads\//, "");
+    return encodePathSegments(`/uploads/${relative}`);
+  }
+
+  if (cleaned.startsWith("/")) {
+    return encodePathSegments(cleaned);
   }
 
   // Payload can return bare filenames in some environments.
-  if (!url.includes("/")) return `/media/${url}`;
+  if (!cleaned.includes("/")) return encodePathSegments(`/api/media/file/${cleaned}`);
 
-  // Backward compatibility for legacy Payload media URLs.
-  return url
-    .replace(/^\/api\/media\/file\//, "/media/")
-    .replace(/\/api\/media\/file\//, "/media/")
-    .replace(/^api\/media\/file\//, "/media/");
+  return encodePathSegments(`/${cleaned.replace(/^\/+/, "")}`);
 }
 
 export function resolveMediaUrl(media) {

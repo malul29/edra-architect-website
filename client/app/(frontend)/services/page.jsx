@@ -12,15 +12,5 @@ export const metadata = {
 };
 
 export default async function ServicesPage() {
-    const payload = await getPayload({ config });
-
-    const servicesRes = await payload.find({
-        collection: "services",
-        limit: 20,
-        depth: 1,
-    });
-
-    const services = servicesRes.docs.length > 0 ? servicesRes.docs : fallbackServices;
-
-    return <ServicesClient services={services} />;
+    return <ServicesClient services={fallbackServices} />;
 }

@@ -63,13 +63,6 @@ export default function ProjectsClient({ initialData }) {
         return columns.flat();
     }, [visible]);
 
-    const masonryColumnCount = useMemo(() => {
-        if (visible.length <= 1) return 1;
-        if (visible.length === 2) return 2;
-        if (visible.length === 3) return 3;
-        return 4;
-    }, [visible.length]);
-
     const heroImage = useMemo(() => {
         if (!initialData || initialData.length === 0) {
             return FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
@@ -87,7 +80,7 @@ export default function ProjectsClient({ initialData }) {
         <>
             <Header />
             {/* Hero Section */}
-            <section className="services-hero" style={{ position: "relative", overflow: "hidden" }}>
+            <section className="services-hero" style={{ position: "relative", overflow: "hidden", height: "25vh", minHeight: "25vh" }}>
                 <SafeImage
                     src={heroImage}
                     fallbackSrc={FALLBACK_IMAGES["All"]}
@@ -98,18 +91,25 @@ export default function ProjectsClient({ initialData }) {
                     priority
                     quality={75}
                 />
+                <div style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%)",
+                    zIndex: 1,
+                    pointerEvents: "none"
+                }} />
                 <div className="services-hero-content" style={{ position: "relative", zIndex: 2 }}>
                     <p className="services-hero-label">OUR PROJECTS</p>
                     <h1 className="services-hero-title" style={{ fontSize: "clamp(1.8rem, 3.5vw, 4rem)" }}>{heroTitle}</h1>
                 </div>
             </section>
 
-            <div style={{ minHeight: "100vh", background: "#e6e6e8" }}>
+            <div style={{ minHeight: "100vh", background: "#1a1a1a", color: "#f5f5f5" }}>
                 {/* ── FILTER TABS ── */}
                 <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     flexWrap: "wrap", gap: ".5rem", padding: "3rem var(--px) 2rem",
-                    borderBottom: "1px solid rgba(20,20,20,0.12)",
+                    borderBottom: "1px solid rgba(255,255,255,0.12)",
                 }}>
                     <div style={{ display: "flex", gap: "clamp(.8rem,2.5vw,2.5rem)", flexWrap: "wrap" }}>
                         {CATS.map(c => (
@@ -117,22 +117,22 @@ export default function ProjectsClient({ initialData }) {
                                 background: "none", border: "none", padding: "6px 0",
                                 fontSize: ".85rem", letterSpacing: ".14em", textTransform: "uppercase",
                                 cursor: "pointer",
-                                color: active === c ? "#111111" : "rgba(17,17,17,.45)",
+                                color: active === c ? "#ffffff" : "rgba(255,255,255,.45)",
                                 fontWeight: active === c ? 600 : 400,
-                                borderBottom: active === c ? "2px solid #111111" : "2px solid transparent",
+                                borderBottom: active === c ? "2px solid #ffffff" : "2px solid transparent",
                                 transition: "color .2s, border-color .2s",
                             }}>{c}</button>
                         ))}
                     </div>
-                    <span className="label" style={{ color: "rgba(17,17,17,.55)" }}>{filtered.length} Projects</span>
+                    <span className="label" style={{ color: "rgba(255,255,255,.55)" }}>{filtered.length} Projects</span>
                 </div>
 
                 {/* ── MASONRY GRID ── */}
-                <div style={{ padding: "2rem 0.5rem 4rem" }}>
+                <div style={{ padding: "2rem clamp(1rem, 2vw, 2rem) 4rem" }}>
                     {initialData.length === 0 ? (
-                        <p className="label" style={{ textAlign: "center", padding: "8vh", color: "rgba(17,17,17,.55)" }}>No projects yet.</p>
+                        <p className="label" style={{ textAlign: "center", padding: "8vh", color: "rgba(255,255,255,.55)" }}>No projects yet.</p>
                     ) : (
-                        <div className="projects-masonry-grid" style={{ "--masonry-columns": masonryColumnCount }}>
+                        <div className="projects-masonry-grid">
                             {masonryItems.map((item, i) => <ProjectCard key={`${item.project.id}-${i}`} project={item.project} variant={item.variant} revealIndex={i} />)}
                         </div>
                     )}
@@ -144,14 +144,14 @@ export default function ProjectsClient({ initialData }) {
                         <button
                             onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
                             style={{
-                                background: "transparent", border: "1px solid rgba(17,17,17,0.35)",
-                                color: "#111", padding: "0.85rem 2.8rem", fontSize: ".8rem",
+                                background: "transparent", border: "1px solid rgba(255,255,255,0.35)",
+                                color: "#fff", padding: "0.85rem 2.8rem", fontSize: ".8rem",
                                 letterSpacing: ".18em", textTransform: "uppercase", cursor: "pointer",
                                 fontFamily: "var(--sans)", fontWeight: 500,
                                 transition: "background .2s, border-color .2s, color .2s",
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#111"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#111"; e.currentTarget.style.borderColor = "rgba(17,17,17,0.35)"; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#111"; e.currentTarget.style.borderColor = "#fff"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)"; }}
                         >
                             View More ({filtered.length - visibleCount} remaining)
                         </button>
@@ -194,7 +194,7 @@ function ProjectCard({ project, variant, revealIndex }) {
                     fallbackSrc={fallback}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
                     className="project-masonry-image"
                     loading="lazy"
                     quality={75}
@@ -209,20 +209,14 @@ function ProjectCard({ project, variant, revealIndex }) {
 }
 
 function getEditorialVariant(id, index) {
-    const slot = index % 10;
+    const slot = index % 12;
     const seed = hashId(`${id}-${index}`);
 
-    // Anchor one larger horizontal card per cycle.
-    if (slot === 0) return "feature";
+    // Predominantly portrait blocks with occasional tall cards.
+    if ((slot === 2 || slot === 5 || slot === 9 || slot === 11) && seed % 100 < 82) return "tall";
 
-    // Add occasional landscape strips.
-    if ((slot === 3 || slot === 8) && seed % 100 < 55) return "landscape";
-
-    // Make more portrait cards for collage rhythm.
-    if ((slot === 2 || slot === 5 || slot === 9) && seed % 100 < 75) return "tall";
-
-    // Secondary horizontal accent.
-    if (slot === 6 && seed % 100 < 65) return "wide";
+    // Add a rare horizontal break to avoid repetitive rhythm.
+    if ((slot === 4 || slot === 8) && seed % 100 < 28) return "landscape";
 
     return "standard";
 }

@@ -23,12 +23,15 @@ function normalizeResponse(data) {
 }
 
 export function useApi(endpoint) {
-  const [data, setData] = useState(_cache.get(endpoint) ?? []);
-  const [loading, setLoading] = useState(!_cache.has(endpoint));
+  const isPortfolioEndpoint = /portfolio/i.test(endpoint);
+  const canUseMemoryCache = !isPortfolioEndpoint;
+
+  const [data, setData] = useState((canUseMemoryCache ? _cache.get(endpoint) : null) ?? []);
+  const [loading, setLoading] = useState(!(canUseMemoryCache && _cache.has(endpoint)));
   const [error, setError] = useState(null);
 
   const fetchData = (force = false) => {
-    if (!force && _cache.has(endpoint)) {
+    if (canUseMemoryCache && !force && _cache.has(endpoint)) {
       setData(_cache.get(endpoint));
       setLoading(false);
       return;
@@ -42,14 +45,22 @@ export function useApi(endpoint) {
       const separator = endpoint.includes('?') ? '&' : '?';
       const url = `${BASE}${endpoint}${separator}limit=100&depth=1`;
 
-      const promise = fetch(url)
+      const promise = fetch(url, {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
+      })
         .then((r) => {
           if (!r.ok) throw new Error(r.statusText);
           return r.json();
         })
         .then((d) => {
           const normalized = normalizeResponse(d);
-          _cache.set(endpoint, normalized);
+          if (canUseMemoryCache) {
+            _cache.set(endpoint, normalized);
+          }
           _pending.delete(endpoint);
           return normalized;
         })
@@ -69,7 +80,9 @@ export function useApi(endpoint) {
 
   // refetch clears cache entry and forces a fresh fetch
   const refetch = () => {
-    _cache.delete(endpoint);
+    if (canUseMemoryCache) {
+      _cache.delete(endpoint);
+    }
     fetchData(true);
   };
 

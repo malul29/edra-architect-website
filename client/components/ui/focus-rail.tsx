@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -223,61 +223,27 @@ export function FocusRail({
                 />
                 <div className="focus-rail-card-light" />
                 <div className="focus-rail-card-shade" />
+
+                <div className="focus-rail-card-overlay">
+                  {item.meta && (
+                    <span className="focus-rail-card-meta">{item.meta}</span>
+                  )}
+                  <h3 className="focus-rail-card-title">{item.title}</h3>
+                  {item.href && (
+                    <Link
+                      href={item.href}
+                      className="focus-rail-card-cta"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Explore
+                      <ArrowUpRight className="focus-rail-card-cta-icon" />
+                    </Link>
+                  )}
+                </div>
               </motion.div>
             );
           })}
         </motion.div>
-
-        <div className="focus-rail-controls-wrap">
-          <div className="focus-rail-copy">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeItem.id}
-                initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                transition={{ duration: 0.3 }}
-              >
-                {activeItem.meta && (
-                  <span className="focus-rail-meta">{activeItem.meta}</span>
-                )}
-                <h2 className="focus-rail-title">{activeItem.title}</h2>
-                {activeItem.description && (
-                  <p className="focus-rail-description">{activeItem.description}</p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <div className="focus-rail-actions">
-            <div className="focus-rail-nav">
-              <button
-                onClick={handlePrev}
-                className="focus-rail-nav-btn"
-                aria-label="Previous"
-              >
-                <ChevronLeft className="focus-rail-nav-icon" />
-              </button>
-              <span className="focus-rail-count">
-                {activeIndex + 1} / {count}
-              </span>
-              <button
-                onClick={handleNext}
-                className="focus-rail-nav-btn"
-                aria-label="Next"
-              >
-                <ChevronRight className="focus-rail-nav-icon" />
-              </button>
-            </div>
-
-            {activeItem.href && (
-              <Link href={activeItem.href} className="focus-rail-cta">
-                Explore
-                <ArrowUpRight className="focus-rail-cta-icon" />
-              </Link>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -12,24 +12,15 @@ export const metadata = {
 };
 
 export default async function Home() {
-    const payload = await getPayload({ config });
-
-    // Fetch portfolio - only need a few for the hero carousel
-    const portfolioRes = await payload.find({
-        collection: "portfolio",
-        limit: 10,
-        sort: "-createdAt",
-    });
-
-    // Fetch services
-    const servicesRes = await payload.find({
-        collection: "services",
-        limit: 10,
-    });
-
-    const portfolio = portfolioRes.docs || [];
-    const services = servicesRes.docs.length > 0 ? servicesRes.docs : fallbackServices;
-
+    let portfolio = [];
+    let services = fallbackServices;
+    try {
+        const payload = await getPayload({ config });
+        const portfolioRes = await payload.find({ collection: "portfolio", limit: 10, sort: "-createdAt", depth: 1 });
+        portfolio = portfolioRes.docs || [];
+    } catch (err) {
+        console.error("[Home] Failed to load CMS data:", err?.message);
+    }
     return <HomeClient initialPortfolio={portfolio} initialServices={services} />;
 }
 

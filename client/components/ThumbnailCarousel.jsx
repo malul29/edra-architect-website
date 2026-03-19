@@ -65,6 +65,17 @@ export default function ThumbnailCarousel({ images, onImageClick }) {
     const x = useMotionValue(0);
 
     useEffect(() => {
+        setIndex(0);
+        x.set(0);
+    }, [images, x]);
+
+    useEffect(() => {
+        if (index > images.length - 1) {
+            setIndex(Math.max(0, images.length - 1));
+        }
+    }, [images.length, index]);
+
+    useEffect(() => {
         if (!isDragging && containerRef.current) {
             const w = containerRef.current.offsetWidth || 1;
             animate(x, -index * w, { type: "spring", stiffness: 300, damping: 30 });

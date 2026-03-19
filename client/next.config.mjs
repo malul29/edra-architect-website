@@ -56,16 +56,6 @@ const nextConfig = {
             },
         ]
     },
-    async rewrites() {
-        return {
-            beforeFiles: [
-                {
-                    source: '/api/media/file/:path*',
-                    destination: '/media/:path*',
-                },
-            ],
-        }
-    },
     images: {
         formats: ['image/avif', 'image/webp'],
         deviceSizes: [640, 828, 1080, 1200, 1920],

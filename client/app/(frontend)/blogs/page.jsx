@@ -9,14 +9,14 @@ export const metadata = {
 };
 
 export default async function BlogsPage() {
-    const payload = await getPayload({ config });
-    const blogsRes = await payload.find({
-        collection: "blogs",
-        limit: 50,
-        depth: 1,
-        sort: "-date",
-    });
-    const blogs = blogsRes.docs || [];
+    let blogs = [];
+    try {
+        const payload = await getPayload({ config });
+        const blogsRes = await payload.find({ collection: "blogs", limit: 50, depth: 1, sort: "-date" });
+        blogs = blogsRes.docs || [];
+    } catch (err) {
+        console.error("[BlogsPage] Failed to load CMS data:", err?.message);
+    }
     return <BlogsClient initialBlogs={blogs} />;
 }
 

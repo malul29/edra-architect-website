@@ -168,56 +168,7 @@ const blogsData = [
     },
 ]
 
-const servicesData = [
-    {
-        title: "Architecture Design",
-        image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop",
-        subtitle: "From concept to technical",
-        description: "Master planning, concept exploration, schematic design, technical drawings, permits, and design development for any scale of project.",
-        features: [
-            { feature: "Concept Development" },
-            { feature: "Technical Documentation" },
-            { feature: "Building Permits" },
-            { feature: "Design Development" },
-        ],
-    },
-    {
-        title: "Interior Design",
-        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2500&auto=format&fit=crop",
-        subtitle: "Space as experience",
-        description: "Spatial mood strategy, material curation, furniture detailing, and execution support for commercial and residential interiors.",
-        features: [
-            { feature: "Spatial Planning" },
-            { feature: "Material & Finish Selection" },
-            { feature: "Furniture & Decor Curation" },
-            { feature: "Lighting Design Consultation" },
-        ],
-    },
-    {
-        title: "Project Management",
-        image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
-        subtitle: "On time, on budget",
-        description: "Scheduling, budget coordination, tender administration, ISO-compliant documentation, and comprehensive stakeholder reporting.",
-        features: [
-            { feature: "Cost & Schedule Planning" },
-            { feature: "Tender Management" },
-            { feature: "Quality Assurance" },
-            { feature: "Progress Reporting" },
-        ],
-    },
-    {
-        title: "Construction",
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2400&auto=format&fit=crop",
-        subtitle: "Precision delivery",
-        description: "Full site supervision and quality control to ensure every design intent is translated to the built result with accuracy.",
-        features: [
-            { feature: "Site Supervision" },
-            { feature: "Structural Engineering" },
-            { feature: "Safety & Compliance" },
-            { feature: "Integrated Build Solutions" },
-        ],
-    },
-]
+
 
 async function seed() {
     console.log('🌱 Starting seed...')
@@ -356,35 +307,7 @@ async function seed() {
         }
     }
 
-    // Seed Services
-    console.log('🔧 Seeding services...')
-    for (const item of servicesData) {
-        try {
-            const imageId = await uploadMedia(item.image, item.title)
 
-            const dataToInsert = {
-                ...item,
-                image: imageId
-            }
-
-            const existing = await payload.find({
-                collection: 'services',
-                where: { title: { equals: item.title } },
-            })
-
-            if (existing.docs.length === 0) {
-                await payload.create({
-                    collection: 'services',
-                    data: dataToInsert as any,
-                })
-                console.log(`  ✅ Created: ${item.title}`)
-            } else {
-                console.log(`  ⏭️ Skipped (already exists): ${item.title}`)
-            }
-        } catch (err: any) {
-            console.log(`  ⚠️ Skipped: ${item.title} (${err.message})`)
-        }
-    }
 
     console.log('\n✅ Seed complete!')
     process.exit(0)

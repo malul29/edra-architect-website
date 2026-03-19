@@ -3,7 +3,7 @@ export const fallbackServices = [
     {
         id: 1,
         title: "Architecture Design",
-        image: "/media/gateway-pasteur-bandung-main.png",
+        image: "/uploads/architecture-design.jpg",
         description: "We provide a full range of Architectural Services including: Plot Research, Architectural Design, Technical Consultancy, Conservation Services, External Works and Landscaping Services.",
         features: [
             { feature: "Concept Development" },
@@ -15,7 +15,7 @@ export const fallbackServices = [
     {
         id: 2,
         title: "Interior Design",
-        image: "/media/la-montana-apartment-main.png",
+        image: "/uploads/interior.jpeg",
         description: "Creating bespoke interior environments that reflect your personality and lifestyle.",
         features: [
             { feature: "Spatial Planning" },
@@ -27,7 +27,7 @@ export const fallbackServices = [
     {
         id: 3,
         title: "Project Management",
-        image: "/media/the-mansion-main.png",
+        image: "/uploads/management.png",
         description: "Comprehensive project management for residential, commercial, and public facilities.",
         features: [
             { feature: "Cost Estimation & Budgeting" },
@@ -39,7 +39,7 @@ export const fallbackServices = [
     {
         id: 4,
         title: "Construction",
-        image: "/media/tod-poris-plawad-gallery-0.png",
+        image: "/uploads/construction.jpeg",
         description: "Expert construction services with a focus on precision and quality.",
         features: [
             { feature: "Site Supervision" },
