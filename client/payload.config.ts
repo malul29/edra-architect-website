@@ -3,8 +3,6 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-
 import { Media } from './collections/Media.ts'
 import { Portfolio } from './collections/Portfolio.ts'
 import { Blogs } from './collections/Blogs.ts'
@@ -35,14 +33,6 @@ export default buildConfig({
         Portfolio,
         Blogs,
         ContactSubmissions,
-    ],
-    plugins: [
-        vercelBlobStorage({
-            collections: {
-                media: true,
-            },
-            token: process.env.BLOB_READ_WRITE_TOKEN || '',
-        }),
     ],
     editor: lexicalEditor(),
     db: postgresAdapter({
