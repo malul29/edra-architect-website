@@ -24,7 +24,7 @@ export function normalizeMediaUrl(url) {
 
   if (cleaned.startsWith("/api/media/file/") || cleaned.startsWith("api/media/file/")) {
     const relative = cleaned.replace(/^\/?api\/media\/file\//, "");
-    return encodePathSegments(`/media/${relative}`);
+    return encodePathSegments(`/api/media/file/${relative}`);
   }
 
   if (cleaned.startsWith("/media/") || cleaned.startsWith("media/")) {
@@ -42,7 +42,7 @@ export function normalizeMediaUrl(url) {
   }
 
   // Payload can return bare filenames in some environments.
-  if (!cleaned.includes("/")) return encodePathSegments(`/media/${cleaned}`);
+  if (!cleaned.includes("/")) return encodePathSegments(`/api/media/file/${cleaned}`);
 
   return encodePathSegments(`/${cleaned.replace(/^\/+/, "")}`);
 }
