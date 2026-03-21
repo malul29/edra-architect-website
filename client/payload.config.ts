@@ -15,7 +15,10 @@ const blobTokenCandidates = [process.env.BLOB_READ_WRITE_TOKEN, process.env.VERC
     .map((value) => value?.trim())
     .filter(Boolean)
 const blobToken = blobTokenCandidates.find((value) => blobTokenPattern.test(value))
-const blobEnabled = process.env.ENABLE_BLOB_STORAGE === 'true' && Boolean(blobToken)
+const blobEnabledRaw = (process.env.ENABLE_BLOB_STORAGE || '').trim().toLowerCase()
+const blobEnabledByFlag = ['1', 'true', 'yes', 'on'].includes(blobEnabledRaw)
+const blobDisabledByFlag = ['0', 'false', 'no', 'off'].includes(blobEnabledRaw)
+const blobEnabled = blobDisabledByFlag ? false : (blobEnabledByFlag || Boolean(blobToken))
 
 export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
