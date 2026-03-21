@@ -10,8 +10,12 @@ import { Blogs } from './collections/Blogs.ts'
 
 import { ContactSubmissions } from './collections/ContactSubmissions.ts'
 
-const blobTokenRaw = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN
-const blobToken = /^vercel_blob_rw_[a-z\d]+_[a-z\d]+$/i.test(blobTokenRaw || '') ? blobTokenRaw : undefined
+const blobTokenPattern = /^vercel_blob_rw_[a-z\d]+_[a-z\d]+$/i
+const blobTokenCandidates = [process.env.BLOB_READ_WRITE_TOKEN, process.env.VERCEL_BLOB_READ_WRITE_TOKEN]
+    .map((value) => value?.trim())
+    .filter(Boolean)
+const blobToken = blobTokenCandidates.find((value) => blobTokenPattern.test(value))
+const blobEnabled = process.env.ENABLE_BLOB_STORAGE === 'true' && Boolean(blobToken)
 
 export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
@@ -48,8 +52,9 @@ export default buildConfig({
     // Keep plugin always registered so importMap is stable across build/runtime envs.
     plugins: [
         vercelBlobStorage({
+            enabled: blobEnabled,
             token: blobToken,
-            clientUploads: true,
+            clientUploads: blobEnabled,
             collections: {
                 media: true,
             },

@@ -7,3 +7,4 @@ dist/
 
 # Payload CMS
 client/payload-types.ts
+.vercel
