@@ -16,7 +16,7 @@ export default async function Home() {
     let services = fallbackServices;
     try {
         const payload = await getPayload({ config });
-        const portfolioRes = await payload.find({ collection: "portfolio", limit: 10, sort: "-createdAt", depth: 1 });
+        const portfolioRes = await payload.find({ collection: "portfolio", limit: 24, sort: "-createdAt", depth: 1 });
         portfolio = portfolioRes.docs || [];
     } catch (err) {
         console.error("[Home] Failed to load CMS data:", err?.message);

@@ -7,7 +7,7 @@ import gsap from "gsap";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SafeImage from "@/components/SafeImage";
-import { FocusRail } from "@/components/ui/focus-rail";
+import StickyScroll from "@/components/ui/sticky-scroll";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 const SERVICE_FALLBACKS = {
@@ -175,18 +175,10 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
     }, []);
 
     const featured = portfolio || [];
-    const railItems = featured.map((p) => ({
-        id: p.id,
-        title: p.title,
-        description: p.location || "Selected architectural project",
-        imageSrc: resolveMediaUrl(p.image),
-        href: `/project/${p.slug || p.id}`,
-        meta: p.category || "Project",
-    })).filter((item) => Boolean(item.imageSrc));
 
-    // Build hero images from first 3 rail items (fallback to static hero)
-    const heroImages = railItems.length > 0
-        ? railItems.slice(0, 3).map((item) => item.imageSrc)
+    // Build hero images from latest projects (fallback to static hero)
+    const heroImages = featured.length > 0
+        ? featured.slice(0, 3).map((item) => resolveMediaUrl(item.image)).filter(Boolean)
         : [HERO_IMG];
 
     // Rotate hero image every 15 seconds
@@ -243,10 +235,10 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                 </button>
             </section>
 
-            {/* ── PROJECT TRACK (focus rail) ── */}
-            {railItems.length > 0 && (
+            {/* ── PROJECT GALLERY STICKY SCROLL ── */}
+            {featured.length > 0 && (
                 <section className="home-focus-rail-section">
-                    <FocusRail items={railItems} autoPlay={false} loop={true} className="home-focus-rail" />
+                    <StickyScroll projects={featured} maxItems={13} />
                 </section>
             )}
 

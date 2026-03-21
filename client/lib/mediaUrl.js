@@ -47,6 +47,25 @@ export function normalizeMediaUrl(url) {
   return encodePathSegments(`/${cleaned.replace(/^\/+/, "")}`);
 }
 
+export function getAlternateMediaUrl(url) {
+  if (!url || typeof url !== "string") return null;
+
+  const cleaned = String(url).trim();
+  if (/^https?:\/\//i.test(cleaned)) return null;
+
+  if (cleaned.startsWith("/api/media/file/") || cleaned.startsWith("api/media/file/")) {
+    const relative = cleaned.replace(/^\/?api\/media\/file\//, "");
+    return encodePathSegments(`/media/${relative}`);
+  }
+
+  if (cleaned.startsWith("/media/") || cleaned.startsWith("media/")) {
+    const relative = cleaned.replace(/^\/?media\//, "");
+    return encodePathSegments(`/api/media/file/${relative}`);
+  }
+
+  return null;
+}
+
 export function resolveMediaUrl(media) {
   if (!media) return FALLBACK_MEDIA_URL;
 
