@@ -8823,9 +8823,10 @@ body {
 .projects-masonry-grid {
   column-count: 4;
   column-gap: 1rem;
-  width: 100vw;
+  width: 100%;
   max-width: none;
-  padding: 0;
+  padding: clamp(0.9rem, 2vw, 1.9rem);
+  box-sizing: border-box;
   margin: 0;
 }
 
@@ -8867,34 +8868,28 @@ body {
   object-position: center;
   display: block;
   transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .project-masonry-overlay {
   position: absolute;
-  inset: 0;
+  inset: auto 0 0 0;
+  height: 65%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   text-align: center;
   padding: 2.5rem 1.5rem;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  z-index: 2;
-}
-
-.project-masonry-overlay::before {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  mask-image: linear-gradient(to top, black 20%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to top, black 20%, transparent 100%);
-  z-index: -1;
-  pointer-events: none;
+  mask-image: linear-gradient(to top, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 40%, transparent 100%);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 2;
 }
 
 .project-masonry-title {
@@ -8926,6 +8921,7 @@ body {
 
 .project-masonry-card:hover .project-masonry-overlay {
   opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes project-card-reveal {
@@ -8943,6 +8939,7 @@ body {
   .projects-masonry-grid {
     column-count: 3;
     column-gap: 0.75rem;
+    padding: clamp(0.7rem, 1.8vw, 1.5rem);
   }
 
   .project-masonry-card {
@@ -8962,7 +8959,7 @@ body {
   .projects-masonry-grid {
     column-count: 2;
     column-gap: 0.5rem;
-    padding: 0;
+    padding: 0.75rem;
   }
 
   .project-masonry-card {
@@ -8979,7 +8976,7 @@ body {
   .projects-masonry-grid {
     column-count: 1;
     column-gap: 0.5rem;
-    padding: 0;
+    padding: 0.5rem;
   }
 
   .project-masonry-card {

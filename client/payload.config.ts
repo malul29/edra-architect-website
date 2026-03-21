@@ -1,6 +1,7 @@
 import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig } from 'payload'
 
 import { Media } from './collections/Media.ts'
@@ -40,6 +41,14 @@ export default buildConfig({
             connectionString: process.env.DATABASE_URL || '',
         },
         push: true,
+    }),
+    // Vercel Blob storage adapter untuk production
+    ...(process.env.VERCEL_BLOB_READ_WRITE_TOKEN && {
+        plugins: [
+            vercelBlobStorage({
+                token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
+            }),
+        ],
     }),
     sharp,
     typescript: {
