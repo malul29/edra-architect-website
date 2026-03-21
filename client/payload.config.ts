@@ -10,7 +10,8 @@ import { Blogs } from './collections/Blogs.ts'
 
 import { ContactSubmissions } from './collections/ContactSubmissions.ts'
 
-const blobToken = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN
+const blobTokenRaw = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN
+const blobToken = /^vercel_blob_rw_[a-z\d]+_[a-z\d]+$/i.test(blobTokenRaw || '') ? blobTokenRaw : undefined
 
 export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
@@ -44,17 +45,17 @@ export default buildConfig({
         },
         push: true,
     }),
-    // Vercel Blob storage adapter untuk production
-    ...(blobToken && {
-        plugins: [
-            vercelBlobStorage({
-                token: blobToken,
-                collections: {
-                    media: true,
-                },
-            }),
-        ],
-    }),
+    // Keep plugin always registered so importMap is stable across build/runtime envs.
+    plugins: [
+        vercelBlobStorage({
+            token: blobToken,
+            clientUploads: true,
+            collections: {
+                media: true,
+            },
+            alwaysInsertFields: true,
+        }),
+    ],
     sharp,
     typescript: {
         outputFile: 'payload-types.ts',
