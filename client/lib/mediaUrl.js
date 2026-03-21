@@ -23,13 +23,13 @@ export function normalizeMediaUrl(url) {
   const cleaned = String(url).trim();
 
   if (cleaned.startsWith("/api/media/file/") || cleaned.startsWith("api/media/file/")) {
-    const normalized = cleaned.startsWith("/") ? cleaned : `/${cleaned}`;
-    return encodePathSegments(normalized);
+    const relative = cleaned.replace(/^\/?api\/media\/file\//, "");
+    return encodePathSegments(`/media/${relative}`);
   }
 
   if (cleaned.startsWith("/media/") || cleaned.startsWith("media/")) {
     const relative = cleaned.replace(/^\/?media\//, "");
-    return encodePathSegments(`/api/media/file/${relative}`);
+    return encodePathSegments(`/media/${relative}`);
   }
 
   if (cleaned.startsWith("/uploads/") || cleaned.startsWith("uploads/")) {
@@ -42,7 +42,7 @@ export function normalizeMediaUrl(url) {
   }
 
   // Payload can return bare filenames in some environments.
-  if (!cleaned.includes("/")) return encodePathSegments(`/api/media/file/${cleaned}`);
+  if (!cleaned.includes("/")) return encodePathSegments(`/media/${cleaned}`);
 
   return encodePathSegments(`/${cleaned.replace(/^\/+/, "")}`);
 }
