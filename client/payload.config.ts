@@ -10,6 +10,8 @@ import { Blogs } from './collections/Blogs.ts'
 
 import { ContactSubmissions } from './collections/ContactSubmissions.ts'
 
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN
+
 export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
     admin: {
@@ -43,10 +45,10 @@ export default buildConfig({
         push: true,
     }),
     // Vercel Blob storage adapter untuk production
-    ...(process.env.VERCEL_BLOB_READ_WRITE_TOKEN && {
+    ...(blobToken && {
         plugins: [
             vercelBlobStorage({
-                token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
+                token: blobToken,
                 collections: {
                     media: true,
                 },
