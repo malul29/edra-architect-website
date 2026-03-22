@@ -10,11 +10,13 @@ const archivo = Archivo({
 });
 
 export const metadata = {
+    metadataBase: new URL("https://edraarsitek.co.id"),
     title: "Edra Arsitek Indonesia",
     description: "Edra Arsitek Indonesia - Architecture & Interior Design",
     icons: {
-        icon: "/edra-logo.png",
-        apple: "/edra-logo.png",
+        icon: "/favivon.png",
+        shortcut: "/favivon.png",
+        apple: "/favivon.png",
     },
 };
 

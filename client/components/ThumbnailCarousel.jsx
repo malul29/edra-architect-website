@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 const FULL_WIDTH_PX = 120;
 const COLLAPSED_WIDTH_PX = 35;
@@ -42,8 +42,9 @@ function Thumbnails({ images, index, setIndex }) {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className={`tcarousel-thumb${i === index ? " tcarousel-thumb-active" : ""}`}
                     >
-                        <Image
+                        <SafeImage
                             src={img}
+                            fallbackSrc="/edra-logo.png"
                             alt={`Thumbnail ${i + 1}`}
                             fill
                             style={{ objectFit: "cover", pointerEvents: "none", userSelect: "none" }}
@@ -115,8 +116,9 @@ export default function ThumbnailCarousel({ images, onImageClick }) {
                                 if (!isDragging && onImageClick) onImageClick(i);
                             }}
                         >
-                            <Image
+                            <SafeImage
                                 src={img}
+                                fallbackSrc="/edra-logo.png"
                                 alt={`Gallery image ${i + 1}`}
                                 fill
                                 style={{ objectFit: "cover", userSelect: "none", pointerEvents: "none" }}

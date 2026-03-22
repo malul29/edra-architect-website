@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 const FULL_WIDTH_PX = 110;
 const COLLAPSED_WIDTH_PX = 32;
@@ -39,8 +39,9 @@ function LightboxThumbs({ images, currentIndex, onGoTo }) {
                         transition={{ duration: 0.28, ease: "easeOut" }}
                         className={`lightbox-thumb${i === currentIndex ? " lightbox-thumb-active" : ""}`}
                     >
-                        <Image
+                        <SafeImage
                             src={img}
+                          fallbackSrc="/edra-logo.png"
                             alt={`Thumbnail ${i + 1}`}
                             fill
                             sizes="110px"
@@ -102,8 +103,9 @@ export default function Lightbox({ images, currentIndex, onClose, onNext, onPrev
         )}
 
         <div className="lightbox-content">
-          <Image
+          <SafeImage
             src={currentImage}
+            fallbackSrc="/edra-logo.png"
             alt={`Gallery image ${currentIndex + 1}`}
             className="lightbox-image"
             width={1920}

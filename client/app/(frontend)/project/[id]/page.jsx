@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState, use } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { useApi } from "../../../../hooks/useApi";
 import Lightbox from "../../../../components/Lightbox";
 import ThumbnailCarousel from "../../../../components/ThumbnailCarousel";
 import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
+import SafeImage from "@/components/SafeImage";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 export default function ProjectDetailPage({ params }) {
@@ -102,7 +102,7 @@ export default function ProjectDetailPage({ params }) {
             {/* Hero Section */}
             <section className="project-detail-hero">
                 <div className="project-detail-hero-img">
-                    <Image src={resolveMediaUrl(project.image)} alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
+                    <SafeImage src={resolveMediaUrl(project.image)} fallbackSrc="/edra-logo.png" alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
                 </div>
                 <div className="project-detail-hero-overlay" />
                 <div className="project-detail-hero-content">
