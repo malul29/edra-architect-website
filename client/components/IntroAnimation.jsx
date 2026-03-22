@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
+import { GooeyText } from "@/components/ui/gooey-text-morphing";
 
 const WORDS = ["Design.", "Build.", "Inspire."];
 
@@ -12,7 +13,7 @@ export default function IntroAnimation({ onComplete }) {
     // Separate layers so they can be animated independently
     const bgRef = useRef(null); // dark background — fades out at end
     const contentRef = useRef(null); // words + logo — stays solid during outro
-    const wordRef = useRef(null);
+    const morphWrapRef = useRef(null);
     const logoWrapRef = useRef(null);
 
     useEffect(() => {
@@ -26,26 +27,14 @@ export default function IntroAnimation({ onComplete }) {
 
         const ctx = gsap.context(() => {
             // ── Initial states ──────────────────────────────────
-            gsap.set(wordRef.current, { autoAlpha: 0, y: 50 });
+            gsap.set(morphWrapRef.current, { autoAlpha: 1, y: 0 });
             gsap.set(logoWrapRef.current, { opacity: 0, visibility: "hidden" });
 
             const tl = gsap.timeline();
 
-            // ── 1. Words one-by-one ─────────────────────────────
-            WORDS.forEach((word, i) => {
-                tl.call(() => {
-                    if (wordRef.current) wordRef.current.textContent = word;
-                });
-                tl.to(wordRef.current, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" });
-                tl.to({}, { duration: 0.55 });
-                if (i < WORDS.length - 1) {
-                    tl.to(wordRef.current, { autoAlpha: 0, y: -45, duration: 0.4, ease: "power2.in" });
-                    tl.set(wordRef.current, { y: 50 });
-                }
-            });
-
-            // Last word out
-            tl.to(wordRef.current, { autoAlpha: 0, y: -45, duration: 0.5, ease: "power2.in" });
+            // ── 1. Gooey text morphing phase ─────────────────────
+            tl.to({}, { duration: 3.2 });
+            tl.to(morphWrapRef.current, { autoAlpha: 0, y: -32, duration: 0.45, ease: "power2.in" });
 
             // ── 2. Logo fades in ────────────────────────────────
             tl.to(logoWrapRef.current, { opacity: 1, visibility: "visible", duration: 0.9, ease: "power2.out" }, "-=0.1");
@@ -132,22 +121,22 @@ export default function IntroAnimation({ onComplete }) {
                 }}
             >
                 {/* Single word slot */}
-                <span
-                    ref={wordRef}
-                    aria-live="polite"
+                <div
+                    ref={morphWrapRef}
                     style={{
                         position: "absolute",
-                        fontFamily: "'Archivo', sans-serif",
-                        fontSize: "clamp(42px, 8vw, 120px)",
-                        fontWeight: 800,
-                        lineHeight: 1.05,
-                        letterSpacing: "-0.03em",
-                        color: "#f5f5f5",
-                        textAlign: "center",
-                        whiteSpace: "nowrap",
-                        userSelect: "none",
+                        width: "min(92vw, 980px)",
+                        pointerEvents: "none",
                     }}
-                />
+                >
+                    <GooeyText
+                        texts={WORDS}
+                        morphTime={0.85}
+                        cooldownTime={0.28}
+                        className="h-[160px]"
+                        textClassName="font-archivo font-extrabold tracking-[-0.03em] text-[#f5f5f5] text-[clamp(42px,8vw,120px)] leading-none"
+                    />
+                </div>
 
                 {/* EDRA logo — hidden via CSS until logo phase */}
                 <div

@@ -10,12 +10,46 @@ import Footer from "../../../../components/Footer";
 import SafeImage from "@/components/SafeImage";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 
+function toYouTubeEmbedURL(value) {
+    if (!value || typeof value !== "string") return null;
+
+    const raw = value.trim();
+    if (!raw) return null;
+
+    const normalized = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+
+    try {
+        const url = new URL(normalized);
+        const host = url.hostname.replace(/^www\./i, "").toLowerCase();
+        let videoId = "";
+
+        if (host === "youtu.be") {
+            videoId = url.pathname.replace(/^\//, "").split("/")[0];
+        } else if (host === "youtube.com" || host === "m.youtube.com") {
+            if (url.pathname.startsWith("/watch")) {
+                videoId = url.searchParams.get("v") || "";
+            } else if (url.pathname.startsWith("/embed/")) {
+                videoId = url.pathname.split("/embed/")[1]?.split("/")[0] || "";
+            } else if (url.pathname.startsWith("/shorts/")) {
+                videoId = url.pathname.split("/shorts/")[1]?.split("/")[0] || "";
+            }
+        }
+
+        if (!videoId) return null;
+
+        return `https://www.youtube.com/embed/${videoId}`;
+    } catch {
+        return null;
+    }
+}
+
 export default function ProjectDetailPage({ params }) {
     const { id } = use(params);
     const router = useRouter();
     const { data: apiData } = useApi("/portfolio");
     const [project, setProject] = useState(null);
     const [lightboxIndex, setLightboxIndex] = useState(null);
+    const [videoShouldAutoplay, setVideoShouldAutoplay] = useState(false);
 
     useEffect(() => {
         if (apiData && apiData.length > 0) {
@@ -64,9 +98,53 @@ export default function ProjectDetailPage({ params }) {
         return [];
     }, [project]);
 
+    const youtubeEmbedBase = useMemo(() => {
+        if (!project) return null;
+        const candidate = project.youtubeUrl || project.videoUrl || project.youtubeURL;
+        return toYouTubeEmbedURL(candidate);
+    }, [project]);
+
+    const youtubeEmbedSrc = useMemo(() => {
+        if (!youtubeEmbedBase) return null;
+
+        const params = new URLSearchParams({
+            rel: "0",
+            modestbranding: "1",
+            controls: "1",
+            playsinline: "1",
+            mute: "1",
+        });
+
+        params.set("autoplay", videoShouldAutoplay ? "1" : "0");
+        return `${youtubeEmbedBase}?${params.toString()}`;
+    }, [youtubeEmbedBase, videoShouldAutoplay]);
+
     useEffect(() => {
         setLightboxIndex(null);
     }, [project?.id]);
+
+    useEffect(() => {
+        if (!youtubeEmbedBase) return;
+
+        const section = document.getElementById("project-video-section");
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setVideoShouldAutoplay(true);
+                    }
+                });
+            },
+            {
+                threshold: 0.6,
+            }
+        );
+
+        observer.observe(section);
+        return () => observer.disconnect();
+    }, [youtubeEmbedBase]);
 
     const handleOpenLightbox = (index) => {
         setLightboxIndex(index);
@@ -134,6 +212,23 @@ export default function ProjectDetailPage({ params }) {
                         <ThumbnailCarousel
                             images={galleryImages}
                             onImageClick={handleOpenLightbox}
+                        />
+                    </div>
+                </section>
+            )}
+
+            {/* Optional YouTube Video Section */}
+            {youtubeEmbedSrc && (
+                <section id="project-video-section" className="project-detail-video-section">
+                    <div className="project-detail-video-shell">
+                        <iframe
+                            className="project-detail-video-iframe"
+                            src={youtubeEmbedSrc}
+                            title={`${project.title} video`}
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
                         />
                     </div>
                 </section>

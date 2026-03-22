@@ -92,5 +92,13 @@ export const Portfolio: CollectionConfig = {
                 },
             ],
         },
+        {
+            name: 'youtubeUrl',
+            type: 'text',
+            required: false,
+            admin: {
+                description: 'Optional YouTube video URL for project detail page',
+            },
+        },
     ],
 }
