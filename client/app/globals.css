@@ -3470,42 +3470,108 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 /* Story Section */
 .about-redesign-story {
   padding: 12vh var(--px);
-  background: #f5f5f5;
+  background: #fdfdfd;
   border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  overflow: hidden;
 }
 
-.about-redesign-story-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 8rem;
+.about-redesign-story-wrapper {
+  position: relative;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.about-redesign-story-left h2 {
+.about-redesign-story-deco {
+  position: absolute;
+  top: -80px;
+  left: -2%;
   font-family: var(--sans);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
+  font-size: clamp(8rem, 15vw, 15rem);
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.03);
+  letter-spacing: -0.05em;
+  z-index: 0;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.about-redesign-story-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.about-redesign-story-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.about-redesign-story-image-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 90%;
+  z-index: 2;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+.about-redesign-story-image-accent {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 90%;
+  height: 90%;
+  background: #1a1a1a;
+  z-index: 1;
+}
+
+.about-redesign-story-text {
+  padding-right: 2rem;
+}
+
+.about-redesign-story-title {
+  font-family: var(--sans);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 900;
   color: #1a1a1a;
   letter-spacing: -0.04em;
-  line-height: 1.1;
-  margin: 0;
-  position: sticky;
-  top: 150px;
+  line-height: 1.05;
+  margin: 0 0 2rem;
+  text-transform: uppercase;
 }
 
-.about-redesign-story-right .lead {
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
+.about-redesign-story-title span {
+  color: #888888;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.about-redesign-story-divider {
+  width: 80px;
+  height: 4px;
+  background: #1a1a1a;
+  margin-bottom: 2.5rem;
+}
+
+.about-redesign-story-text .lead {
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
   line-height: 1.6;
   color: #1a1a1a;
-  font-weight: 500;
-  margin-bottom: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
-.about-redesign-story-right p {
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+.about-redesign-story-text p {
+  font-size: 1.05rem;
   line-height: 1.8;
-  color: #666666;
+  color: #555555;
   margin-bottom: 1.5rem;
 }
 
@@ -3692,6 +3758,204 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
   margin: 0;
 }
 
+/* ── MEET THE TEAM (dark, tilted cards) ─────────────────────── */
+.mt-section {
+  position: relative;
+  padding: 8rem var(--px) 6rem;
+  background: radial-gradient(ellipse at 50% 20%, #222 0%, #0a0a0a 70%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.mt-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mt-blob--1 {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(245, 245, 245, 0.22) 0%, transparent 70%);
+  top: 8%;
+  left: 28%;
+  filter: blur(40px);
+  animation: mt-float 8s ease-in-out infinite;
+}
+
+.mt-blob--2 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(245, 245, 245, 0.18) 0%, transparent 70%);
+  top: 12%;
+  right: 26%;
+  filter: blur(35px);
+  animation: mt-float 9s ease-in-out infinite 1s;
+}
+
+.mt-blob--3 {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(245, 245, 245, 0.15) 0%, transparent 70%);
+  bottom: 30%;
+  left: 18%;
+  filter: blur(30px);
+  animation: mt-float 7s ease-in-out infinite 2s;
+}
+
+.mt-blob--4 {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(245, 245, 245, 0.12) 0%, transparent 70%);
+  bottom: 22%;
+  right: 15%;
+  filter: blur(28px);
+  animation: mt-float 10s ease-in-out infinite 0.5s;
+}
+
+@keyframes mt-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.08);
+  }
+}
+
+.mt-cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-bottom: 3.5rem;
+}
+
+.mt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.4s var(--ease);
+}
+
+.mt-card:hover {
+  transform: scale(1.03);
+}
+
+.mt-card--left {
+  transform: rotate(-6deg);
+}
+
+.mt-card--left:hover {
+  transform: rotate(-4deg) scale(1.03);
+}
+
+.mt-card--right {
+  transform: rotate(5deg);
+}
+
+.mt-card--right:hover {
+  transform: rotate(3deg) scale(1.03);
+}
+
+.mt-card-backdrop {
+  position: absolute;
+  inset: -8px;
+  background: rgba(26, 26, 26, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  z-index: 0;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.mt-card:hover .mt-card-backdrop {
+  background: rgba(40, 40, 40, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.mt-card-frame {
+  position: relative;
+  width: clamp(200px, 22vw, 280px);
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 1;
+  background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.mt-card-info {
+  position: relative;
+  z-index: 2;
+  margin-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mt-card-info h3 {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.mt-card-divider {
+  width: 30px;
+  height: 2px;
+  background: #ffffff;
+  margin: 0.6rem 0;
+  opacity: 0.3;
+}
+
+.mt-card-info p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.mt-heading {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mt-heading-title {
+  font-family: var(--sans);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  color: #ffffff;
+  margin: 0 0 1.5rem;
+}
+
+.mt-heading-sub {
+  font-family: var(--sans);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
 /* ── TEAM SECTION (redesigned) ────────────────────────────────── */
 .team-section {
   padding: 10vh 0 0;
@@ -3820,13 +4084,23 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .about-redesign-story-grid {
+  .about-redesign-story-content {
     grid-template-columns: 1fr;
     gap: 4rem;
   }
 
-  .about-redesign-story-left h2 {
-    position: static;
+  .about-redesign-story-image-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .about-redesign-story-deco {
+    font-size: clamp(5rem, 12vw, 8rem);
+    top: -40px;
+  }
+
+  .about-redesign-story-text {
+    padding-right: 0;
   }
 
   .about-redesign-stats-grid {
@@ -3885,6 +4159,61 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 
   .about-redesign-team-header h2 {
     font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  .mt-section {
+    padding: 5rem var(--px) 4rem;
+  }
+
+  .mt-cards {
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .mt-card--left {
+    transform: rotate(-4deg);
+  }
+
+  .mt-card--right {
+    transform: rotate(3deg);
+  }
+
+  .mt-card-frame {
+    width: clamp(150px, 40vw, 200px);
+  }
+
+  .mt-heading-title {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .mt-blob--1,
+  .mt-blob--2 {
+    width: 140px;
+    height: 140px;
+  }
+
+  .mt-blob--3,
+  .mt-blob--4 {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mt-cards {
+    gap: 1rem;
+  }
+
+  .mt-card-frame {
+    width: clamp(130px, 38vw, 170px);
+  }
+
+  .mt-card--left {
+    transform: rotate(-3deg);
+  }
+
+  .mt-card--right {
+    transform: rotate(2deg);
   }
 }
 
