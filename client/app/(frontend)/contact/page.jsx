@@ -67,7 +67,7 @@ export default function ContactPage() {
                     <div className="contact-info-wrapper">
 
                         {/* Top eyebrow */}
-                        <p className="git-eyebrow">Get in Touch</p>
+                        <p className="git-eyebrow">Get in touch</p>
 
                         {/* Bold headline */}
                         <h2 className="git-title">

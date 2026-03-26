@@ -27,26 +27,51 @@ export default function AboutPage() {
                 {/* ── STORY ── */}
                 <section className="about-redesign-story">
                     <div className="container">
-                        <div className="about-redesign-story-grid">
-                            <div className="about-redesign-story-left">
-                                <h2>Our Story</h2>
+                        <div className="about-redesign-story-wrapper">
+                            {/* Decorative Text */}
+                            <div className="about-redesign-story-deco" aria-hidden="true">
+                                STORY
                             </div>
-                            <div className="about-redesign-story-right">
-                                <p className="lead">
-                                    PT. EDRA Arsitek Indonesia has been at the forefront of architectural excellence
-                                    for over 25 years, transforming ideas into iconic spaces across Indonesia.
-                                </p>
-                                <p>
-                                    PT. EDRA Arsitek Indonesia was established in 1999 as an architect studio.
-                                    With 25+ years of experience, PT. EDRA Arsitek Indonesia providing services in
-                                    planning, concept design, project supervision, tender, and construction in the
-                                    real estate, apartment, hotel, mall, office building and land area utilization.
-                                </p>
-                                <p>
-                                    Led by experienced professionals, our team combines technical expertise with creative
-                                    vision. We're committed to delivering every creation as a masterpiece, maintaining
-                                    professionalism and earning our clients' trust through exceptional work.
-                                </p>
+                            
+                            {/* Content Grid */}
+                            <div className="about-redesign-story-content">
+                                {/* Image Column */}
+                                <div className="about-redesign-story-image-wrap">
+                                    <div className="about-redesign-story-image-accent"></div>
+                                    <div className="about-redesign-story-image-frame">
+                                        <Image
+                                            src="/about-teaser.jpg"
+                                            alt="PT EDRA Arsitek Indonesia Story"
+                                            fill
+                                            style={{ objectFit: "cover" }}
+                                            sizes="(max-width: 992px) 100vw, 50vw"
+                                        />
+                                    </div>
+                                </div>
+                                
+                                {/* Text Column */}
+                                <div className="about-redesign-story-text">
+                                    <h2 className="about-redesign-story-title">
+                                        Architectural Excellence<br />
+                                        <span>Since 1999</span>
+                                    </h2>
+                                    <div className="about-redesign-story-divider"></div>
+                                    <p className="lead">
+                                        PT. EDRA Arsitek Indonesia has been at the forefront of architectural excellence
+                                        for over 25 years, transforming ideas into iconic spaces across Indonesia.
+                                    </p>
+                                    <p>
+                                        PT. EDRA Arsitek Indonesia was established in 1999 as an architect studio.
+                                        With 25+ years of experience, we provide comprehensive services in
+                                        planning, concept design, project supervision, tender, and construction across
+                                        real estate, apartments, hotels, malls, office buildings, and land area utilization.
+                                    </p>
+                                    <p>
+                                        Led by experienced professionals, our team combines technical expertise with creative
+                                        vision. We are committed to delivering every creation as a masterpiece, maintaining
+                                        professionalism and earning our clients' trust through exceptional work.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -152,42 +177,59 @@ export default function AboutPage() {
                         </div>
                     </div>
                 </section>
-
                 {/* ── TEAM ── */}
-                <section className="team-section">
-                    <div className="team-section-wrap container">
-                        <div className="team-section-copy">
-                            <p className="team-copy-label">Our Team</p>
-                            <h2 className="team-copy-title">Meet Our Team</h2>
-                            <p className="team-copy-text">
-                                A passionate group of architects and visionaries dedicated
-                                to creating meaningful and enduring spaces.
-                            </p>
-                        </div>
+                <section className="mt-section">
+                    {/* Organic accent blobs */}
+                    <div className="mt-blob mt-blob--1" aria-hidden="true" />
+                    <div className="mt-blob mt-blob--2" aria-hidden="true" />
+                    <div className="mt-blob mt-blob--3" aria-hidden="true" />
+                    <div className="mt-blob mt-blob--4" aria-hidden="true" />
 
-                        <div className="team-grid">
-                            {[
-                                { img: "/presdir.jpg", name: "Ar. Megawati Nyonri", role: "President Director & Lead Architect" },
-                                { img: "/opsdir.jpg", name: "Ning Widyastuti", role: "Operational Director" },
-                            ].map((m, i) => (
-                                <article className="team-card" key={m.name}>
-                                    <div className="team-card-visual">
-                                        <Image
-                                            src={m.img}
-                                            alt={m.name}
-                                            fill
-                                            style={{ objectFit: "cover", objectPosition: "top" }}
-                                            sizes="(max-width: 1024px) 100vw, 35vw"
-                                        />
-                                    </div>
-                                    <div className="team-card-meta">
-                                        <h3 className="team-card-name">{m.name}</h3>
-                                        <p className="team-card-role">{m.role}</p>
-                                        <span className="team-card-index">{String(i + 1).padStart(2, "0")}</span>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
+                    {/* Photo cards */}
+                    <div className="mt-cards">
+                        {[
+                            { 
+                                img: "/Megawati Nyonri.png", 
+                                name: "Ar. Megawati Nyonri", 
+                                role: "President Director", 
+                                tilt: "left",
+                                imgStyle: { objectFit: "cover", objectPosition: "bottom", transform: "scale(1.15) translateY(4%)" }
+                            },
+                            { 
+                                img: "/Ning Widyastuti.png", 
+                                name: "Ning Widyastuti", 
+                                role: "Operational Director", 
+                                tilt: "right",
+                                imgStyle: { objectFit: "cover", objectPosition: "bottom", transform: "scale(1.4) translateY(12%)" }
+                            },
+                        ].map((m) => (
+                            <div className={`mt-card mt-card--${m.tilt}`} key={m.name}>
+                                <div className="mt-card-backdrop" />
+                                <div className="mt-card-frame">
+                                    <Image
+                                        src={m.img}
+                                        alt={m.name}
+                                        fill
+                                        style={m.imgStyle}
+                                        sizes="(max-width: 768px) 45vw, 280px"
+                                    />
+                                </div>
+                                <div className="mt-card-info">
+                                    <h3>{m.name}</h3>
+                                    <div className="mt-card-divider" aria-hidden="true" />
+                                    <p>{m.role}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Heading below */}
+                    <div className="mt-heading">
+                        <h2 className="mt-heading-title">MEET THE<br />TEAM</h2>
+                        <p className="mt-heading-sub">
+                            A passionate group of architects and visionaries dedicated to
+                            creating meaningful and enduring spaces.
+                        </p>
                     </div>
                 </section>
 

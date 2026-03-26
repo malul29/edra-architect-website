@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import YodezeenButton from "./YodezeenButton";
+import TextRoll from "@/components/ui/text-roll";
 
 export default function Header() {
   const [solid, setSolid] = useState(false);
@@ -131,16 +132,22 @@ export default function Header() {
       <div className="header-inner">
         {/* Desktop Left Nav */}
         <nav className="header-left">
-          <Link href="/projects" className="nav-link">PROJECTS</Link>
+          <Link href="/projects" className="nav-link">
+            <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">PROJECTS</TextRoll>
+          </Link>
           <Link
             href="/services"
             className={`nav-link nav-button ${servicesOpen ? 'active' : ''}`}
             onMouseEnter={() => setServicesOpen(true)}
             onMouseLeave={() => setServicesOpen(false)}
           >
-            <span className="nav-circle">SERVICES</span>
+            <span className="nav-circle">
+              <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">SERVICES</TextRoll>
+            </span>
           </Link>
-          <Link href="/about" className="nav-link">ABOUT</Link>
+          <Link href="/about" className="nav-link">
+            <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">ABOUT</TextRoll>
+          </Link>
         </nav>
 
         <Link href="/" className="brand">
@@ -149,8 +156,12 @@ export default function Header() {
 
         {/* Desktop Right Nav */}
         <nav className="header-right">
-          <Link href="/contact" className="nav-link">CONTACT</Link>
-          <Link href="/blogs" className="nav-link">BLOGS</Link>
+          <Link href="/contact" className="nav-link">
+            <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">CONTACT</TextRoll>
+          </Link>
+          <Link href="/blogs" className="nav-link">
+            <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">BLOGS</TextRoll>
+          </Link>
           <YodezeenButton to="/contact" />
         </nav>
 
@@ -174,16 +185,16 @@ export default function Header() {
         <div className="services-content">
           <div className="services-menu">
             <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
-              ARCHITECTURE
+              <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">ARCHITECTURE</TextRoll>
             </Link>
             <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
-              MANAGEMENT
+              <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">MANAGEMENT</TextRoll>
             </Link>
             <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
-              CONSTRUCTION
+              <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">CONSTRUCTION</TextRoll>
             </Link>
             <Link href="/services" className="services-item" onClick={() => setServicesOpen(false)}>
-              INTERIOR DESIGN
+              <TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">INTERIOR DESIGN</TextRoll>
             </Link>
           </div>
         </div>
@@ -192,11 +203,11 @@ export default function Header() {
       {/* Fullscreen Mobile Menu */}
       <div className={`mobile-menu ${mobileOpen ? 'active' : ''}`}>
         <nav className="mobile-nav">
-          <Link href="/projects" className="mobile-nav-item" onClick={closeMobile}>PROJECTS</Link>
-          <Link href="/services" className="mobile-nav-item" onClick={closeMobile}>SERVICES</Link>
-          <Link href="/about" className="mobile-nav-item" onClick={closeMobile}>ABOUT</Link>
-          <Link href="/contact" className="mobile-nav-item" onClick={closeMobile}>CONTACT</Link>
-          <Link href="/blogs" className="mobile-nav-item" onClick={closeMobile}>BLOGS</Link>
+          <Link href="/projects" className="mobile-nav-item" onClick={closeMobile}><TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">PROJECTS</TextRoll></Link>
+          <Link href="/services" className="mobile-nav-item" onClick={closeMobile}><TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">SERVICES</TextRoll></Link>
+          <Link href="/about" className="mobile-nav-item" onClick={closeMobile}><TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">ABOUT</TextRoll></Link>
+          <Link href="/contact" className="mobile-nav-item" onClick={closeMobile}><TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">CONTACT</TextRoll></Link>
+          <Link href="/blogs" className="mobile-nav-item" onClick={closeMobile}><TextRoll className="text-[inherit] leading-[1] font-[inherit] tracking-[inherit]">BLOGS</TextRoll></Link>
         </nav>
 
         <div className="mobile-menu-footer">

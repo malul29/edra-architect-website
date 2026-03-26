@@ -104,11 +104,11 @@ export default function ProjectsClient({ initialData }) {
                 </div>
             </section>
 
-            <div style={{ minHeight: "100vh", background: "#1a1a1a", color: "#f5f5f5" }}>
+            <div style={{ minHeight: "100vh", background: "#000000", color: "#f5f5f5" }}>
                 {/* ── FILTER TABS ── */}
                 <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
-                    flexWrap: "wrap", gap: ".5rem", padding: "3rem var(--px) 2rem",
+                    flexWrap: "wrap", gap: ".5rem", padding: "1.75rem var(--px) 1.25rem",
                     borderBottom: "1px solid rgba(255,255,255,0.12)",
                 }}>
                     <div style={{ display: "flex", gap: "clamp(.8rem,2.5vw,2.5rem)", flexWrap: "wrap" }}>
@@ -128,7 +128,7 @@ export default function ProjectsClient({ initialData }) {
                 </div>
 
                 {/* ── MASONRY GRID ── */}
-                <div style={{ padding: "2rem clamp(1rem, 2vw, 2rem) 4rem" }}>
+                <div style={{ padding: "2rem 0 4rem" }}>
                     {initialData.length === 0 ? (
                         <p className="label" style={{ textAlign: "center", padding: "8vh", color: "rgba(255,255,255,.55)" }}>No projects yet.</p>
                     ) : (

@@ -8899,7 +8899,7 @@ body {
   column-gap: 1rem;
   width: 100%;
   max-width: none;
-  padding: clamp(0.9rem, 2vw, 1.9rem);
+  padding: clamp(0.6rem, 1.5vw, 1.25rem);
   box-sizing: border-box;
   margin: 0;
 }
