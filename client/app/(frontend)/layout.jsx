@@ -2,6 +2,7 @@ import { Archivo } from "next/font/google";
 import "../globals.css";
 import BodyWrapper from "../../components/BodyWrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const archivo = Archivo({
     subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
             <body>
                 <BodyWrapper>{children}</BodyWrapper>
                 <SpeedInsights />
+                <Analytics />
             </body>
         </html>
     );
