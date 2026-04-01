@@ -146,6 +146,27 @@ export default function ProjectDetailPage({ params }) {
         return () => observer.disconnect();
     }, [youtubeEmbedBase]);
 
+    useEffect(() => {
+        if (!project) return;
+        const revealEls = document.querySelectorAll('.reveal');
+        if (!revealEls.length) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        revealEls.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+    }, [project]);
+
     const handleOpenLightbox = (index) => {
         setLightboxIndex(index);
     };
@@ -194,12 +215,33 @@ export default function ProjectDetailPage({ params }) {
                 </div>
             </section>
 
-            {/* Description Section */}
+            {/* Description / Story Section */}
             <section className="project-detail-description">
-                <div className="project-detail-container">
-                    <div className="project-detail-desc-content">
-                        <h2>About the Project</h2>
-                        <p>{project.description || "A stunning architectural masterpiece that combines innovative design with functional excellence. This project represents our commitment to creating spaces that inspire and endure."}</p>
+                <div className="project-story-wrapper">
+                    {/* Left column: Heading & Meta */}
+                    <div className="project-story-meta reveal reveal-left">
+                        <h2 className="section-title-dark">ABOUT THE<br/>PROJECT</h2>
+                        <div className="project-meta-list">
+                            <div className="meta-item">
+                                <span className="meta-label">Location</span>
+                                <span className="meta-value">{project.location || "Jakarta, Indonesia"}</span>
+                            </div>
+                            <div className="meta-item">
+                                <span className="meta-label">Year</span>
+                                <span className="meta-value">{project.year || "2023"}</span>
+                            </div>
+                            <div className="meta-item">
+                                <span className="meta-label">Category</span>
+                                <span className="meta-value">{project.category || "Architecture"}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right column: Description */}
+                    <div className="project-story-text reveal reveal-up" style={{ transitionDelay: '0.2s' }}>
+                        <p className="lead-text">
+                            {project.description || "A stunning architectural masterpiece that combines innovative design with functional excellence. This project represents our commitment to creating spaces that inspire and endure."}
+                        </p>
                     </div>
                 </div>
             </section>

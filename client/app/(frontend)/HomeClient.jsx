@@ -176,10 +176,9 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
 
     const featured = portfolio || [];
 
-    // Build hero images from latest projects (fallback to static hero)
-    const heroImages = featured.length > 0
-        ? featured.map((item) => resolveMediaUrl(item.image)).filter(Boolean)
-        : [HERO_IMG];
+    const rawImages = featured.map((item) => resolveMediaUrl(item.image)).filter(src => src && src !== "/edra-logo.png");
+    const uniqueImages = Array.from(new Set(rawImages));
+    const heroImages = uniqueImages.length > 0 ? uniqueImages : [HERO_IMG];
 
     // Rotate hero image every 15 seconds
     useEffect(() => {
