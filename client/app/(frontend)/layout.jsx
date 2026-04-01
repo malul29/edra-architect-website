@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Archivo } from "next/font/google";
 import "../globals.css";
 import BodyWrapper from "../../components/BodyWrapper";
@@ -27,6 +29,8 @@ export default function RootLayout({ children }) {
         <html lang="en" className={archivo.variable}>
             <body>
                 <BodyWrapper>{children}</BodyWrapper>
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
