@@ -176,9 +176,11 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
 
     const featured = portfolio || [];
 
-    const rawImages = featured.map((item) => resolveMediaUrl(item.image)).filter(src => src && src !== "/edra-logo.png");
-    const uniqueImages = Array.from(new Set(rawImages));
-    const heroImages = uniqueImages.length > 0 ? uniqueImages : [HERO_IMG];
+    const [heroImages, setHeroImages] = useState(() => {
+        const rawImages = featured.map((item) => resolveMediaUrl(item.image)).filter(src => src && src !== "/edra-logo.png");
+        const uniqueImages = Array.from(new Set(rawImages));
+        return uniqueImages.length > 0 ? uniqueImages : [HERO_IMG];
+    });
 
     // Rotate hero image every 15 seconds
     useEffect(() => {
@@ -204,7 +206,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                 {heroImages.map((src, i) => (
                     <Image
                         key={src}
-                        className={`hero-img${i === heroIndex ? ' hero-img-active' : ''}`}
+                        className={`hero-img${i === (heroIndex % heroImages.length) ? ' hero-img-active' : ''}`}
                         src={src}
                         alt={`EDRA Architect project ${i + 1}`}
                         fill
@@ -213,6 +215,12 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                         priority={i === 0}
                         loading={i === 0 ? "eager" : "lazy"}
                         quality={75}
+                        onError={() => {
+                            setHeroImages(prev => {
+                                const nextImages = prev.filter(img => img !== src);
+                                return nextImages.length > 0 ? nextImages : [HERO_IMG];
+                            });
+                        }}
                     />
                 ))}
                 <div className="hero-shade" />
