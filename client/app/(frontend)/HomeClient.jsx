@@ -178,7 +178,7 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
 
     // Build hero images from latest projects (fallback to static hero)
     const heroImages = featured.length > 0
-        ? featured.slice(0, 3).map((item) => resolveMediaUrl(item.image)).filter(Boolean)
+        ? featured.map((item) => resolveMediaUrl(item.image)).filter(Boolean)
         : [HERO_IMG];
 
     // Rotate hero image every 15 seconds
