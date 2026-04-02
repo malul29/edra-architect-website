@@ -22,6 +22,7 @@ const blobEnabled = blobDisabledByFlag ? false : (blobEnabledByFlag || Boolean(b
 
 export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
+    telemetry: false,
     admin: {
         user: 'users',
         meta: {

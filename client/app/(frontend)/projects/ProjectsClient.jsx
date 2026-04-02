@@ -34,6 +34,7 @@ const FALLBACK_IMAGES = {
 
 export default function ProjectsClient({ initialData }) {
     const [active, setActive] = useState("All");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const PAGE_SIZE = 12;
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -111,18 +112,54 @@ export default function ProjectsClient({ initialData }) {
                     flexWrap: "wrap", gap: ".5rem", padding: "1.75rem var(--px) 1.25rem",
                     borderBottom: "1px solid rgba(255,255,255,0.12)",
                 }}>
-                    <div style={{ display: "flex", gap: "clamp(.8rem,2.5vw,2.5rem)", flexWrap: "wrap" }}>
-                        {CATS.map(c => (
-                            <button key={c} onClick={() => setActive(c)} style={{
-                                background: "none", border: "none", padding: "6px 0",
-                                fontSize: ".85rem", letterSpacing: ".14em", textTransform: "uppercase",
-                                cursor: "pointer",
-                                color: active === c ? "#ffffff" : "rgba(255,255,255,.45)",
-                                fontWeight: active === c ? 600 : 400,
-                                borderBottom: active === c ? "2px solid #ffffff" : "2px solid transparent",
-                                transition: "color .2s, border-color .2s",
-                            }}>{c}</button>
-                        ))}
+                    <div style={{ position: "relative" }}>
+                        <button 
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            style={{
+                                background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
+                                color: "#ffffff", padding: "0.5rem 1rem", fontSize: "0.85rem",
+                                letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer",
+                                display: "flex", alignItems: "center", gap: "0.5rem",
+                                borderRadius: "4px", transition: "border-color 0.2s"
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)"}
+                            onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"}
+                        >
+                            Kategori: {active}
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                        </button>
+
+                        {isDropdownOpen && (
+                            <div style={{
+                                position: "absolute", top: "100%", left: 0, marginTop: "0.5rem",
+                                background: "#111111", border: "1px solid rgba(255,255,255,0.1)",
+                                borderRadius: "6px", zIndex: 10, minWidth: "220px",
+                                display: "flex", flexDirection: "column",
+                                overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.5)"
+                            }}>
+                                {CATS.map(c => (
+                                    <button 
+                                        key={c} 
+                                        onClick={() => { setActive(c); setIsDropdownOpen(false); }} 
+                                        style={{
+                                            background: "transparent", border: "none", padding: "0.85rem 1rem",
+                                            fontSize: ".8rem", letterSpacing: ".1em", textTransform: "uppercase",
+                                            cursor: "pointer", textAlign: "left",
+                                            color: active === c ? "#ffffff" : "rgba(255,255,255,.55)",
+                                            fontWeight: active === c ? 600 : 400,
+                                            borderLeft: active === c ? "2px solid #ffffff" : "2px solid transparent",
+                                            transition: "background 0.2s, color 0.2s"
+                                        }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                                    >
+                                        {c}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
                     <span className="label" style={{ color: "rgba(255,255,255,.55)" }}>{filtered.length} Projects</span>
                 </div>

@@ -46,7 +46,8 @@ const nextConfig = {
                 ],
             },
             {
-                source: '/:path*',
+                // Exclude API, Admin dashboard, and internal Next.js paths from this aggressive cache
+                source: '/((?!api|admin|_next|.*\\..*).*)*',
                 headers: [
                     {
                         key: 'Cache-Control',

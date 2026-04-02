@@ -400,33 +400,14 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                             { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
                             { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
                             { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
-                        ]
-                            .concat([
-                                { name: "PILAR ARTHA MANDIRI", logo: "/client-4.png" },
-                                { name: "BINAKARYA PROPERTINDO GROUP", logo: "/client-5.png" },
-                                { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
-                                { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
-                                { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
-                            ])
-                            .concat([
-                                { name: "PILAR ARTHA MANDIRI", logo: "/client-4.png" },
-                                { name: "BINAKARYA PROPERTINDO GROUP", logo: "/client-5.png" },
-                                { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
-                                { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
-                                { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
-                            ])
-                            .concat([
-                                { name: "PILAR ARTHA MANDIRI", logo: "/client-4.png" },
-                                { name: "BINAKARYA PROPERTINDO GROUP", logo: "/client-5.png" },
-                                { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
-                                { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
-                                { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
-                            ])
-                            .map((client, index) => (
+                            { name: "NEW CLIENT", logo: "/client-6.png" },
+                            { name: "NEW CLIENT", logo: "/client-7.png" },
+                            { name: "NEW CLIENT", logo: "/client-8.png" },
+                        ].flatMap(baseArray => [baseArray, baseArray, baseArray, baseArray].flat()).map((client, index) => (
                                 <div className="client-logo-item" key={index}>
                                     <Image src={client.logo} alt={client.name} width={150} height={100} style={{ objectFit: "contain" }} loading="lazy" quality={60} />
                                 </div>
-                            ))}
+                        ))}
                     </div>
                 </div>
             </section>
