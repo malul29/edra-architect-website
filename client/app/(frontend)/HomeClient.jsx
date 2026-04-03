@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SafeImage from "@/components/SafeImage";
 import StickyScroll from "@/components/ui/sticky-scroll";
-import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { resolveMediaUrl, resolveMediaUrlForSize } from "@/lib/mediaUrl";
 
 const SERVICE_FALLBACKS = {
     architecture: "/media/gateway-pasteur-bandung-main.png",
@@ -174,7 +174,14 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
         return () => observer.disconnect();
     }, []);
 
-    const featured = portfolio || [];
+    const [featured, setFeatured] = useState(() => portfolio || []);
+
+    useEffect(() => {
+        // Randomize on client mount to prevent server hydration mismatches
+        if (portfolio && portfolio.length > 0) {
+            setFeatured([...portfolio].sort(() => Math.random() - 0.5));
+        }
+    }, [portfolio]);
 
     const [heroImages, setHeroImages] = useState(() => {
         const rawImages = featured.map((item) => resolveMediaUrl(item.image)).filter(src => src && src !== "/edra-logo.png");
@@ -204,10 +211,11 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
             {/* ── HERO ── */}
             <section className="hero" ref={heroRef}>
                 {heroImages.map((src, i) => (
-                    <Image
+                    <SafeImage
                         key={src}
-                        className={`hero-img${i === (heroIndex % heroImages.length) ? ' hero-img-active' : ''}`}
-                        src={src}
+                        className={`hero-img ${i === (heroIndex % heroImages.length) ? ' hero-img-active' : ''}`}
+                        src={resolveMediaUrlForSize(src, 'full')}
+                        fallbackSrc={HERO_IMG}
                         alt={`EDRA Architect project ${i + 1}`}
                         fill
                         sizes="100vw"
@@ -353,8 +361,9 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
                     <div className="home-services-grid">
                         {(services || []).slice(0, 3).map((service, i) => {
                             const fallback = getServiceFallback(service);
-                            const imageSrc = resolveMediaUrl(service.image);
-                            const displaySrc = imageSrc === "/edra-logo.png" ? fallback : imageSrc;
+                            const originalSrc = resolveMediaUrl(service.image);
+                            const imageSrc = resolveMediaUrlForSize(service.image, 'card');
+                            const displaySrc = originalSrc === "/edra-logo.png" ? fallback : imageSrc;
 
                             return (
                             <div className="home-service-card modern reveal reveal-up" key={service.id} style={{ transitionDelay: `${i * 0.15}s` }}>
@@ -394,20 +403,23 @@ export default function HomeClient({ initialPortfolio, initialServices }) {
             <section className="clients-carousel-section reveal reveal-up">
                 <div className="clients-carousel-wrapper">
                     <div className="clients-carousel-track">
-                        {[
-                            { name: "PILAR ARTHA MANDIRI", logo: "/client-4.png" },
-                            { name: "BINAKARYA PROPERTINDO GROUP", logo: "/client-5.png" },
-                            { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
-                            { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
-                            { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
-                            { name: "NEW CLIENT", logo: "/client-6.png" },
-                            { name: "NEW CLIENT", logo: "/client-7.png" },
-                            { name: "NEW CLIENT", logo: "/client-8.png" },
-                        ].flatMap(baseArray => [baseArray, baseArray, baseArray, baseArray].flat()).map((client, index) => (
+                                        {(() => {
+                            const clients = [
+                                { name: "PILAR ARTHA MANDIRI", logo: "/client-4.png" },
+                                { name: "BINAKARYA PROPERTINDO GROUP", logo: "/client-5.png" },
+                                { name: "PT. ANUGRAH DUTA MANDIRI", logo: "/client-1.png" },
+                                { name: "MEGAKARYA PROPERTI GROUP", logo: "/client-2.png" },
+                                { name: "RURARAHA DEVELOPMENT", logo: "/client-3.png" },
+                                { name: "NEW CLIENT", logo: "/client-6.png" },
+                                { name: "NEW CLIENT", logo: "/client-7.png" },
+                                { name: "NEW CLIENT", logo: "/client-8.png" },
+                            ];
+                            return [...clients, ...clients, ...clients, ...clients].map((client, index) => (
                                 <div className="client-logo-item" key={index}>
                                     <Image src={client.logo} alt={client.name} width={150} height={100} style={{ objectFit: "contain" }} loading="lazy" quality={60} />
                                 </div>
-                        ))}
+                            ));
+                        })()}
                     </div>
                 </div>
             </section>

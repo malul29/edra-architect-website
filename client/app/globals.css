@@ -3759,210 +3759,156 @@ body:has(.projects-strip.dragging) a[href]:focus::after {
 }
 
 /* ── MEET THE TEAM (dark, tilted cards) ─────────────────────── */
-.mt-section {
-  position: relative;
-  padding: 8rem var(--px) 6rem;
-  background: radial-gradient(ellipse at 50% 20%, #222 0%, #0a0a0a 70%);
-  overflow: hidden;
-  text-align: center;
+.team-hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #060606;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
 }
 
-.mt-blob {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+.team-hero-text-group {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    text-align: center;
+    gap: 0;
 }
 
-.mt-blob--1 {
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(245, 245, 245, 0.22) 0%, transparent 70%);
-  top: 8%;
-  left: 28%;
-  filter: blur(40px);
-  animation: mt-float 8s ease-in-out infinite;
+.team-hero-bg-text {
+    font-size: clamp(5rem, 12vw, 14rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.12);
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: -0.05em;
+    font-family: var(--sans);
+    user-select: none;
+    margin: 0;
 }
 
-.mt-blob--2 {
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(245, 245, 245, 0.18) 0%, transparent 70%);
-  top: 12%;
-  right: 26%;
-  filter: blur(35px);
-  animation: mt-float 9s ease-in-out infinite 1s;
+.team-hero-fg-text {
+    font-size: clamp(4rem, 12vw, 15rem);
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: -0.06em;
+    font-family: var(--sans);
+    margin: -0.15em 0 0;
 }
 
-.mt-blob--3 {
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(245, 245, 245, 0.15) 0%, transparent 70%);
-  bottom: 30%;
-  left: 18%;
-  filter: blur(30px);
-  animation: mt-float 7s ease-in-out infinite 2s;
+.team-hero-paragraph {
+    margin-top: 1.5rem;
+    max-width: 450px;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-.mt-blob--4 {
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, rgba(245, 245, 245, 0.12) 0%, transparent 70%);
-  bottom: 22%;
-  right: 15%;
-  filter: blur(28px);
-  animation: mt-float 10s ease-in-out infinite 0.5s;
+.team-hero-paragraph p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
-@keyframes mt-float {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-
-  50% {
-    transform: translateY(-18px) scale(1.08);
-  }
+.team-hero-images {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(2rem, 20vw, 28rem);
+    width: 100%;
+    max-width: var(--max);
+    height: 90vh;
+    padding: 0;
 }
 
-.mt-cards {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: clamp(2rem, 5vw, 5rem);
-  margin-bottom: 3.5rem;
+.team-hero-person {
+    position: relative;
+    width: clamp(320px, 40vw, 580px);
+    height: 100%;
+    cursor: pointer;
 }
 
-.mt-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.4s var(--ease);
+.team-hero-person img {
+    object-fit: contain;
+    object-position: bottom;
+    filter: grayscale(100%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+    will-change: filter, transform;
 }
 
-.mt-card:hover {
-  transform: scale(1.03);
+.team-hero-person:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.02);
 }
 
-.mt-card--left {
-  transform: rotate(-6deg);
+.team-hero-info {
+    position: absolute;
+    bottom: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    color: #ffffff;
+    width: max-content;
+    z-index: 4;
 }
 
-.mt-card--left:hover {
-  transform: rotate(-4deg) scale(1.03);
+.team-hero-person:hover .team-hero-info {
+    opacity: 1;
+    transform: translate(-50%, -10px);
 }
 
-.mt-card--right {
-  transform: rotate(5deg);
+.team-hero-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: var(--sans);
 }
 
-.mt-card--right:hover {
-  transform: rotate(3deg) scale(1.03);
+.team-hero-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
 }
 
-.mt-card-backdrop {
-  position: absolute;
-  inset: -8px;
-  background: rgba(26, 26, 26, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  z-index: 0;
-  transition: background 0.4s ease, border-color 0.4s ease;
-}
-
-.mt-card:hover .mt-card-backdrop {
-  background: rgba(40, 40, 40, 0.5);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.mt-card-frame {
-  position: relative;
-  width: clamp(200px, 22vw, 280px);
-  aspect-ratio: 3 / 4;
-  border-radius: 6px;
-  overflow: hidden;
-  z-index: 1;
-  background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-}
-
-.mt-card-frame img {
-  filter: grayscale(100%);
-  transition: filter 0.5s ease;
-}
-
-.mt-card:hover .mt-card-frame img {
-  filter: grayscale(0%);
-}
-
-.mt-card-info {
-  position: relative;
-  z-index: 2;
-  margin-top: 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mt-card-info h3 {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.mt-card-divider {
-  width: 30px;
-  height: 2px;
-  background: #ffffff;
-  margin: 0.6rem 0;
-  opacity: 0.3;
-}
-
-.mt-card-info p {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(0.8rem, 1vw, 0.9rem);
-  color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 0.05em;
-  font-weight: 500;
-}
-
-.mt-heading {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.mt-heading-title {
-  font-family: var(--sans);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.05em;
-  line-height: 0.95;
-  color: #ffffff;
-  margin: 0 0 1.5rem;
-}
-
-.mt-heading-sub {
-  font-family: var(--sans);
-  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.5);
-  max-width: 480px;
-  margin: 0 auto;
+@media (max-width: 768px) {
+    .team-hero-images {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        height: auto;
+    }
+    .team-hero-person {
+        width: 80vw;
+        height: 50vh;
+    }
+    .team-hero-fg-text {
+        position: relative;
+        transform: none;
+        top: auto;
+        left: auto;
+        margin-top: 2rem;
+    }
+    .team-hero-bg-text {
+        top: 20%;
+    }
 }
 
 /* ── TEAM SECTION (redesigned) ────────────────────────────────── */

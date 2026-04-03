@@ -8,7 +8,7 @@ import ThumbnailCarousel from "../../../../components/ThumbnailCarousel";
 import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
 import SafeImage from "@/components/SafeImage";
-import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { resolveMediaUrl, resolveMediaUrlForSize } from "@/lib/mediaUrl";
 
 function toYouTubeEmbedURL(value) {
     if (!value || typeof value !== "string") return null;
@@ -201,7 +201,7 @@ export default function ProjectDetailPage({ params }) {
             {/* Hero Section */}
             <section className="project-detail-hero">
                 <div className="project-detail-hero-img">
-                    <SafeImage src={resolveMediaUrl(project.image)} fallbackSrc="/edra-logo.png" alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
+                    <SafeImage src={resolveMediaUrlForSize(project.image, 'full')} fallbackSrc="/edra-logo.png" alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} priority quality={75} />
                 </div>
                 <div className="project-detail-hero-overlay" />
                 <div className="project-detail-hero-content">

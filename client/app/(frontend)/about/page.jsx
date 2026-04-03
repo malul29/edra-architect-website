@@ -2,10 +2,60 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function AboutPage() {
+    const sectionRef = useRef(null);
+    const textGroupRef = useRef(null);
+    const leftPersonRef = useRef(null);
+    const rightPersonRef = useRef(null);
+    const paragraphRef = useRef(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 769px)", () => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "center center",
+                    end: "+=150%",
+                    scrub: 1,
+                    pin: true,
+                }
+            });
+
+            // Move entire text group (OUR + PROFESSIONAL) up together
+            tl.to(textGroupRef.current, {
+                yPercent: -60,
+                scale: 0.5,
+            }, 0);
+
+            tl.to(leftPersonRef.current, {
+                xPercent: -40,
+            }, 0);
+
+            tl.to(rightPersonRef.current, {
+                xPercent: 40,
+            }, 0);
+
+            tl.to(paragraphRef.current, {
+                opacity: 1,
+                y: 0,
+            }, 0.3);
+
+            return () => tl.kill();
+        });
+
+        return () => mm.revert();
+    }, []);
+
     return (
         <>
             <Header />
@@ -178,58 +228,32 @@ export default function AboutPage() {
                     </div>
                 </section>
                 {/* ── TEAM ── */}
-                <section className="mt-section">
-                    {/* Organic accent blobs */}
-                    <div className="mt-blob mt-blob--1" aria-hidden="true" />
-                    <div className="mt-blob mt-blob--2" aria-hidden="true" />
-                    <div className="mt-blob mt-blob--3" aria-hidden="true" />
-                    <div className="mt-blob mt-blob--4" aria-hidden="true" />
-
-                    {/* Photo cards */}
-                    <div className="mt-cards">
-                        {[
-                            { 
-                                img: "/Megawati Nyonri.png", 
-                                name: "Ar. Megawati Nyonri", 
-                                role: "President Director", 
-                                tilt: "left",
-                                imgStyle: { objectFit: "cover", objectPosition: "bottom", transform: "scale(1.15) translateY(4%)" }
-                            },
-                            { 
-                                img: "/Ning Widyastuti.png", 
-                                name: "Ning Widyastuti", 
-                                role: "Operational Director", 
-                                tilt: "right",
-                                imgStyle: { objectFit: "cover", objectPosition: "bottom", transform: "scale(1.4) translateY(12%)" }
-                            },
-                        ].map((m) => (
-                            <div className={`mt-card mt-card--${m.tilt}`} key={m.name}>
-                                <div className="mt-card-backdrop" />
-                                <div className="mt-card-frame">
-                                    <Image
-                                        src={m.img}
-                                        alt={m.name}
-                                        fill
-                                        style={m.imgStyle}
-                                        sizes="(max-width: 768px) 45vw, 280px"
-                                    />
-                                </div>
-                                <div className="mt-card-info">
-                                    <h3>{m.name}</h3>
-                                    <div className="mt-card-divider" aria-hidden="true" />
-                                    <p>{m.role}</p>
-                                </div>
+                <section className="team-hero-section" ref={sectionRef}>
+                    <div className="team-hero-images">
+                        <div className="team-hero-person" ref={leftPersonRef}>
+                            <Image src="/Megawati Nyonri.png" alt="Ar. Megawati Nyonri" fill sizes="(max-width: 768px) 80vw, 30vw" style={{ objectFit: "contain", objectPosition: "bottom" }} />
+                            <div className="team-hero-info">
+                                <h3>Ar. Megawati Nyonri</h3>
+                                <p>President Director</p>
                             </div>
-                        ))}
+                        </div>
+                        <div className="team-hero-person" ref={rightPersonRef}>
+                            <Image src="/Ning Widyastuti.png" alt="Ning Widyastuti" fill sizes="(max-width: 768px) 80vw, 30vw" style={{ objectFit: "contain", objectPosition: "bottom" }} />
+                            <div className="team-hero-info">
+                                <h3>Ning Widyastuti</h3>
+                                <p>Operational Director</p>
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Heading below */}
-                    <div className="mt-heading">
-                        <h2 className="mt-heading-title">MEET THE<br />TEAM</h2>
-                        <p className="mt-heading-sub">
-                            A passionate group of architects and visionaries dedicated to
-                            creating meaningful and enduring spaces.
-                        </p>
+                    <div className="team-hero-text-group" ref={textGroupRef}>
+                        <span className="team-hero-bg-text" aria-hidden="true">OUR</span>
+                        <h2 className="team-hero-fg-text">PROFESSIONAL</h2>
+                        <div className="team-hero-paragraph" ref={paragraphRef}>
+                            <p>
+                                We create spaces that enrich lives and inspire emotions, blending form, function, and storytelling
+                                to craft experiences that resonate deeply with each space and its inhabitants.
+                            </p>
+                        </div>
                     </div>
                 </section>
 

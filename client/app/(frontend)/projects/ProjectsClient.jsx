@@ -5,7 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SafeImage from "@/components/SafeImage";
-import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { resolveMediaUrl, resolveMediaUrlForSize } from "@/lib/mediaUrl";
 
 const CATS = ["All", "High Rise", "Mall", "Residence", "Private House", "Office", "Public Facility", "Interior"];
 
@@ -37,10 +37,19 @@ export default function ProjectsClient({ initialData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const PAGE_SIZE = 12;
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+    const [clientData, setClientData] = useState(initialData);
 
     useEffect(() => { setVisibleCount(PAGE_SIZE); }, [active]);
 
-    const filtered = active === "All" ? initialData : initialData.filter(p => p.category === active);
+    useEffect(() => {
+        // Randomize on client mount to prevent server hydration mismatches 
+        // while giving a unique experience every page load
+        if (initialData && initialData.length > 0) {
+            setClientData([...initialData].sort(() => Math.random() - 0.5));
+        }
+    }, [initialData]);
+
+    const filtered = active === "All" ? clientData : clientData.filter(p => p.category === active);
     const visible = filtered.slice(0, visibleCount);
     const hasMore = visibleCount < filtered.length;
     const heroTitle = CATEGORY_TITLES[active] || active.toUpperCase();
@@ -71,7 +80,7 @@ export default function ProjectsClient({ initialData }) {
         const categoryProjects = active === "All" ? initialData : initialData.filter(p => p.category === active);
         if (categoryProjects.length > 0) {
             const randomProject = categoryProjects[Math.floor(Math.random() * categoryProjects.length)];
-            const resolved = resolveMediaUrl(randomProject.image);
+            const resolved = resolveMediaUrlForSize(randomProject.image, 'full');
             if (resolved && resolved !== "/edra-logo.png") return resolved;
         }
         return FALLBACK_IMAGES[active] || FALLBACK_IMAGES["All"];
@@ -215,7 +224,7 @@ export default function ProjectsClient({ initialData }) {
 }
 
 function ProjectCard({ project, variant, revealIndex }) {
-    const imageSrc = resolveMediaUrl(project.image);
+    const imageSrc = resolveMediaUrlForSize(project.image, 'card');
     const fallback = FALLBACK_IMAGES[project.category] || FALLBACK_IMAGES["All"];
 
     return (

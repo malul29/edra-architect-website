@@ -88,3 +88,37 @@ export function resolveMediaUrl(media) {
 
   return FALLBACK_MEDIA_URL;
 }
+
+/**
+ * Resolve a media object to a specific Payload image size.
+ * Preferred size order: requested → next larger → original.
+ * This reduces Vercel Blob Data Transfer by serving smaller variants.
+ *
+ * @param {object|string|number} media - Payload media object, URL string, or ID
+ * @param {'thumbnail'|'card'|'full'} preferredSize - Which Payload imageSizes variant to use
+ * @returns {string} Resolved URL
+ */
+export function resolveMediaUrlForSize(media, preferredSize = 'card') {
+  if (!media || typeof media !== "object") return resolveMediaUrl(media);
+
+  const sizes = media.sizes;
+  if (!sizes) return resolveMediaUrl(media);
+
+  // Define fallback chain: requested size → next larger → original
+  const chains = {
+    thumbnail: ['thumbnail', 'card', 'full'],
+    card: ['card', 'full'],
+    full: ['full'],
+  };
+
+  const chain = chains[preferredSize] || chains.card;
+
+  for (const sizeName of chain) {
+    const sizeUrl = sizes[sizeName]?.url;
+    if (sizeUrl) return normalizeMediaUrl(sizeUrl);
+  }
+
+  // Fall back to original
+  return resolveMediaUrl(media);
+}
+
