@@ -18,7 +18,7 @@
     "db:copy-cms-old-to-new": "node --experimental-strip-types scripts/copy-cms-data-between-dbs.mjs",
     "media:migrate-blob": "node --experimental-strip-types scripts/migrate-media-to-blob-sql.mjs",
     "media:migrate-blob:apply": "node --experimental-strip-types scripts/migrate-media-to-blob-sql.mjs --apply",
-    "generate:importmap": "node --experimental-strip-types node_modules/payload/dist/bin/index.js generate:importmap && node scripts/ensure-importmap-blob.mjs",
+    "generate:importmap": "node --experimental-strip-types node_modules/payload/bin.js generate:importmap && node scripts/ensure-importmap-blob.mjs",
     "seed": "node --experimental-strip-types seed.ts"
   },
   "dependencies": {
